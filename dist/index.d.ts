@@ -1,2 +1,15 @@
-export declare function greet(name: string): string;
+import { Config } from './types';
+import { TaskBus } from './core/task';
+import { BenefitBus } from './core/benifit';
+declare class Core {
+    private config;
+    private env;
+    task: TaskBus;
+    benefit: BenefitBus;
+    constructor();
+    init(config: Config): void;
+    go(path: string, params?: object): any;
+}
+declare const _default: Core | null;
+export default _default;
 //# sourceMappingURL=index.d.ts.map

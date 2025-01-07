@@ -1,0 +1,1 @@
+{"version":3,"file":"miniprogram.js","sourceRoot":"","sources":["../../src/env/miniprogram.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,OAAO,cAAc;IAC/B,EAAE,CAAC,IAAY,EAAE,MAAe;QAC9B,aAAa;QACb,OAAO,CAAC,GAAG,CAAC,oBAAoB,EAAE,IAAI,EAAE,MAAM,CAAC,CAAC;IAClD,CAAC;CACF"}
