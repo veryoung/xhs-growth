@@ -1,4 +1,4 @@
 export function greet(name) {
-    return `Hello, ${name}!`;
+    return `hello xhs!!!, ${name}!`;
 }
 //# sourceMappingURL=index.js.map
