@@ -1,3 +1,3 @@
 export function greet(name: string): string {
-    return `hello xhs!!!!, ${name}!`;
+    return `小红书能力开始, ${name}!`;
 }
