@@ -5,5 +5,5 @@
 ## Installation
 
 ```bash
-pnpm add my-awesome-package
+pnpm add @veryoung/xhs-growth
 ```
