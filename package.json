@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": ""
   },
   "keywords": ["xhs", "xhs-growth"],
   "author": "terrywan",

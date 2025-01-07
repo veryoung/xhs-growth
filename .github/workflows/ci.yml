@@ -10,19 +10,41 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.PAT_TOKEN }}
+
+    - name: Git config
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
 
     - name: Use Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '18.19.1'
         registry-url: 'https://npm.pkg.github.com'
+        scope: '@veryoung'
 
     - name: Install pnpm
       uses: pnpm/action-setup@v2
       with:
         version: 9.15.2
 
+    - name: Configure npm
+      run: |
+        echo "//npm.pkg.github.com/:_authToken=${{ secrets.PAT_TOKEN }}" > ~/.npmrc
+        echo "@veryoung:registry=https://npm.pkg.github.com" >> ~/.npmrc
+
+    - name: Bump version
+      run: |
+        pnpm version patch --no-git-tag-version
+        VERSION=$(node -p "require('./package.json').version")
+        git add package.json
+        git commit -m "chore: bump version to ${VERSION}"
+        git push
+
     - name: Publish to GitHub Packages
-      run: pnpm publish --no-git-checks
+      run: pnpm publish --no-git-checks --access public
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.PAT_TOKEN }}
