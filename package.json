@@ -1,6 +1,6 @@
 {
   "name": "@veryoung/xhs-growth",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "小红书增长前端能力核心",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
