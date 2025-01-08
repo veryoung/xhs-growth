@@ -1,4 +1,7 @@
 export default class MiniProgramEnv {
+    constructor(config) {
+        this.fetchCore = config.fetchCore;
+    }
     go(path, params) {
         // 实现小程序的跳转逻辑
         console.log('MiniProgram go to:', path, params);

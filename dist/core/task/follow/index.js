@@ -1,16 +1,15 @@
-import { TaskBus } from "../index";
-export class FollowTask extends TaskBus {
-    constructor(taskBus) {
-        super();
-        this.taskBus = taskBus;
-    }
+import { fetch, go } from "../../../index";
+export class FollowTask {
     /** 关注 */
     takeFollow(accountId) {
-        this.go('xhsdiscover://user/${accountId}');
-        // this.go('xhsdiscover://user/${accountId}');
-        // this.taskBus.fetch('', 'POST', {
-        //   accountId: accountId
-        // }, {});
+        go(`xhsdiscover://user/${accountId}`);
+    }
+    getFollowInfo(accountId) {
+        fetch('POST', `https://api.xhsdiscover.com/v1/user/info`, {
+            accountId: accountId
+        }, {
+            'Content-Type': 'application/json'
+        });
     }
     /** 取消关注 */
     cancelFollow() {

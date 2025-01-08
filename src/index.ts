@@ -1,5 +1,4 @@
 import { TaskBus } from './core/task';
-import { BenefitBus } from './core/benifit';
 import { Config } from './types';
 import { createEnvironment } from './env';
 
@@ -7,19 +6,21 @@ import { createEnvironment } from './env';
 export class Core {
   private config!: Config;
   private env: any;
-  public task!: any;
+  public task!: TaskBus;
+  public fetchCore: any;
   // public benefit: BenefitBus;
 
   constructor() {
-    // this.task = new TaskBus();
+    this.task = new TaskBus();
     // this.benefit = new BenefitBus(this);
     // this.fetch = () => {};
   }
 
   init(config: Config) {
-    // this.task = new TaskBus();
     this.config = config;
-    this.env = createEnvironment(config.platform);
+    this.env = createEnvironment(config.platform, {
+      fetchCore: config.fetchCore,
+    });
     // todo: 实现兼容不同平台的初始化逻辑
   }
 
@@ -34,6 +35,7 @@ export class Core {
 }
 
 
+
 let StaticCore: Core;
 
 const GrowthCore = () => {
@@ -41,6 +43,16 @@ const GrowthCore = () => {
         StaticCore = new Core();
     }
     return StaticCore;
+}
+
+/** 导出跳转方法 */
+export const go = (path: string, params?: object) => {
+  return GrowthCore().go(path, params);
+}
+
+/** 导出请求方法 */
+export const fetch = (method: string, url: string, data?: object, header?: object) => {
+  return GrowthCore().fetch(method, url, data, header);
 }
 
 export default GrowthCore();

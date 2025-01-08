@@ -1,6 +1,5 @@
-import { Core } from '../../index';
-import { FollowTask } from './follow/index';
-export declare class TaskBus extends Core {
+import { FollowTask } from './follow';
+export declare class TaskBus {
     follow: FollowTask;
     constructor();
 }

@@ -1,5 +1,12 @@
 
 export default class MiniProgramEnv {
+  private fetchCore: any;
+  constructor(config: {
+    fetchCore: any;
+  }) {
+    this.fetchCore = config.fetchCore;
+  }
+
   go(path: string, params?: object) {
     // 实现小程序的跳转逻辑
     console.log('MiniProgram go to:', path, params);
@@ -7,6 +14,7 @@ export default class MiniProgramEnv {
 
 
   fetch(method: string, url: string, data?: object, header?: object) {
+
     // 实现小程序的网络请求逻辑
     // console.log('MiniProgram fetch:', method, url, data);
     // this.fetch.request({
