@@ -1,7 +1,8 @@
+import { Core } from '../../index';
 import { FollowTask } from './follow/index';
-export class TaskBus {
-    constructor(core) {
-        this.core = core;
+export class TaskBus extends Core {
+    constructor() {
+        super();
         this.follow = new FollowTask(this);
     }
 }

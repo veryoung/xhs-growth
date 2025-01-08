@@ -1,9 +1,16 @@
-export class FollowTask {
+import { TaskBus } from "../index";
+export class FollowTask extends TaskBus {
     constructor(taskBus) {
+        super();
         this.taskBus = taskBus;
     }
     /** 关注 */
-    takeFollow() {
+    takeFollow(accountId) {
+        this.go('xhsdiscover://user/${accountId}');
+        // this.go('xhsdiscover://user/${accountId}');
+        // this.taskBus.fetch('', 'POST', {
+        //   accountId: accountId
+        // }, {});
     }
     /** 取消关注 */
     cancelFollow() {

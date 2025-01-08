@@ -1,14 +1,12 @@
 import { Config } from './types';
-import { TaskBus } from './core/task';
-import { BenefitBus } from './core/benifit';
-declare class Core {
+export declare class Core {
     private config;
     private env;
-    task: TaskBus;
-    benefit: BenefitBus;
+    task: any;
     constructor();
     init(config: Config): void;
     go(path: string, params?: object): any;
+    fetch(method: string, url: string, data?: object, header?: object): any;
 }
 declare const _default: Core;
 export default _default;

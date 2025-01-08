@@ -1,8 +1,7 @@
-import Core from '../../index';
+import { Core } from '../../index';
 import { FollowTask } from './follow/index';
-export declare class TaskBus {
-    private core;
+export declare class TaskBus extends Core {
     follow: FollowTask;
-    constructor(core: typeof Core);
+    constructor();
 }
 //# sourceMappingURL=index.d.ts.map

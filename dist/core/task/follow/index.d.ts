@@ -1,9 +1,9 @@
 import { TaskBus } from "../index";
-export declare class FollowTask {
+export declare class FollowTask extends TaskBus {
     private taskBus;
     constructor(taskBus: TaskBus);
     /** 关注 */
-    takeFollow(): void;
+    takeFollow(accountId: string): void;
     /** 取消关注 */
     cancelFollow(): void;
 }

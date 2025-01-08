@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/env/webview/index.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,OAAO,UAAU;IAC7B,EAAE,CAAC,IAAY,EAAE,MAAe;QAC9B,mBAAmB;QACnB,OAAO,CAAC,GAAG,CAAC,gBAAgB,EAAE,IAAI,EAAE,MAAM,CAAC,CAAC;IAC9C,CAAC;CACF"}

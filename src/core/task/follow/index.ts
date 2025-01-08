@@ -1,15 +1,20 @@
 import { TaskBus } from "../index";
 
-export class FollowTask {
+export class FollowTask extends TaskBus {
   private taskBus: TaskBus;
 
   constructor(taskBus: TaskBus) {
+    super();
     this.taskBus = taskBus;
   }
 
   /** 关注 */
-  takeFollow() {
-
+  takeFollow(accountId: string) {
+    this.go('xhsdiscover://user/${accountId}');
+    // this.go('xhsdiscover://user/${accountId}');
+    // this.taskBus.fetch('', 'POST', {
+    //   accountId: accountId
+    // }, {});
   }
 
   /** 取消关注 */

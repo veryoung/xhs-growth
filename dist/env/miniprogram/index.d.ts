@@ -5,4 +5,4 @@ export default class MiniProgramEnv {
         Authorization: string;
     };
 }
-//# sourceMappingURL=miniprogram.d.ts.map
+//# sourceMappingURL=index.d.ts.map

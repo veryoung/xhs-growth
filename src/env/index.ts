@@ -1,5 +1,5 @@
 import { Platform } from '../types';
-import WebviewEnv from './webview';
+import WebviewEnv from './webview/index';
 import MiniProgramEnv from './miniprogram';
 import RNEnv from './rn';
 

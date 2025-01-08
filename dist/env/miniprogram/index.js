@@ -1,6 +1,3 @@
-const xhs = { request: (data) => {
-        console.log('MiniProgram request:', data);
-    } };
 export default class MiniProgramEnv {
     go(path, params) {
         // 实现小程序的跳转逻辑
@@ -8,13 +5,13 @@ export default class MiniProgramEnv {
     }
     fetch(method, url, data, header) {
         // 实现小程序的网络请求逻辑
-        console.log('MiniProgram fetch:', method, url, data);
-        xhs.request({
-            url: url,
-            method: method,
-            data: data,
-            header: header,
-        });
+        // console.log('MiniProgram fetch:', method, url, data);
+        // this.fetch.request({
+        //   url: url,
+        //   method: method,
+        //   data: data,
+        //   header: header,
+        // });
     }
     authorization(code) {
         // 实现小程序的授权逻辑
@@ -22,4 +19,4 @@ export default class MiniProgramEnv {
         return { 'Authorization': '5fd05bb56b4f4828bf24d3c4f1cc334' };
     }
 }
-//# sourceMappingURL=miniprogram.js.map
+//# sourceMappingURL=index.js.map
