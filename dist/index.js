@@ -7,15 +7,16 @@ class Core {
         this.benefit = new BenefitBus(this);
     }
     init(config) {
-        this.config = config;ddd
+        this.config = config;
         this.env = createEnvironment(config.platform);
         // todo: 实现兼容不同平台的初始化逻辑
+        console.log("🚀 ~ Core ~ config:", this.config);
     }
     go(path, params) {
         return this.env.go(path, params);
     }
 }
-let StaticCore = null;
+let StaticCore;
 const GrowthCore = () => {
     if (!Core) {
         StaticCore = new Core();

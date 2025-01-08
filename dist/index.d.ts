@@ -10,6 +10,6 @@ declare class Core {
     init(config: Config): void;
     go(path: string, params?: object): any;
 }
-declare const _default: Core | null;
+declare const _default: Core;
 export default _default;
 //# sourceMappingURL=index.d.ts.map

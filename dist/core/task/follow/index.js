@@ -4,7 +4,6 @@ export class FollowTask {
     }
     /** 关注 */
     takeFollow() {
-        console.log("take focus task");
     }
     /** 取消关注 */
     cancelFollow() {

@@ -5,7 +5,7 @@ import { BenefitBus } from './core/benifit';
 
 
 class Core {
-  private config: Config;
+  private config!: Config;
   private env: any;
   public task: TaskBus;
   public benefit: BenefitBus;
@@ -19,6 +19,7 @@ class Core {
     this.config = config;
     this.env = createEnvironment(config.platform);
     // todo: 实现兼容不同平台的初始化逻辑
+    console.log("🚀 ~ Core ~ config:", this.config)
   }
 
   go(path: string, params?: object) {
@@ -28,7 +29,7 @@ class Core {
 }
 
 
-let StaticCore: Core | null = null; 
+let StaticCore: Core; 
 
 const GrowthCore = () => {
     if(!Core) {
