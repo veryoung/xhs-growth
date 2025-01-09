@@ -1,15 +1,15 @@
-import { fetch, go } from "../../../index";
+import { go } from "../../../index";
 export class FollowTask {
     /** 关注 */
     takeFollow(accountId) {
         go(`xhsdiscover://user/${accountId}`);
     }
     getFollowInfo(accountId) {
-        fetch('POST', `https://api.xhsdiscover.com/v1/user/info`, {
-            accountId: accountId
-        }, {
-            'Content-Type': 'application/json'
-        });
+        // fetch('POST', `https://api.xhsdiscover.com/v1/user/info`, {
+        //   accountId: accountId
+        // }, {
+        //   'authorization': `Bearer ${getRequestToken()}`
+        // });
     }
     /** 取消关注 */
     cancelFollow() {

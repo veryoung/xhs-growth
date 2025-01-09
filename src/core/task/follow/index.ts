@@ -7,11 +7,11 @@ export class FollowTask  {
 
 
   getFollowInfo(accountId: string) {
-    fetch('POST', `https://api.xhsdiscover.com/v1/user/info`, {
-      accountId: accountId
-    }, {
-      'Content-Type': 'application/json'
-    });
+    // fetch('POST', `https://api.xhsdiscover.com/v1/user/info`, {
+    //   accountId: accountId
+    // }, {
+    //   'authorization': `Bearer ${getRequestToken()}`
+    // });
   }
 
   /** 取消关注 */

@@ -1,17 +1,30 @@
 import { TaskBus } from './core/task';
 import { createEnvironment } from './env';
 export class Core {
-    // public benefit: BenefitBus;
     constructor() {
+        /** 是否是调试模式 */
+        this.isDebugger = false;
+        /** 活动id */
+        this.activityId = '';
         this.task = new TaskBus();
         // this.benefit = new BenefitBus(this);
         // this.fetch = () => {};
     }
     init(config) {
+        // 初始化配置
         this.config = config;
+        // 初始化活动id
+        if (config.activityId) {
+            this.activityId = config.activityId;
+        }
+        // 初始化环境
         this.env = createEnvironment(config.platform, {
             fetchCore: config.fetchCore,
+            isDebugger: config.isDebugger,
+            activityId: config.activityId,
+            baseUrl: config.baseUrl,
         });
+        this.env.init();
         // todo: 实现兼容不同平台的初始化逻辑
     }
     go(path, params) {
@@ -19,6 +32,9 @@ export class Core {
     }
     fetch(method, url, data, header) {
         return this.env.fetch(method, url, data, header);
+    }
+    getUserType() {
+        return this.env.getUserType();
     }
 }
 let StaticCore;
