@@ -22,3 +22,23 @@ export interface EnvConfig {
   isDebugger?: boolean;
   baseUrl?: string;
 }
+
+export enum eventMissionType {
+  // 发布笔记
+  NOTE_CHANGE = 'NOTE_CHANGE',
+
+  // 笔记浏览
+  NOTE_BROWSE = 'NOTE_BROWSE',
+
+  // 笔记点赞
+  NOTE_LIKE = 'NOTE_LIKE',
+
+  // 关注用户
+  FOLLOW_USER = 'FOLLOW_USER',
+
+  // 笔记搜索
+  SEARCH_NOTE = 'SEARCH_NOTE',
+
+  // 邀请助力
+  INVITE_ASSIST = 'INVITE_ASSIST'
+}

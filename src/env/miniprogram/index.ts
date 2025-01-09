@@ -1,6 +1,5 @@
-import { NavigateParams, EnvConfig } from "../../types";
+import { NavigateParams, EnvConfig, eventMissionType } from "../../types";
 import { httpConfig } from "../../config/http.config";
-import { xhs } from "../../types/xhs.d";
 
 export default class MiniProgramEnv {
   private fetchCore: any;
@@ -76,8 +75,47 @@ export default class MiniProgramEnv {
 
   async getUserType() {
     // console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ header:", header)
-    const res = await this.fetch('POST','/api/growth/haydn/{activityId}/user/type');
+    const res = await this.fetch('POST',httpConfig.API_LIST.userType);
     console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ res:", res)
+    return res;
+  }
+
+  async getTaskList() {
+    const res = await this.fetch('GET',httpConfig.API_LIST.taskTable);
+    console.log("🚀 ~ MiniProgramEnv ~ getTaskList ~ res:", res)
+    return res;
+  }
+
+  async claimTask(taskMetaId: string) {
+    const res = await this.fetch('POST',httpConfig.API_LIST.claimTask, {
+      taskMetaId: taskMetaId
+    });
+    console.log("🚀 ~ MiniProgramEnv ~ claimTask ~ res:", res)
+    return res;
+  }
+
+  async completeTask(instanceId: string, eventType: eventMissionType, params: any) {
+    const res = await this.fetch('POST',httpConfig.API_LIST.completeTask, {
+      instanceId: instanceId,
+      eventType: eventType,
+      params: params,
+    });
+    console.log("🚀 ~ MiniProgramEnv ~ completeTask ~ res:", res)
+    return res;
+  }
+
+  async polling(group?: string) {
+    const res = await this.fetch('GET', httpConfig.API_LIST.polling, {
+      group: group,
+    });
+    console.log("🚀 ~ MiniProgramEnv ~ polling ~ res:", res)
+    return res;
+  }
+
+  async queryRecord(limit: number) {
+    const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
+    const res = await this.fetch('GET', url);
+    console.log("🚀 ~ MiniProgramEnv ~ queryRecord ~ res:", res)
     return res;
   }
 }

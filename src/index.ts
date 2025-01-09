@@ -1,5 +1,5 @@
 import { TaskBus } from './core/task';
-import { Config, NavigateParams } from './types';
+import { Config, eventMissionType, NavigateParams } from './types';
 import { createEnvironment } from './env';
 
 
@@ -52,6 +52,22 @@ export class Core {
 
   public getUserType() {
     return this.env.getUserType();
+  }
+
+  public getTaskList() {
+    return this.env.getTaskList();
+  }
+
+  public claimTask(taskMetaId: string) {
+    return this.env.claimTask(taskMetaId);
+  }
+
+  public completeTask(instanceId: string, eventType: eventMissionType, params: any) {
+    return this.env.completeTask(instanceId, eventType, params);
+  }
+
+  public polling(group: string) {
+    return this.env.polling(group);
   }
 }
 

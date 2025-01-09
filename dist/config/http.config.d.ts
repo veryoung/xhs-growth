@@ -11,6 +11,12 @@ export declare const httpConfig: {
     };
     API_LIST: {
         login: string;
+        userType: string;
+        taskTable: string;
+        claimTask: string;
+        completeTask: string;
+        polling: string;
+        qureyRecord: string;
     };
 };
 //# sourceMappingURL=http.config.d.ts.map

@@ -13,6 +13,13 @@ export const httpConfig = {
   },
   API_LIST: {
     login: '/api/growth/haydn/{activityId}/login',
-  },
+    userType: '/api/growth/haydn/{activityId}/user/type',
+    taskTable: '/api/growth/haydn/{activityId}/task/table',
+    claimTask: '/api/growth/haydn/{activityId}/task/claim',
+    completeTask: '/api/growth/haydn/{activityId}/task/advance',
+    polling: '/api/growth/haydn/{activityId}/notification/poll',
+    qureyRecord: '/api/growth/haydn/{activityId}/fission/record',
+  }
 }
+
 

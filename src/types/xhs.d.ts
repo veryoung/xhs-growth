@@ -1,5 +1,3 @@
-import { NavigateParams } from ".";
-
 declare namespace XHS {
   interface LoginResult {
     code: string;

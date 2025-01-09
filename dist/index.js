@@ -33,6 +33,18 @@ export class Core {
     getUserType() {
         return this.env.getUserType();
     }
+    getTaskList() {
+        return this.env.getTaskList();
+    }
+    claimTask(taskMetaId) {
+        return this.env.claimTask(taskMetaId);
+    }
+    completeTask(instanceId, eventType, params) {
+        return this.env.completeTask(instanceId, eventType, params);
+    }
+    polling(group) {
+        return this.env.polling(group);
+    }
 }
 let StaticCore;
 const GrowthCore = () => {
