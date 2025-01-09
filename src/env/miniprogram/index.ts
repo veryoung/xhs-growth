@@ -99,7 +99,7 @@ export default class MiniProgramEnv {
       instanceId: instanceId,
       eventType: eventType,
       params: params,
-    });
+    }); 
     console.log("🚀 ~ MiniProgramEnv ~ completeTask ~ res:", res)
     return res;
   }

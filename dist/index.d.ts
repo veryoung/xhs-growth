@@ -24,6 +24,7 @@ export declare class Core {
     claimTask(taskMetaId: string): any;
     completeTask(instanceId: string, eventType: eventMissionType, params: any): any;
     polling(group: string): any;
+    queryRecord(limit: number): any;
 }
 /** 导出跳转方法 */
 export declare const go: (path: string, params?: NavigateParams) => any;

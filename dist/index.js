@@ -45,6 +45,9 @@ export class Core {
     polling(group) {
         return this.env.polling(group);
     }
+    queryRecord(limit) {
+        return this.env.queryRecord(limit);
+    }
 }
 let StaticCore;
 const GrowthCore = () => {

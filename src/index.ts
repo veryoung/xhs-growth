@@ -69,6 +69,10 @@ export class Core {
   public polling(group: string) {
     return this.env.polling(group);
   }
+
+  public queryRecord(limit: number) {
+    return this.env.queryRecord(limit);
+  }
 }
 
 let StaticCore: Core;
