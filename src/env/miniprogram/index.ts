@@ -44,7 +44,12 @@ export default class MiniProgramEnv {
         success: (res: any) => {
           resolve(res.data);
         },
-        fail: (error: any) => {
+        fail: async (error: any) => {
+          if(error.code === 10009) {
+            await this.init();
+            this.fetch(method, url, data, header);
+            return
+          }
           reject(error);
         }
       });
@@ -56,7 +61,7 @@ export default class MiniProgramEnv {
     if(!code) {
       throw new Error('请完成小程序登录');
     }
-    this.setAuthorization(code);
+    await this.setAuthorization(code);
   }
 
   /** 设置授权 */
