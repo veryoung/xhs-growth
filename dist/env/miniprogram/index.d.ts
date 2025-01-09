@@ -6,9 +6,10 @@ export default class MiniProgramEnv {
     private requestToken;
     constructor(config: EnvConfig);
     go(path: string, params?: NavigateParams): void;
-    fetch(method: string, url: string, data?: object, header?: object): Promise<any>;
+    fetch(method: string, url: string, data?: object, header?: object): Promise<unknown>;
     init(): Promise<void>;
-    authorization(code: string): Promise<any>;
-    getUserType(): Promise<any>;
+    /** 设置授权 */
+    setAuthorization(code: string): Promise<void>;
+    getUserType(): Promise<unknown>;
 }
 //# sourceMappingURL=index.d.ts.map

@@ -8,7 +8,7 @@ export interface Config {
     baseUrl?: string;
 }
 export interface NavigateParams {
-    data?: object;
+    event?: any;
     success?: () => void;
     fail?: () => void;
     complete?: () => void;

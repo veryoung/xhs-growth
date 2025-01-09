@@ -1,11 +1,12 @@
 import { NavigateParams, EnvConfig } from "../../types";
 import { httpConfig } from "../../config/http.config";
+import { xhs } from "../../types/xhs.d";
 
 export default class MiniProgramEnv {
   private fetchCore: any;
   private coreBaseUrl: string;
   private activityId: string;
-  private requestToken!: string;
+  private requestToken!: any;
   constructor(config: EnvConfig) {
     this.fetchCore = config.fetchCore;
     this.coreBaseUrl = config.baseUrl || '';
@@ -14,34 +15,40 @@ export default class MiniProgramEnv {
 
   go(path: string, params?: NavigateParams) {
     // 实现小程序的跳转逻辑
-    console.log('MiniProgram go to:', path, params);
-    this.fetchCore.navigateTo({
-      url: path,
+    xhs.navigateTo({
+      url: path || '',
+      event: params?.event,
       success: params?.success,
       fail: params?.fail,
       complete: params?.complete
     });
   }
 
-  async fetch(method: string, url: string, data?: object, header?: object) {
-    // 替换活动id
-    url = url.replace('{activityId}', this.activityId);
-    // 拼接baseUrl
-    url = this.coreBaseUrl + url;
-    console.log("🚀 ~ MiniProgramEnv ~ fetch ~ url:", url)
-    try {
-      const res = await this.fetchCore.request({
-        url: url,
-        method: method,
-        data: data,
-        header: header,
+  fetch(method: string, url: string, data?: object, header?: object) {
+    return new Promise((resolve, reject) => {
+      url = url.replace('{activityId}', this.activityId);
+      url = this.coreBaseUrl + url;
+
+      if(this.requestToken) {
+        header = {
+          ...header,
+          'authorization': `${this.requestToken}`
+        }
+      }
+      
+      this.fetchCore.request({
+        url,
+        method,
+        data,
+        header,
+        success: (res: any) => {
+          resolve(res.data);
+        },
+        fail: (error: any) => {
+          reject(error);
+        }
       });
-      console.log("🚀 ~ MiniProgramEnv ~ fetch ~ res:", res)
-      return res;
-    } catch (error) {
-      console.log("🚀 ~ MiniProgramEnv ~ fetch ~ error:", error)
-      throw error;
-    }
+    });
   }
 
   async init() {
@@ -49,27 +56,23 @@ export default class MiniProgramEnv {
     if(!code) {
       throw new Error('请完成小程序登录');
     }
-    this.requestToken = await this.authorization(code);
-    // return this.authorization(code);
+    this.setAuthorization(code);
   }
 
-  async authorization(code: string) {
+  /** 设置授权 */
+  async setAuthorization(code: string) {
     // 实现小程序的授权逻辑
-    console.log('MiniProgram authorization:', code);
     const res = await this.fetch('POST', httpConfig.API_LIST.login, {
       code: code,
-    }, {});
-    const response = res;
-    console.log("1111")
-    console.log("🚀 ~ MiniProgramEnv ~ authorization ~ res:", response)
-    console.log("🚀 ~ MiniProgramEnv ~ authorization ~ res:", response.data.authorization)
-    return response.data.authorization;
+    }) as any;
+    console.log('MiniProgram authorization:', res);
+    this.requestToken = res.data.authorization;
   }
 
-  getUserType() {
+  async getUserType() {
     // console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ header:", header)
-    return this.fetch('POST','/api/growth/haydn/{activityId}/user/type', {}, {
-      'authorization': `Bearer ${this.requestToken}`
-    });
+    const res = await this.fetch('POST','/api/growth/haydn/{activityId}/user/type');
+    console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ res:", res)
+    return res;
   }
 }

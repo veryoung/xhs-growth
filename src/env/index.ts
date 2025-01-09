@@ -31,7 +31,6 @@ export function createEnvironment(platform: Platform, config: {
     case 'webview':
       return new WebviewEnv(config);
     case 'miniprogram':
-      console.log('MiniProgramEnv', new MiniProgramEnv(config));
       return new MiniProgramEnv(config);
     case 'rn':
       return new RNEnv(config);

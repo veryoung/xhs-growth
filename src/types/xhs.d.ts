@@ -1,3 +1,5 @@
+import { NavigateParams } from ".";
+
 declare namespace XHS {
   interface LoginResult {
     code: string;
@@ -6,6 +8,7 @@ declare namespace XHS {
 
   interface XhsSDK {
     login(): LoginResult;
+    navigateTo(options: any): void;
     // 可以根据需要添加更多 SDK 方法
   }
 }

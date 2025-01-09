@@ -22,7 +22,7 @@ export declare class Core {
     getUserType(): any;
 }
 /** 导出跳转方法 */
-export declare const go: (path: string, params?: object | undefined) => any;
+export declare const go: (path: string, params?: NavigateParams | undefined) => any;
 /** 导出请求方法 */
 export declare const fetch: (method: string, url: string, data?: object | undefined, header?: object | undefined) => any;
 declare const _default: Core;

@@ -10,7 +10,7 @@ export interface Config {
 }
 
 export interface NavigateParams {
-  data?: object;
+  event?: any;
   success?: () => void;
   fail?: () => void;
   complete?: () => void;

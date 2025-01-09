@@ -30,9 +30,7 @@ export class Core {
     // 初始化配置
     this.config = config;
     // 初始化活动id
-    if(config.activityId) { 
-      this.activityId = config.activityId;
-    }
+    this.activityId = config.activityId;
     // 初始化环境
     this.env = createEnvironment(config.platform, {
       fetchCore: config.fetchCore,
@@ -42,7 +40,6 @@ export class Core {
     });
 
     this.env.init();
-    // todo: 实现兼容不同平台的初始化逻辑
   }
 
   public go(path: string, params?: NavigateParams) {
@@ -68,7 +65,7 @@ const GrowthCore = () => {
 }
 
 /** 导出跳转方法 */
-export const go = (path: string, params?: object) => {
+export const go = (path: string, params?: NavigateParams) => {
   return GrowthCore().go(path, params);
 }
 

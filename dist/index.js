@@ -14,9 +14,7 @@ export class Core {
         // 初始化配置
         this.config = config;
         // 初始化活动id
-        if (config.activityId) {
-            this.activityId = config.activityId;
-        }
+        this.activityId = config.activityId;
         // 初始化环境
         this.env = createEnvironment(config.platform, {
             fetchCore: config.fetchCore,
@@ -25,7 +23,6 @@ export class Core {
             baseUrl: config.baseUrl,
         });
         this.env.init();
-        // todo: 实现兼容不同平台的初始化逻辑
     }
     go(path, params) {
         return this.env.go(path, params);
