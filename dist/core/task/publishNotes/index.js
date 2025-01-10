@@ -12,13 +12,14 @@ export class PublishNotesTask {
             attach: { topics: filterPageIds(pageId) },
             config: {
                 is_post_jump: 0,
+                // callback: `xhsdiscover://webview/${window.location.href.split('//')[1]}&from=post`,
             },
         });
         console.log('publishNotePage', publishNotePage);
         go(publishNotePage, {
             type: 'deeplink',
-            fail: (err) => {
-                console.log('error', err);
+            fail: (res) => {
+                console.log('error', res);
             }
         });
         return 1;

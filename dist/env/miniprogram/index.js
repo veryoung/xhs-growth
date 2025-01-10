@@ -6,8 +6,9 @@ export default class MiniProgramEnv {
         this.activityId = config.activityId;
     }
     go(path, params) {
+        console.log("🚀 ~ MiniProgramEnv ~ go ~ params:", params);
+        console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path);
         if ((params === null || params === void 0 ? void 0 : params.type) === 'deeplink') {
-            // @ts-ignore
             xhs.openXhsDeeplink({
                 link: path || '',
                 success: params === null || params === void 0 ? void 0 : params.success,
@@ -16,13 +17,23 @@ export default class MiniProgramEnv {
             });
             return;
         }
-        xhs.navigateTo({
-            url: path || '',
-            event: params === null || params === void 0 ? void 0 : params.event,
-            success: params === null || params === void 0 ? void 0 : params.success,
-            fail: params === null || params === void 0 ? void 0 : params.fail,
-            complete: params === null || params === void 0 ? void 0 : params.complete
-        });
+        if ((params === null || params === void 0 ? void 0 : params.type) === 'url') {
+            // 去掉https://
+            const url = path.replace('https://', '');
+            // 分离url和query
+            const [urlPath, query] = url.split('?');
+            // 添加xhsdiscover://webview/
+            const deeplink = `xhsdiscover://webview/${urlPath}?${decodeURIComponent(query)}`;
+            // 实现小程序的跳转逻辑
+            console.log("🚀 ~ MiniProgramEnv ~ go ~ deeplink:", deeplink);
+            xhs.openXhsDeeplink({
+                link: deeplink,
+                success: params === null || params === void 0 ? void 0 : params.success,
+                fail: params === null || params === void 0 ? void 0 : params.fail,
+                complete: params === null || params === void 0 ? void 0 : params.complete
+            });
+            return;
+        }
     }
     fetch(method, url, data, header) {
         return new Promise((resolve, reject) => {
@@ -98,7 +109,7 @@ export default class MiniProgramEnv {
     }
     async polling(group) {
         const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
-        const res = await this.fetch('GET', url);
+        const res = await this.fetch('POST', url);
         console.log("🚀 ~ MiniProgramEnv ~ polling ~ res:", res);
         return res;
     }

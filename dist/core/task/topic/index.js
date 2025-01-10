@@ -1,9 +1,12 @@
 import { go } from "../../../index";
-export class FollowTask {
-    /** 关注 */
-    takeFollow(accountId) {
-        go(`xhsdiscover://user/${accountId}`, {
-            type: 'deeplink',
+export class TopicTask {
+    /** 浏览话题 */
+    viewTopic(pageId) {
+        console.log('pageId', pageId);
+        const path = `https://www.xiaohongshu.com/page/topics/${pageId}?fullscreen=true&naviHidden=yes`;
+        console.log("🚀 ~ TopicTask ~ viewTopic ~ path:", path);
+        go(path, {
+            type: 'url',
             success: (res) => {
                 console.log('success', res);
             },
@@ -14,11 +17,6 @@ export class FollowTask {
                 console.log('complete', res);
             }
         });
-    }
-    /** 取消关注 */
-    cancelFollow() {
-        console.log("Cancel follow task");
-        // 实现专注任务的取消逻辑
     }
 }
 //# sourceMappingURL=index.js.map

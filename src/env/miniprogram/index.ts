@@ -13,9 +13,9 @@ export default class MiniProgramEnv {
   }
 
   go(path: string, params?: NavigateParams) {
-<<<<<<< Updated upstream
+    console.log("🚀 ~ MiniProgramEnv ~ go ~ params:", params)
+    console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path)
     if(params?.type === 'deeplink') {
-      // @ts-ignore
       xhs.openXhsDeeplink({
         link: path || '',
         success: params?.success,
@@ -24,17 +24,24 @@ export default class MiniProgramEnv {
       });
       return
     }
-=======
-    console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path)
->>>>>>> Stashed changes
-    // 实现小程序的跳转逻辑
-    xhs.navigateTo({
-      url: path || '',
-      event: params?.event,
-      success: params?.success,
-      fail: params?.fail,
-      complete: params?.complete
-    });
+    
+    if(params?.type === 'url') {
+      // 去掉https://
+      const url = path.replace('https://', '');
+      // 分离url和query
+      const [urlPath, query] = url.split('?');
+      // 添加xhsdiscover://webview/
+      const deeplink = `xhsdiscover://webview/${urlPath}?${decodeURIComponent(query)}`;
+      // 实现小程序的跳转逻辑
+      console.log("🚀 ~ MiniProgramEnv ~ go ~ deeplink:", deeplink)
+      xhs.openXhsDeeplink({
+        link: deeplink,
+        success: params?.success,
+        fail: params?.fail,
+        complete: params?.complete
+      });
+      return
+    }
   }
 
   fetch(method: string, url: string, data?: object, header?: object) {
@@ -120,7 +127,7 @@ export default class MiniProgramEnv {
 
   async polling(group?: string) {
     const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
-    const res = await this.fetch('GET', url);
+    const res = await this.fetch('POST', url);
     console.log("🚀 ~ MiniProgramEnv ~ polling ~ res:", res)
     return res;
   }
