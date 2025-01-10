@@ -24,7 +24,7 @@ export default class MiniProgramEnv {
       });
       return
     }
-    
+
     if(params?.type === 'url') {
       // 去掉https://
       const url = path.replace('https://', '');
@@ -47,7 +47,10 @@ export default class MiniProgramEnv {
   fetch(method: string, url: string, data?: object, header?: object) {
     return new Promise((resolve, reject) => {
       url = url.replace('{activityId}', this.activityId);
-      url = this.coreBaseUrl + url;
+      if (!url.startsWith(this.coreBaseUrl)) {
+        url = this.coreBaseUrl + url;
+      }
+      console.log("🚀 ~ MiniProgramEnv ~ returnnewPromise ~ url:", url)
 
       if(this.requestToken) {
         header = {
@@ -61,15 +64,18 @@ export default class MiniProgramEnv {
         method,
         data,
         header,
-        success: (res: any) => {
-          resolve(res.data);
-        },
-        fail: async (error: any) => {
-          if(error.code === 10009) {
+        success: async (res: any) => {
+          console.log("success", res)
+          if(res.data?.code === 10009) {
             await this.init();
+            console.log(method, url, data, header);
             this.fetch(method, url, data, header);
             return
           }
+          resolve(res.data);
+        },
+        fail: (error: any) => {
+          console.log("fail", error)
           reject(error);
         }
       });

@@ -38,7 +38,10 @@ export default class MiniProgramEnv {
     fetch(method, url, data, header) {
         return new Promise((resolve, reject) => {
             url = url.replace('{activityId}', this.activityId);
-            url = this.coreBaseUrl + url;
+            if (!url.startsWith(this.coreBaseUrl)) {
+                url = this.coreBaseUrl + url;
+            }
+            console.log("🚀 ~ MiniProgramEnv ~ returnnewPromise ~ url:", url);
             if (this.requestToken) {
                 header = {
                     ...header,
@@ -50,15 +53,19 @@ export default class MiniProgramEnv {
                 method,
                 data,
                 header,
-                success: (res) => {
-                    resolve(res.data);
-                },
-                fail: async (error) => {
-                    if (error.code === 10009) {
+                success: async (res) => {
+                    var _a;
+                    console.log("success", res);
+                    if (((_a = res.data) === null || _a === void 0 ? void 0 : _a.code) === 10009) {
                         await this.init();
+                        console.log(method, url, data, header);
                         this.fetch(method, url, data, header);
                         return;
                     }
+                    resolve(res.data);
+                },
+                fail: (error) => {
+                    console.log("fail", error);
                     reject(error);
                 }
             });
