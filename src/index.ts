@@ -73,6 +73,10 @@ export class Core {
   public queryRecord(limit: number) {
     return this.env.queryRecord(limit);
   }
+  
+  public inviteCode() {
+    return this.env.inviteCode();
+  }
 }
 
 let StaticCore: Core;

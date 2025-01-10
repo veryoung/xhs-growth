@@ -13,6 +13,16 @@ export default class MiniProgramEnv {
   }
 
   go(path: string, params?: NavigateParams) {
+    if(params?.type === 'deeplink') {
+      // @ts-ignore
+      xhs.openXhsDeeplink({
+        link: path || '',
+        success: params?.success,
+        fail: params?.fail,
+        complete: params?.complete
+      });
+      return
+    }
     // 实现小程序的跳转逻辑
     xhs.navigateTo({
       url: path || '',
@@ -116,6 +126,12 @@ export default class MiniProgramEnv {
     const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
     const res = await this.fetch('GET', url);
     console.log("🚀 ~ MiniProgramEnv ~ queryRecord ~ res:", res)
+    return res;
+  }
+
+  async inviteCode() {
+    const url = `${httpConfig.API_LIST.inviteCode}?activityId=${this.activityId}`;
+    const res = await this.fetch('GET', url);
     return res;
   }
 }
