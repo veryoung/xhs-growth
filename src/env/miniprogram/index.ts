@@ -139,9 +139,4 @@ export default class MiniProgramEnv {
     return res;
   }
 
-  async inviteCode() {
-    const url = `${httpConfig.API_LIST.inviteCode}?activityId=${this.activityId}`;
-    const res = await this.fetch('GET', url);
-    return res;
-  }
 }
