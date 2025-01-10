@@ -11,9 +11,10 @@ export interface Config {
 
 export interface NavigateParams {
   event?: any;
-  success?: () => void;
-  fail?: () => void;
-  complete?: () => void;
+  type?: 'url' | 'deeplink'
+  success?: (res?:any) => void;
+  fail?: (err?: any) => void;
+  complete?: (res: any) => void;
 }
 
 export interface EnvConfig {
