@@ -18,6 +18,7 @@ export const httpConfig = {
         completeTask: '/api/growth/haydn/{activityId}/task/advance',
         polling: '/api/growth/haydn/{activityId}/notification/poll',
         qureyRecord: '/api/growth/haydn/{activityId}/fission/record',
+        inviteCode: '/api/growth/activity/invite/code',
     }
 };
 //# sourceMappingURL=http.config.js.map

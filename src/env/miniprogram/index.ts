@@ -13,6 +13,7 @@ export default class MiniProgramEnv {
   }
 
   go(path: string, params?: NavigateParams) {
+<<<<<<< Updated upstream
     if(params?.type === 'deeplink') {
       // @ts-ignore
       xhs.openXhsDeeplink({
@@ -23,6 +24,9 @@ export default class MiniProgramEnv {
       });
       return
     }
+=======
+    console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path)
+>>>>>>> Stashed changes
     // 实现小程序的跳转逻辑
     xhs.navigateTo({
       url: path || '',
@@ -85,13 +89,13 @@ export default class MiniProgramEnv {
 
   async getUserType() {
     // console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ header:", header)
-    const res = await this.fetch('POST',httpConfig.API_LIST.userType);
+    const res = await this.fetch('POST', httpConfig.API_LIST.userType);
     console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ res:", res)
     return res;
   }
 
   async getTaskList() {
-    const res = await this.fetch('GET',httpConfig.API_LIST.taskTable);
+    const res = await this.fetch('GET', httpConfig.API_LIST.taskTable);
     console.log("🚀 ~ MiniProgramEnv ~ getTaskList ~ res:", res)
     return res;
   }
@@ -115,9 +119,8 @@ export default class MiniProgramEnv {
   }
 
   async polling(group?: string) {
-    const res = await this.fetch('GET', httpConfig.API_LIST.polling, {
-      group: group,
-    });
+    const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
+    const res = await this.fetch('GET', url);
     console.log("🚀 ~ MiniProgramEnv ~ polling ~ res:", res)
     return res;
   }

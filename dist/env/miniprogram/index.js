@@ -6,7 +6,16 @@ export default class MiniProgramEnv {
         this.activityId = config.activityId;
     }
     go(path, params) {
-        // 实现小程序的跳转逻辑
+        if ((params === null || params === void 0 ? void 0 : params.type) === 'deeplink') {
+            // @ts-ignore
+            xhs.openXhsDeeplink({
+                link: path || '',
+                success: params === null || params === void 0 ? void 0 : params.success,
+                fail: params === null || params === void 0 ? void 0 : params.fail,
+                complete: params === null || params === void 0 ? void 0 : params.complete
+            });
+            return;
+        }
         xhs.navigateTo({
             url: path || '',
             event: params === null || params === void 0 ? void 0 : params.event,
@@ -88,9 +97,8 @@ export default class MiniProgramEnv {
         return res;
     }
     async polling(group) {
-        const res = await this.fetch('GET', httpConfig.API_LIST.polling, {
-            group: group,
-        });
+        const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
+        const res = await this.fetch('GET', url);
         console.log("🚀 ~ MiniProgramEnv ~ polling ~ res:", res);
         return res;
     }
@@ -98,6 +106,11 @@ export default class MiniProgramEnv {
         const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
         const res = await this.fetch('GET', url);
         console.log("🚀 ~ MiniProgramEnv ~ queryRecord ~ res:", res);
+        return res;
+    }
+    async inviteCode() {
+        const url = `${httpConfig.API_LIST.inviteCode}?activityId=${this.activityId}`;
+        const res = await this.fetch('GET', url);
         return res;
     }
 }

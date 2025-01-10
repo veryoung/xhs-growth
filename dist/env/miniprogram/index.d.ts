@@ -16,5 +16,6 @@ export default class MiniProgramEnv {
     completeTask(instanceId: string, eventType: eventMissionType, params: any): Promise<unknown>;
     polling(group?: string): Promise<unknown>;
     queryRecord(limit: number): Promise<unknown>;
+    inviteCode(): Promise<unknown>;
 }
 //# sourceMappingURL=index.d.ts.map

@@ -48,6 +48,9 @@ export class Core {
     queryRecord(limit) {
         return this.env.queryRecord(limit);
     }
+    inviteCode() {
+        return this.env.inviteCode();
+    }
 }
 let StaticCore;
 const GrowthCore = () => {
