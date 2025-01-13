@@ -163,7 +163,9 @@ ACTIVE 老用户
 
 ##### task.topic
 专注话题相关方法
-- `viewTopic()`: 查看话题
+- `viewTopic(pageId:string)`: 查看话题
+
+
 
 
 
