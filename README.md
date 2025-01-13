@@ -144,37 +144,35 @@ ACTIVE 老用户
 #### TaskBus
 任务管理系统，提供任务相关的功能
 
-- `getTaskList()` 获取任务列表方法
-- `claimTask(taskMetaId: string)` 获取任务列表方法
-    
-     taskMetaId：任务元ID
-- `completeNoteChangeTask(instanceId: string)`完成发布笔记任务
+- `getTaskList()` 获取任务列表
+  
+- `claimTask(taskMetaId: string)` 领取任务
+  - `taskMetaId`: 任务元数据 ID
 
-    instanceId: 任务实例ID
-- `completeNoteBrowserTask(instanceId: string)`完成笔记浏览任务
-    
-    instanceId: 任务实例ID
-- `completeNoteLikeTask(instanceId: string)`完成笔记点赞任务
-    
-    instanceId: 任务实例ID
-- `completeFollowTask(instanceId: string)`完成关注任务
-    
-    instanceId: 任务实例ID
+- `completeNoteChangeTask(instanceId: string)` 完成发布笔记任务
+  - `instanceId`: 任务实例 ID
 
-- `completeSearchNoteTask(instanceId: string)`完成笔记搜索任务
-    
-    instanceId: 任务实例ID
+- `completeNoteBrowserTask(instanceId: string)` 完成笔记浏览任务
+  - `instanceId`: 任务实例 ID
 
-- `completeInviteAssistTask(instanceId: string, shareCode: string)`完成邀请助力任务
-    
-    instanceId: 任务实例ID
-    shareCode: 助力任务的邀请码
+- `completeNoteLikeTask(instanceId: string)` 完成笔记点赞任务
+  - `instanceId`: 任务实例 ID
+
+- `completeFollowTask(instanceId: string)` 完成关注任务
+  - `instanceId`: 任务实例 ID
+
+- `completeSearchNoteTask(instanceId: string)` 完成笔记搜索任务
+  - `instanceId`: 任务实例 ID
+
+- `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
+  - `instanceId`: 任务实例 ID
+  - `shareCode`: 助力任务的邀请码
+
 - `polling(group?: string)` 任务轮询
-    
-    group : 活动下查询的分组，可以对同一活动同一类型的通知进行数据隔离。不传则使用默认COMMON分组
-- `queryRecord(limit: number)`获取助力记录
-    
-    limit：一次查询的数量
+  - `group`: 活动分组标识，用于数据隔离，默认为 COMMON 分组
+
+- `queryRecord(limit: number)` 获取助力记录
+  - `limit`: 单次查询的数量限制
 
 
 #### task.follow
