@@ -1,6 +1,1 @@
-export class BenefitBus {
-    constructor(core) {
-        this.core = core;
-    }
-}
-//# sourceMappingURL=index.js.map
+class s{constructor(s){this.core=s}}export{s as BenefitBus};

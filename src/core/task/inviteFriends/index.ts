@@ -1,10 +1,3 @@
-import {
-    setShareContent,
-  } from '@xhs/ozone-share'
-import {
-    showShareMenu,
-  } from '@xhs/ozone-bridge'
-
 export class InviteFriendsTask {
 
   async shareFriend(title: string, desc: string, imgUrl: string){

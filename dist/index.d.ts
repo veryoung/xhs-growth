@@ -16,7 +16,7 @@ export declare class Core {
     /** 请求核心 */
     fetchCore: any;
     constructor();
-    init(config: Config): void;
+    init(config: Config): Promise<this>;
     go(path: string, params?: NavigateParams): any;
     fetch(method: string, url: string, data?: object, header?: object): any;
     getUserType(): any;

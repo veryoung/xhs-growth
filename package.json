@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "tsc --watch",
-    "build": "tsc",
+    "build": "rimraf dist && tsc && rollup -c",
     "test": "jest",
     "prepublishOnly": ""
   },
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
@@ -43,8 +44,5 @@
     "dist"
   ],
   "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387",
-  "dependencies": {
-    "@xhs/ozone-bridge": "^4.0.4",
-    "@xhs/ozone-share": "^1.4.4"
-  }
+  "dependencies": {}
 }
