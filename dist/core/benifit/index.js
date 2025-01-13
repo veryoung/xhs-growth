@@ -1,5 +1,1 @@
-export class BenefitBus {
-    constructor(core) {
-        this.core = core;
-    }
-}
+class s{constructor(s){this.core=s}}export{s as BenefitBus};
