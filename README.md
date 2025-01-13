@@ -149,25 +149,6 @@ ACTIVE 老用户
 - `claimTask(taskMetaId: string)` 领取任务
   - `taskMetaId`: 任务元数据 ID
 
-- `completeNoteChangeTask(instanceId: string)` 完成发布笔记任务
-  - `instanceId`: 任务实例 ID
-
-- `completeNoteBrowserTask(instanceId: string)` 完成笔记浏览任务
-  - `instanceId`: 任务实例 ID
-
-- `completeNoteLikeTask(instanceId: string)` 完成笔记点赞任务
-  - `instanceId`: 任务实例 ID
-
-- `completeFollowTask(instanceId: string)` 完成关注任务
-  - `instanceId`: 任务实例 ID
-
-- `completeSearchNoteTask(instanceId: string)` 完成笔记搜索任务
-  - `instanceId`: 任务实例 ID
-
-- `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
-  - `instanceId`: 任务实例 ID
-  - `shareCode`: 助力任务的邀请码
-
 - `polling(group?: string)` 任务轮询
   - `group`: 活动分组标识，用于数据隔离，默认为 COMMON 分组
 
@@ -179,15 +160,33 @@ ACTIVE 老用户
 专注关注相关方法
 - `takeFollow()`: 发起关注
 - `cancelFollow()`: 取消关注
+- `completeFollowTask(instanceId: string)` 完成关注任务
+  - `instanceId`: 任务实例 ID
 
 #### task.publishNotes
 专注笔记相关方法
 - `publishNote()`: 发布笔记
+- `completeNoteChangeTask(instanceId: string)` 完成发布笔记任务
+  - `instanceId`: 任务实例 ID
+
+- `completeNoteBrowserTask(instanceId: string)` 完成笔记浏览任务
+  - `instanceId`: 任务实例 ID
+
+- `completeNoteLikeTask(instanceId: string)` 完成笔记点赞任务
+  - `instanceId`: 任务实例 ID
+
+- `completeSearchNoteTask(instanceId: string)` 完成笔记搜索任务
+  - `instanceId`: 任务实例 ID
 
 #### task.topic
 专注话题相关方法
 - `viewTopic()`: 查看话题
 
+#### task.inviteFriends
+专注邀请助力相关方法
+- `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
+  - `instanceId`: 任务实例 ID
+  - `shareCode`: 助力任务的邀请码
 
 ### BenefitBus（待实现）
 

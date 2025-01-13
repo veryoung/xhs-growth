@@ -1,4 +1,6 @@
+import { httpConfig } from "src/config/http.config";
 import { fetch, go } from "../../../index";
+import { eventMissionType } from "src/types";
 export class FollowTask  {
 
   /** 关注 */
@@ -15,6 +17,15 @@ export class FollowTask  {
         console.log('complete', res)
       }
     });
+  }
+
+  // 完成关注任务
+  async completeFollowTask(instanceId: string) {
+    const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
+      instanceId: instanceId,
+      eventType: eventMissionType.FOLLOW_USER,
+    }); 
+    return res;
   }
 
   /** 取消关注 */

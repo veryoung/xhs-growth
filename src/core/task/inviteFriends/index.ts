@@ -1,6 +1,21 @@
+import { httpConfig } from "src/config/http.config";
+import { eventMissionType } from "src/types";
+import { fetch } from "../../../index";
 export class InviteFriendsTask {
 
-  async shareFriend(title: string, desc: string, imgUrl: string){
+  // 完成邀请助力任务
+  async completeInviteAssistTask(instanceId: string, shareCode: string) {
+    const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
+      instanceId,
+      eventType: eventMissionType.INVITE_ASSIST,
+      params: {
+        shareCode,
+      }
+    }); 
+    return res;
+  }
+
+  // async shareFriend(title: string, desc: string, imgUrl: string){
     // const url = window.location.href;
     // const params = new URL(url).searchParams;
     // const activityVersion = params.get('activityVersion');
@@ -21,5 +36,5 @@ export class InviteFriendsTask {
       // })
       // await showShareMenu()
     // })
-  }
+  // }
 }
