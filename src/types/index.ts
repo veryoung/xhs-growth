@@ -43,3 +43,10 @@ export enum eventMissionType {
   // 邀请助力
   INVITE_ASSIST = 'INVITE_ASSIST'
 }
+
+export interface ViewTopicParams {
+  times?: number;
+  source?: string;
+  asc?: number;
+  totalSize?: number;
+}

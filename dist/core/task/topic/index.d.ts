@@ -1,5 +1,4 @@
 export declare class TopicTask {
-    /** 浏览话题 */
-    viewTopic(pageId: string): void;
+    viewTopic(pageId: string, params: any): void;
 }
 //# sourceMappingURL=index.d.ts.map

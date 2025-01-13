@@ -93,43 +93,5 @@ export default class MiniProgramEnv {
         console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ res:", res);
         return res;
     }
-    async getTaskList() {
-        const res = await this.fetch('GET', httpConfig.API_LIST.taskTable);
-        console.log("🚀 ~ MiniProgramEnv ~ getTaskList ~ res:", res);
-        return res;
-    }
-    async claimTask(taskMetaId) {
-        const res = await this.fetch('POST', httpConfig.API_LIST.claimTask, {
-            taskMetaId: taskMetaId
-        });
-        console.log("🚀 ~ MiniProgramEnv ~ claimTask ~ res:", res);
-        return res;
-    }
-    async completeTask(instanceId, eventType, params) {
-        const res = await this.fetch('POST', httpConfig.API_LIST.completeTask, {
-            instanceId: instanceId,
-            eventType: eventType,
-            params: params,
-        });
-        console.log("🚀 ~ MiniProgramEnv ~ completeTask ~ res:", res);
-        return res;
-    }
-    async polling(group) {
-        const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
-        const res = await this.fetch('POST', url);
-        console.log("🚀 ~ MiniProgramEnv ~ polling ~ res:", res);
-        return res;
-    }
-    async queryRecord(limit) {
-        const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
-        const res = await this.fetch('GET', url);
-        console.log("🚀 ~ MiniProgramEnv ~ queryRecord ~ res:", res);
-        return res;
-    }
-    async inviteCode() {
-        const url = `${httpConfig.API_LIST.inviteCode}?activityId=${this.activityId}`;
-        const res = await this.fetch('GET', url);
-        return res;
-    }
 }
 //# sourceMappingURL=index.js.map

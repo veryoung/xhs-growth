@@ -1,5 +1,5 @@
 import { TaskBus } from './core/task';
-import { Config, eventMissionType, NavigateParams } from './types';
+import { Config, NavigateParams } from './types';
 export declare class Core {
     /** 初始化原始配置 */
     private config;
@@ -20,17 +20,12 @@ export declare class Core {
     go(path: string, params?: NavigateParams): any;
     fetch(method: string, url: string, data?: object, header?: object): any;
     getUserType(): any;
-    getTaskList(): any;
-    claimTask(taskMetaId: string): any;
-    completeTask(instanceId: string, eventType: eventMissionType, params: any): any;
-    polling(group: string): any;
-    queryRecord(limit: number): any;
-    inviteCode(): any;
 }
 /** 导出跳转方法 */
 export declare const go: (path: string, params?: NavigateParams) => any;
 /** 导出请求方法 */
 export declare const fetch: (method: string, url: string, data?: object, header?: object) => any;
+export declare const getUserType: () => any;
 declare const _default: Core;
 export default _default;
 //# sourceMappingURL=index.d.ts.map

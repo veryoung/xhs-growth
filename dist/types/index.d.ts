@@ -28,4 +28,10 @@ export declare enum eventMissionType {
     SEARCH_NOTE = "SEARCH_NOTE",
     INVITE_ASSIST = "INVITE_ASSIST"
 }
+export interface ViewTopicParams {
+    times?: number;
+    source?: string;
+    asc?: number;
+    totalSize?: number;
+}
 //# sourceMappingURL=index.d.ts.map

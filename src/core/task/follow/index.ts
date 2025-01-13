@@ -1,5 +1,6 @@
 import { fetch, go } from "../../../index";
 export class FollowTask  {
+
   /** 关注 */
   takeFollow(accountId: string) {
     go(`xhsdiscover://user/${accountId}`, {

@@ -33,24 +33,6 @@ export class Core {
     getUserType() {
         return this.env.getUserType();
     }
-    getTaskList() {
-        return this.env.getTaskList();
-    }
-    claimTask(taskMetaId) {
-        return this.env.claimTask(taskMetaId);
-    }
-    completeTask(instanceId, eventType, params) {
-        return this.env.completeTask(instanceId, eventType, params);
-    }
-    polling(group) {
-        return this.env.polling(group);
-    }
-    queryRecord(limit) {
-        return this.env.queryRecord(limit);
-    }
-    inviteCode() {
-        return this.env.inviteCode();
-    }
 }
 let StaticCore;
 const GrowthCore = () => {
@@ -66,6 +48,9 @@ export const go = (path, params) => {
 /** 导出请求方法 */
 export const fetch = (method, url, data, header) => {
     return GrowthCore().fetch(method, url, data, header);
+};
+export const getUserType = () => {
+    return GrowthCore().getUserType();
 };
 export default GrowthCore();
 //# sourceMappingURL=index.js.map

@@ -2,7 +2,6 @@ import { TaskBus } from './core/task';
 import { Config, eventMissionType, NavigateParams } from './types';
 import { createEnvironment } from './env';
 
-
 export class Core {
   /** 初始化原始配置 */
   private config!: Config;
@@ -53,27 +52,6 @@ export class Core {
   public getUserType() {
     return this.env.getUserType();
   }
-
-  public getTaskList() {
-    return this.env.getTaskList();
-  }
-
-  public claimTask(taskMetaId: string) {
-    return this.env.claimTask(taskMetaId);
-  }
-
-  public completeTask(instanceId: string, eventType: eventMissionType, params: any) {
-    return this.env.completeTask(instanceId, eventType, params);
-  }
-
-  public polling(group: string) {
-    return this.env.polling(group);
-  }
-
-  public queryRecord(limit: number) {
-    return this.env.queryRecord(limit);
-  }
-  
 }
 
 let StaticCore: Core;
@@ -93,6 +71,10 @@ export const go = (path: string, params?: NavigateParams) => {
 /** 导出请求方法 */
 export const fetch = (method: string, url: string, data?: object, header?: object) => {
   return GrowthCore().fetch(method, url, data, header);
+}
+
+export const getUserType = () => {
+  return GrowthCore().getUserType();
 }
 
 export default GrowthCore();

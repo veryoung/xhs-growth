@@ -17,7 +17,6 @@ export declare const httpConfig: {
         completeTask: string;
         polling: string;
         qureyRecord: string;
-        inviteCode: string;
     };
 };
 //# sourceMappingURL=http.config.d.ts.map
