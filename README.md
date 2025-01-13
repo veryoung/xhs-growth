@@ -43,7 +43,7 @@ import growthCore from '@veryoung/xhs-growth';
 
 const TaskComponent: React.FC = () => {
   useEffect(() => {
-    growthCore.init({
+    const core = await growthCore.init({
       platform: 'webview',
     });
   }, []);
@@ -69,7 +69,7 @@ import growthCore from '@veryoung/xhs-growth';
 export default defineComponent({
   name: 'TaskComponent',
   mounted() {
-    growthCore.init({
+    const core = await growthCore.init({
       platform: 'webview',
     });
   },
@@ -89,7 +89,7 @@ import growthCore from '@veryoung/xhs-growth';
 
 App({
   onLaunch() {
-    growthCore.init({
+    const core = await growthCore.init({
       platform: 'miniprogram',
     });
   }
@@ -176,7 +176,7 @@ ACTIVE 老用户
 1. **初始化时机**
 ```typescript
 // 在应用入口处初始化
-growthCore.init({
+const core = await growthCore.init({
   platform: process.env.PLATFORM || 'webview',
 });
 ```
