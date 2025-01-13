@@ -26,7 +26,7 @@ export class Core {
   }
 
 
-  init(config: Config) {
+  async init(config: Config) {
     // 初始化配置
     this.config = config;
     // 初始化活动id
@@ -38,8 +38,8 @@ export class Core {
       activityId: config.activityId,
       baseUrl: config.baseUrl,
     });
-
-    this.env.init();
+    await this.env.init();
+    return this;
   }
 
   public go(path: string, params?: NavigateParams) {
