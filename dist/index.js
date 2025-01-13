@@ -68,8 +68,14 @@ export class Core {
         return this.env.getRequestToken();
 =======
     getUserType() {
+<<<<<<< HEAD
         return this.env.getUserType();
 >>>>>>> b932bf8 (feat: 修复发布问题)
+=======
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.env.getUserType();
+        });
+>>>>>>> 584cd82 (feat: changeToPromiseType)
     }
 }
 let StaticCore;

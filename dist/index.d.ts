@@ -12,15 +12,22 @@ export declare class Core {
     go(path: string, params?: NavigateParams): any;
     fetch(method: string, url: string, data?: object, header?: object): any;
     getUserType(): Promise<any>;
+<<<<<<< HEAD
     getRequestToken(): any;
+=======
+>>>>>>> 584cd82 (feat: changeToPromiseType)
 }
 export declare const go: (path: string, params?: NavigateParams) => any;
 <<<<<<< HEAD
 export declare const getUserType: () => Promise<any>;
 =======
 export declare const fetch: (method: string, url: string, data?: object, header?: object) => any;
+<<<<<<< HEAD
 export declare const getUserType: () => any;
 >>>>>>> b932bf8 (feat: 修复发布问题)
+=======
+export declare const getUserType: () => Promise<any>;
+>>>>>>> 584cd82 (feat: changeToPromiseType)
 declare const _default: Core;
 export default _default;
 //# sourceMappingURL=index.d.ts.map

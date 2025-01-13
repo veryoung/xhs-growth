@@ -52,10 +52,13 @@ export class Core {
 
   public async getUserType() {
     return await this.env.getUserType();
+<<<<<<< HEAD
   }
   
   public getRequestToken() {
     return this.env.getRequestToken();
+=======
+>>>>>>> 584cd82 (feat: changeToPromiseType)
   }
 }
 

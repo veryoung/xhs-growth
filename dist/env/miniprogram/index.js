@@ -167,9 +167,17 @@ export default class MiniProgramEnv {
     }
     getUserType() {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield this.fetch('POST', httpConfig.API_LIST.userType);
-            console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ res:", res);
-            return res;
+            var _a;
+            try {
+                const res = yield this.fetch('POST', httpConfig.API_LIST.userType);
+                if ((_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.userType) {
+                    return res.data.userType;
+                }
+                return '';
+            }
+            catch (error) {
+                return '';
+            }
         });
 >>>>>>> b932bf8 (feat: 修复发布问题)
     }

@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/core/task/publishNotes/index.ts"],"names":[],"mappings":"AAEA,qBAAa,gBAAgB;IACpB,IAAI,EAAE,GAAG,CAAC;gBACL,IAAI,EAAE,GAAG;IAIf,OAAO,CAAC,UAAU,EAAE,MAAM;;;;CAgFjC"}
+=======
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/core/task/publishNotes/index.ts"],"names":[],"mappings":"AAQA,qBAAa,gBAAgB;IAE3B,OAAO,CAAC,MAAM,EAAE,MAAM;CAcvB"}
+>>>>>>> 584cd82 (feat: changeToPromiseType)
