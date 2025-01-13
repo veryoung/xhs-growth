@@ -1,1 +1,9 @@
-class s{constructor(s){this.fetchCore=s.fetchCore}go(s,t){}}export{s as default};
+export default class RNEnv {
+    constructor(config) {
+        this.fetchCore = config.fetchCore;
+    }
+    go(path, params) {
+        // 实现 React Native 的跳转逻辑
+        console.log('React Native go to:', path, params);
+    }
+}

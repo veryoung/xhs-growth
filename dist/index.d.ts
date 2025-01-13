@@ -19,13 +19,13 @@ export declare class Core {
     init(config: Config): Promise<this>;
     go(path: string, params?: NavigateParams): any;
     fetch(method: string, url: string, data?: object, header?: object): any;
-    getUserType(): any;
+    getUserType(): Promise<any>;
 }
 /** 导出跳转方法 */
 export declare const go: (path: string, params?: NavigateParams) => any;
 /** 导出请求方法 */
 export declare const fetch: (method: string, url: string, data?: object, header?: object) => any;
-export declare const getUserType: () => any;
+export declare const getUserType: () => Promise<any>;
 declare const _default: Core;
 export default _default;
 //# sourceMappingURL=index.d.ts.map

@@ -1,1 +1,23 @@
-export{P as PublishNotesTask}from"../../../index-CFi0c7RT.js";import"./capa.js";import"../inviteFriends/index.js";import"../../../config/http.config.js";import"../../../env/index.js";import"../../../env/webview/index.js";import"../../../env/miniprogram/index.js";import"../../../env/rn/index.js";
+import { go } from "../../../index";
+import { genCapaPostDeeplink } from './capa';
+const filterPageIds = (ids) => {
+    const pageIds = ids.split(',').filter((id) => id.trim() !== '');
+    return pageIds.map(pageId => ({ page_id: pageId.trim() }));
+};
+export class PublishNotesTask {
+    //    发布笔记
+    publish(pageId) {
+        const publishNotePage = genCapaPostDeeplink({
+            attach: { topics: filterPageIds(pageId) },
+            config: {
+                is_post_jump: 0,
+            },
+        });
+        go(publishNotePage, {
+            type: 'deeplink',
+            fail: (res) => {
+                console.log('error', res);
+            }
+        });
+    }
+}

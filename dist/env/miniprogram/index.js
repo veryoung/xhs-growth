@@ -1,1 +1,104 @@
-import{httpConfig as i}from"../../config/http.config.js";class t{constructor(i){this.fetchCore=i.fetchCore,this.coreBaseUrl=i.baseUrl||"",this.activityId=i.activityId}go(i,t){if("deeplink"!==(null==t?void 0:t.type))if("url"!==(null==t?void 0:t.type));else{const s=i.replace("https://",""),[o,e]=s.split("?");xhs.openXhsDeeplink({link:`xhsdiscover://webview/${o}?${decodeURIComponent(e)}`,success:null==t?void 0:t.success,fail:null==t?void 0:t.fail,complete:null==t?void 0:t.complete})}else xhs.openXhsDeeplink({link:i||"",success:null==t?void 0:t.success,fail:null==t?void 0:t.fail,complete:null==t?void 0:t.complete})}fetch(i,t,s,o){return new Promise(((e,l)=>{(t=t.replace("{activityId}",this.activityId)).startsWith(this.coreBaseUrl)||(t=this.coreBaseUrl+t),this.requestToken&&(o={...o,authorization:""+this.requestToken}),this.fetchCore.request({url:t,method:i,data:s,header:o,success:async l=>{var n;if(10009===(null===(n=l.data)||void 0===n?void 0:n.code))return await this.init(),void this.fetch(i,t,s,o);e(l.data)},fail:i=>{l(i)}})}))}async init(){const{code:i}=await xhs.login();if(!i)throw Error("\u8bf7\u5b8c\u6210\u5c0f\u7a0b\u5e8f\u767b\u5f55");await this.setAuthorization(i)}async setAuthorization(t){const s=await this.fetch("POST",i.API_LIST.login,{code:t});this.requestToken=s.data.authorization}async getUserType(){return await this.fetch("POST",i.API_LIST.userType)}}export{t as default};
+import { httpConfig } from "../../config/http.config";
+export default class MiniProgramEnv {
+    constructor(config) {
+        this.fetchCore = config.fetchCore;
+        this.coreBaseUrl = config.baseUrl || '';
+        this.activityId = config.activityId;
+    }
+    go(path, params) {
+        console.log("🚀 ~ MiniProgramEnv ~ go ~ params:", params);
+        console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path);
+        if ((params === null || params === void 0 ? void 0 : params.type) === 'deeplink') {
+            xhs.openXhsDeeplink({
+                link: path || '',
+                success: params === null || params === void 0 ? void 0 : params.success,
+                fail: params === null || params === void 0 ? void 0 : params.fail,
+                complete: params === null || params === void 0 ? void 0 : params.complete
+            });
+            return;
+        }
+        if ((params === null || params === void 0 ? void 0 : params.type) === 'url') {
+            // 去掉https://
+            const url = path.replace('https://', '');
+            // 分离url和query
+            const [urlPath, query] = url.split('?');
+            // 添加xhsdiscover://webview/
+            const deeplink = `xhsdiscover://webview/${urlPath}?${decodeURIComponent(query)}`;
+            // 实现小程序的跳转逻辑
+            console.log("🚀 ~ MiniProgramEnv ~ go ~ deeplink:", deeplink);
+            xhs.openXhsDeeplink({
+                link: deeplink,
+                success: params === null || params === void 0 ? void 0 : params.success,
+                fail: params === null || params === void 0 ? void 0 : params.fail,
+                complete: params === null || params === void 0 ? void 0 : params.complete
+            });
+            return;
+        }
+    }
+    fetch(method, url, data, header) {
+        return new Promise((resolve, reject) => {
+            url = url.replace('{activityId}', this.activityId);
+            if (!url.startsWith(this.coreBaseUrl)) {
+                url = this.coreBaseUrl + url;
+            }
+            console.log("🚀 ~ MiniProgramEnv ~ returnnewPromise ~ url:", url);
+            if (this.requestToken) {
+                header = {
+                    ...header,
+                    'authorization': `${this.requestToken}`
+                };
+            }
+            this.fetchCore.request({
+                url,
+                method,
+                data,
+                header,
+                success: async (res) => {
+                    var _a;
+                    console.log("success", res);
+                    if (((_a = res.data) === null || _a === void 0 ? void 0 : _a.code) === 10009) {
+                        await this.init();
+                        console.log(method, url, data, header);
+                        this.fetch(method, url, data, header);
+                        return;
+                    }
+                    resolve(res.data);
+                },
+                fail: (error) => {
+                    console.log("fail", error);
+                    reject(error);
+                }
+            });
+        });
+    }
+    async init() {
+        const { code } = await xhs.login();
+        if (!code) {
+            throw new Error('请完成小程序登录');
+        }
+        await this.setAuthorization(code);
+    }
+    /** 设置授权 */
+    async setAuthorization(code) {
+        // 实现小程序的授权逻辑
+        const res = await this.fetch('POST', httpConfig.API_LIST.login, {
+            code: code,
+        });
+        console.log('MiniProgram authorization:', res);
+        this.requestToken = res.data.authorization;
+    }
+    async getUserType() {
+        var _a;
+        // console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ header:", header)
+        try {
+            const res = await this.fetch('POST', httpConfig.API_LIST.userType);
+            if ((_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.userType) {
+                return res.data.userType;
+            }
+            return '';
+        }
+        catch (error) {
+            return '';
+        }
+    }
+}

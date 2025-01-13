@@ -49,8 +49,8 @@ export class Core {
     return this.env.fetch(method, url, data, header);
   }
 
-  public getUserType() {
-    return this.env.getUserType();
+  public async getUserType() {
+    return await this.env.getUserType();
   }
 }
 

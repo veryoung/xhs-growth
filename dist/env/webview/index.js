@@ -1,1 +1,17 @@
-class t{constructor(t){this.fetchCore=t.fetchCore}go(t,s){window.open(t,"_blank")}fetch(t,s,o,a){"POST"===t&&this.fetchCore.post(s,o,a),"GET"===t&&this.fetchCore.get(s,o,a)}}export{t as default};
+export default class WebviewEnv {
+    constructor(config) {
+        this.fetchCore = config.fetchCore;
+    }
+    go(path, params) {
+        // 实现 webview 的跳转逻辑
+        window.open(path, '_blank');
+    }
+    fetch(method, url, data, header) {
+        if (method === 'POST') {
+            this.fetchCore.post(url, data, header);
+        }
+        if (method === 'GET') {
+            this.fetchCore.get(url, data, header);
+        }
+    }
+}

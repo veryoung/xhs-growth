@@ -1,4 +1,4 @@
-import { NavigateParams, EnvConfig, eventMissionType } from "../../types";
+import { NavigateParams, EnvConfig, eventMissionType, UserTypeResponse } from "../../types";
 import { httpConfig } from "../../config/http.config";
 
 export default class MiniProgramEnv {
@@ -102,8 +102,14 @@ export default class MiniProgramEnv {
 
   async getUserType() {
     // console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ header:", header)
-    const res = await this.fetch('POST', httpConfig.API_LIST.userType);
-    console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ res:", res)
-    return res;
+    try {
+      const res = await this.fetch('POST', httpConfig.API_LIST.userType) as UserTypeResponse;
+      if(res?.data?.userType) {
+        return res.data.userType;
+      }
+      return ''
+    } catch (error) {
+      return '';
+    }
   }
 }

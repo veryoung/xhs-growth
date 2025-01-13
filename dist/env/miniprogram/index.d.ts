@@ -10,6 +10,6 @@ export default class MiniProgramEnv {
     init(): Promise<void>;
     /** 设置授权 */
     setAuthorization(code: string): Promise<void>;
-    getUserType(): Promise<unknown>;
+    getUserType(): Promise<string>;
 }
 //# sourceMappingURL=index.d.ts.map

@@ -50,3 +50,9 @@ export interface ViewTopicParams {
   asc?: number;
   totalSize?: number;
 }
+
+export interface UserTypeResponse {
+  data: {
+    userType: string;
+  }
+}

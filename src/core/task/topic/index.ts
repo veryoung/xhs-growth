@@ -29,6 +29,7 @@ export class TopicTask {
     }).toString();
 
     const statsPath = `https://yingzheng.xiaohongshu.com/overview?${queryParams}`;
+    console.log("🚀 ~ TopicTask ~ viewTopic ~ statsPath:", statsPath)
     go(statsPath, { type: 'url' });
   }
 }

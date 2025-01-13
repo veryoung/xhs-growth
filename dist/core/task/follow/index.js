@@ -1,1 +1,22 @@
-export{F as FollowTask}from"../../../index-CFi0c7RT.js";import"../publishNotes/capa.js";import"../inviteFriends/index.js";import"../../../config/http.config.js";import"../../../env/index.js";import"../../../env/webview/index.js";import"../../../env/miniprogram/index.js";import"../../../env/rn/index.js";
+import { go } from "../../../index";
+export class FollowTask {
+    /** 关注 */
+    takeFollow(accountId) {
+        go(`xhsdiscover://user/${accountId}`, {
+            type: 'deeplink',
+            success: (res) => {
+                console.log('success', res);
+            },
+            fail: (res) => {
+                console.log('fail', res);
+            },
+            complete: (res) => {
+                console.log('complete', res);
+            }
+        });
+    }
+    /** 取消关注 */
+    cancelFollow() {
+        console.log("Cancel follow task");
+    }
+}
