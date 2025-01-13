@@ -205,6 +205,9 @@ export default class MiniProgramEnv {
     getUserType() {
         return __awaiter(this, void 0, void 0, function* () {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 24408f1 (feat: changeToPromiseType)
             var _a;
             try {
                 const res = yield this.fetch('POST', httpConfig.API_LIST.userType);
@@ -216,6 +219,7 @@ export default class MiniProgramEnv {
             catch (error) {
                 return '';
             }
+<<<<<<< HEAD
         });
     }
     getActivityId() {
@@ -227,6 +231,8 @@ export default class MiniProgramEnv {
             const res = yield this.fetch('POST', httpConfig.API_LIST.userType);
             console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ res:", res);
             return res;
+=======
+>>>>>>> 24408f1 (feat: changeToPromiseType)
         });
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)

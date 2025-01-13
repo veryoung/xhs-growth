@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { NavigateParams, EnvConfig, UserTypeResponse } from "../../types";
+=======
+import { NavigateParams, EnvConfig, eventMissionType, UserTypeResponse } from "../../types";
+>>>>>>> 584cd82 (feat: changeToPromiseType)
 import { httpConfig } from "../../config/http.config";
 
 export default class MiniProgramEnv {
@@ -97,6 +101,10 @@ export default class MiniProgramEnv {
   }
 
   async getUserType() {
+<<<<<<< HEAD
+=======
+    // console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ header:", header)
+>>>>>>> 584cd82 (feat: changeToPromiseType)
     try {
       const res = await this.fetch('POST', httpConfig.API_LIST.userType) as UserTypeResponse;
       if(res?.data?.userType) {
@@ -107,6 +115,7 @@ export default class MiniProgramEnv {
       return '';
     }
   }
+<<<<<<< HEAD
 
   getActivityId() {
     return this.activityId;
@@ -115,5 +124,10 @@ export default class MiniProgramEnv {
   getRequestToken() {
     return this.requestToken;
   }
+<<<<<<< HEAD
 
+=======
+=======
+>>>>>>> 584cd82 (feat: changeToPromiseType)
+>>>>>>> 24408f1 (feat: changeToPromiseType)
 }

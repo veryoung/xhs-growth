@@ -72,22 +72,26 @@ const filterPageIds = (ids) => {
 };
 export class PublishNotesTask {
     publish(pageId) {
-        console.log('pageId', pageId);
         const publishNotePage = genCapaPostDeeplink({
             attach: { topics: filterPageIds(pageId) },
             config: {
                 is_post_jump: 0,
             },
         });
-        console.log('publishNotePage', publishNotePage);
         go(publishNotePage, {
             type: 'deeplink',
             fail: (res) => {
                 console.log('error', res);
             }
         });
+<<<<<<< HEAD
         return 1;
 >>>>>>> b932bf8 (feat: 修复发布问题)
+<<<<<<< HEAD
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+=======
+>>>>>>> 584cd82 (feat: changeToPromiseType)
+>>>>>>> 24408f1 (feat: changeToPromiseType)
     }
 }
