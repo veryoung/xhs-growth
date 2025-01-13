@@ -26,176 +26,11 @@ pnpm add @veryoung/xhs-growth
 
 ## 快速开始
 
-### 1. 初始化
-
 ```typescript
-import growthCore from '@veryoung/xhs-growth';
+import GrowthCore from '@veryoung/xhs-growth';
 
 // 初始化配置
-const core = await growthCore.init({
-  //使用增长能力平台
-  platform: 'webview', // 'webview' | 'miniprogram' | 'rn'
-  //小程序标识码
-  appId: ''，
-  //请求实例
-  fetchCore: xhs,
-  //活动ID
-  activityId: '',
-  //测试模式
-  isDebugger: true,
-  //测试模式基地址
-  baseUrl: " https://logan.devops.xiaohongshu.com/proxy/redgamecenter",
-  // 其他配置项...
-});
-```
-
-### 2. 基础功能使用
-
-####  页面跳转
-```typescript
-growthCore.go(path, NavigateParams);
-growthCore.go('/task-list', { id: 123 });
-```
-
-##### NavigateParams 参数说明
-| 参数名 | 类型 | 必填 | 说明 |
-| --- | --- | :---: | --- |
-| event | any | 否 | 事件对象 |
-| type | 'url' \| 'deeplink' | 否 | 跳转类型（deeplink为跳转小红书页面） |
-| success | (res?: any) => void | 否 | 成功回调函数 |
-| fail | (err?: any) => void | 否 | 失败回调函数 |
-| complete | (res: any) => void | 否 | 完成回调函数（无论成功失败） |
-
-
-### 请求
-```typescript
-growthCore.fetch(method, url, data, header)
-growthCore.fetch('get', { id: 123 });
-```
-### 获取用户类型
-```typescript
-growthCore.getUserType()
-```
-| 返回值 | 说明 |
-| --- | --- |
-| NEW | 新用户 |
-| RECALL | 召回用户 |
-| REVIVE | 拉活 |
-| ACTIVE | 老用户 |
-
-### 使用任务功能
-#### 获取任务列表
-```typescript
-growthCore.task.getTaskList();
-// 示例响应
-{
-    "code":0,  
-    "msg":"成功",
-    "success": true,
-    "data": {
-        "tasks": [
-            {    
-                "tasketaId":"", // 任务元ID 领取任务时使用
-                "instanceId":"", // 该字段需要用户领取了任务才会有 如果没有领取任务这个字段为空
-                "taskType":"", // 任务类型 必有
-                "name":"", // 任务名称
-                "taskStatus":"", // 任务状态 必有
-                "progress":"", //进度
-                "expireTime": "", //失效时间
-                "triggerMeta":{
-                     "triggerCondition":[], //话题ID 关注者用户ID 根据任务类型返回不同的ID集合 关注任务返回关注userId 发布笔记任务返回话题ID 浏览任务返回pageId
-                }, // 任务元信息
-                "extra":{
-                    "shareCode":"" // 邀请码
-                }
-            }
-        ]
-    }
-}
-```
-#### 领取任务
-```typescript
-growthCore.task.claimTask(taskMetaId);
-// 请求参数taskMetaId 任务元ID
-// 示例响应
-{
-    "code":0,  
-    "msg":"成功",
-    "success": true,
-    "data": {    
-                "tasketaId":"", // 任务元ID 领取任务时使用
-                "instanceId":"", // 该字段需要用户领取了任务才会有 如果没有领取任务这个字段为空
-                "taskType":"", // 任务类型 必有
-                "name":"", // 任务名称
-                "taskStatus":"", // 任务状态 必有
-                "progress":"", //进度
-                "expireTime": "", //失效时间
-                "triggerMeta":{
-                     "triggerCondition":[], //话题ID 关注者用户ID 根据任务类型返回不同的ID集合 关注任务返回关注userId 发布笔记任务返回话题ID 浏览任务返回pageId
-                }, // 任务元信息
-                "extra":{
-                    "shareCode":""
-                }
-            }
-}
-```
-#### 完成任务
-```typescript
-growthCore.task.completeTask(instanceId: string, eventType: eventMissionType, params: any);
-// 请求参数
-{
-    "instanceId":"" // 任务实例ID
-    "eventType":""
-    "param":{
-        "shareCode":"" // 助力任务时传入 其它任务当前不用传
-    } // map kv格式
-}
-```
-
-#### 事件轮询
-```typescript
-growthCore.task.polling(group?: string);
-// 请求参数
-{
-   "group":"" // 活动下查询的分组，可以对同一活动同一类型的通知进行数据隔离。不传则使用默认COMMON分组
-}
-// 示例响应
-{
-    "code":0,  
-    "msg":"成功",
-    "success": true,
-    "data": {
-        "nextQueryAfter":"", //下一次轮训间隔
-        "notifications":[
-            {
-                "notificationId"::"", // 通知ID
-                "notificationData":{
-            
-                } // 具体的内容 map kv格式
-            }
-        ]
-    }
-}
-```
-#### 获取助力记录
-```typescript
-growthCore.task.queryRecord();
-// 示例响应
-{
-    "code":0,  
-    "msg":"成功",
-    "success": true,
-    "data": [
-        {
-            "avatar":"", // 头像
-            "nickname":"", // 昵称
-        }  
-    ]
-}
-```
-
-```typescript
-// 使用权益功能(待实现)
+const core = await GrowthCore.init(config);
 ```
 
 ## 在不同框架中使用
@@ -270,22 +105,67 @@ App({
 
 ```typescript
 interface Config {
-  platform: 'webview' | 'miniprogram' | 'rn';
-  // 其他配置项...
+  platform: 'webview' | 'miniprogram' | 'rn'; //小程序标识码
+  appId: string， //请求实例
+  fetchCore: any, //活动ID
+  activityId: string, //测试模式
+  isDebugger: Boolean, //测试模式基地址
+  baseUrl: string, 
 }
 ```
 
-#### go(path: string, params?: object)
+#### go(path: string, navigateParams?: NavigateParams)
 统一的页面跳转方法
 
-### TaskBus
+###### navigateParams 参数说明
 
+```typescript
+interface NavigateParams {
+  event?: any;
+  type?: 'url' | 'deeplink'
+  success?: (res?:any) => void;
+  fail?: (err?: any) => void;
+  complete?: (res: any) => void;
+}
+```
+
+#### getUserType()
+获取用户类型
+
+用户类型说明
+
+NEW 新用户 |
+RECALL 召回用户 |
+REVIVE 拉活 |
+ACTIVE 老用户
+
+#### fetch(method: string, url: string, data?: object, header?: object)
+请求方法
+
+#### TaskBus
 任务管理系统，提供任务相关的功能
 
-#### task.follow
-专注任务相关方法
+- `getTaskList()` 获取任务列表方法
+- `claimTask(taskMetaId: string)` 获取任务列表方法
+- `completeTask(instanceId: string, eventType: eventMissionType, params: any)`完成任务
+- `polling(group?: string)` 任务轮询
+- `queryRecord(limit: number)`获取助力记录
+
+
+##### task.follow
+专注关注相关方法
 - `takeFollow()`: 发起关注
 - `cancelFollow()`: 取消关注
+
+##### task.publishNotes
+专注笔记相关方法
+- `publishNote()`: 发布笔记
+
+##### task.topic
+专注话题相关方法
+- `viewTopic()`: 查看话题
+
+
 
 ### BenefitBus（待实现）
 
