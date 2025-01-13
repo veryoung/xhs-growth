@@ -156,6 +156,8 @@ growthCore.task.completeTask(instanceId: string, eventType: eventMissionType, pa
 ```typescript
 growthCore.task.viewTopic(pageId: string);
 growthCore.task.topic.viewTopic('668fef32b432f300013be439');
+```
+
 ##### NavigateParams 参数说明
 | 参数名 | 类型 | 必填 | 说明 |
 | --- | --- | :---: | --- |
