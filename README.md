@@ -33,7 +33,18 @@ import growthCore from '@veryoung/xhs-growth';
 
 // 初始化配置
 growthCore.init({
+  //使用增长能力平台
   platform: 'webview', // 'webview' | 'miniprogram' | 'rn'
+  //小程序标识码
+  appId: ''，
+  //请求实例
+  fetchCore: xhs,
+  //活动ID
+  activityId: '',
+  //测试模式
+  isDebugger: true,
+  //测试模式基地址
+  baseUrl: " https://logan.devops.xiaohongshu.com/proxy/redgamecenter",
   // 其他配置项...
 });
 ```
