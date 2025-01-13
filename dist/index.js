@@ -10,7 +10,7 @@ export class Core {
         // this.benefit = new BenefitBus(this);
         // this.fetch = () => {};
     }
-    init(config) {
+    async init(config) {
         // 初始化配置
         this.config = config;
         // 初始化活动id
@@ -22,7 +22,8 @@ export class Core {
             activityId: config.activityId,
             baseUrl: config.baseUrl,
         });
-        this.env.init();
+        await this.env.init();
+        return this;
     }
     go(path, params) {
         return this.env.go(path, params);
@@ -53,4 +54,3 @@ export const getUserType = () => {
     return GrowthCore().getUserType();
 };
 export default GrowthCore();
-//# sourceMappingURL=index.js.map

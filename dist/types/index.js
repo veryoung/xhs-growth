@@ -13,4 +13,3 @@ export var eventMissionType;
     // 邀请助力
     eventMissionType["INVITE_ASSIST"] = "INVITE_ASSIST";
 })(eventMissionType || (eventMissionType = {}));
-//# sourceMappingURL=index.js.map

@@ -25,4 +25,3 @@ export class PublishNotesTask {
         return 1;
     }
 }
-//# sourceMappingURL=index.js.map

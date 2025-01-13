@@ -21,6 +21,9 @@ importers:
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.0
         version: 16.0.0(rollup@4.29.1)
+      '@rollup/plugin-terser':
+        specifier: ^0.4.4
+        version: 0.4.4(rollup@4.29.1)
       '@rollup/plugin-typescript':
         specifier: ^12.1.2
         version: 12.1.2(rollup@4.29.1)(tslib@2.8.1)(typescript@5.7.2)
@@ -994,6 +997,15 @@ packages:
       rollup:
         optional: true
 
+  '@rollup/plugin-terser@0.4.4':
+    resolution: {integrity: sha512-XHeJC5Bgvs8LfukDwWZp7yeqin6ns8RTl2B9avbejt6tZqsqvVoWI7ZTQrcNsfKEDWBTnTxM8nMDkO2IFFbd0A==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/@rollup/plugin-terser/-/plugin-terser-0.4.4.tgz}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+
   '@rollup/plugin-typescript@12.1.2':
     resolution: {integrity: sha512-cdtSp154H5sv637uMr1a8OTWB0L1SWDSm1rDGiyfcGcvQ6cuTs4MDk2BVEBGysUWago4OJN4EQZqOTl/QY3Jgg==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/@rollup/plugin-typescript/-/plugin-typescript-12.1.2.tgz}
     engines: {node: '>=14.0.0'}
@@ -1483,10 +1495,13 @@ packages:
   color-name@1.1.4:
     resolution: {integrity: sha1-wqCah6y95pVD3m9j+jmVyCbFNqI=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/color-name/download/color-name-1.1.4.tgz}
 
+<<<<<<< HEAD
   commander@12.1.0:
     resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/commander/-/commander-12.1.0.tgz}
     engines: {node: '>=18'}
 
+=======
+>>>>>>> cc403db (feat: 升级build文件)
   commander@2.20.3:
     resolution: {integrity: sha1-/UhehMA+tIgcIHIrpIA16FMa6zM=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/commander/download/commander-2.20.3.tgz}
 
@@ -2668,6 +2683,7 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha1-SSkii7xyTfrEPg77BYyve2z7YkM=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/queue-microtask/download/queue-microtask-1.2.3.tgz}
 
+<<<<<<< HEAD
   queue@6.0.2:
     resolution: {integrity: sha1-uRUlKD4jFcdVPS76GNg+dkMv7WU=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/queue/download/queue-6.0.2.tgz}
 
@@ -2680,6 +2696,10 @@ packages:
 
   react-is@16.13.1:
     resolution: {integrity: sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/react-is/download/react-is-16.13.1.tgz}
+=======
+  randombytes@2.1.0:
+    resolution: {integrity: sha1-32+ENy8CcNxlzfYpE0mrekc9Tyo=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/randombytes/download/randombytes-2.1.0.tgz}
+>>>>>>> cc403db (feat: 升级build文件)
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/react-is/-/react-is-18.3.1.tgz}
@@ -2808,6 +2828,7 @@ packages:
   run-parallel@1.2.0:
     resolution: {integrity: sha1-ZtE2jae9+SHrnZW9GpIp5/IaQ+4=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/run-parallel/download/run-parallel-1.2.0.tgz}
 
+<<<<<<< HEAD
   safe-buffer@5.1.2:
     resolution: {integrity: sha1-mR7GnSluAxN0fVm9/St0XDX4go0=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/safe-buffer/download/safe-buffer-5.1.2.tgz}
 
@@ -2821,6 +2842,10 @@ packages:
   semver@5.7.2:
     resolution: {integrity: sha1-SNVdtzfDKHzUg14X+hP+rOHEHvg=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/semver/download/semver-5.7.2.tgz}
     hasBin: true
+=======
+  safe-buffer@5.2.1:
+    resolution: {integrity: sha1-Hq+fqb2x/dTsdfWPnNtOa3gn7sY=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/safe-buffer/download/safe-buffer-5.2.1.tgz}
+>>>>>>> cc403db (feat: 升级build文件)
 
   semver@6.3.1:
     resolution: {integrity: sha1-VW0u+GiRRuRtzqS/3QlfNDTf/LQ=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/semver/download/semver-6.3.1.tgz}
@@ -2831,6 +2856,7 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+<<<<<<< HEAD
   send@0.19.0:
     resolution: {integrity: sha512-dW41u5VfLXu8SJh5bwRmyYUbAoSB3c9uQh6L8h/KtsFREPWpbX1lrljJo186Jc4nmci/sGUZ9a0a0J2zgfq2hw==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/send/-/send-0.19.0.tgz}
     engines: {node: '>= 0.8.0'}
@@ -2849,6 +2875,10 @@ packages:
   shallow-clone@3.0.1:
     resolution: {integrity: sha1-jymBrZJTH1UDWwH7IwdppA4C76M=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/shallow-clone/download/shallow-clone-3.0.1.tgz}
     engines: {node: '>=8'}
+=======
+  serialize-javascript@6.0.2:
+    resolution: {integrity: sha512-Saa1xPByTTq2gdeFZYLLo+RFE35NHZkAbqZeWNd3BpzppeVisAqpDjcp8dyf6uIvEqJRd46jemmyA4iFIeVk8g==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/serialize-javascript/-/serialize-javascript-6.0.2.tgz}
+>>>>>>> cc403db (feat: 升级build文件)
 
   shebang-command@2.0.0:
     resolution: {integrity: sha1-zNCvT4g1+9wmW4JGGq8MNmY/NOo=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/shebang-command/download/shebang-command-2.0.0.tgz}
@@ -2892,16 +2922,22 @@ packages:
     resolution: {integrity: sha1-ZTm+hwwWWtvVJAIg2+Nh8bxNRjQ=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/slash/download/slash-3.0.0.tgz}
     engines: {node: '>=8'}
 
+  smob@1.5.0:
+    resolution: {integrity: sha512-g6T+p7QO8npa+/hNx9ohv1E5pVCmWrVCUzUXJyLdMmftX6ER0oiWY/w9knEonLpnOp6b6FenKnMfR8gqwWdwig==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/smob/-/smob-1.5.0.tgz}
+
   source-map-support@0.5.13:
     resolution: {integrity: sha1-MbJKnC5zwt6FBmwP631Edn7VKTI=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/source-map-support/download/source-map-support-0.5.13.tgz}
 
   source-map-support@0.5.21:
     resolution: {integrity: sha1-BP58f54e0tZiIzwoyys1ufY/bk8=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/source-map-support/download/source-map-support-0.5.21.tgz}
 
+<<<<<<< HEAD
   source-map@0.5.7:
     resolution: {integrity: sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/source-map/download/source-map-0.5.7.tgz}
     engines: {node: '>=0.10.0'}
 
+=======
+>>>>>>> cc403db (feat: 升级build文件)
   source-map@0.6.1:
     resolution: {integrity: sha1-dHIq8y6WFOnCh6jQu95IteLxomM=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/source-map/download/source-map-0.6.1.tgz}
     engines: {node: '>=0.10.0'}
@@ -2975,10 +3011,13 @@ packages:
     resolution: {integrity: sha1-btpL00SjyUrqN21MwxvHcxEDngk=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/supports-preserve-symlinks-flag/download/supports-preserve-symlinks-flag-1.0.0.tgz}
     engines: {node: '>= 0.4'}
 
+<<<<<<< HEAD
   temp@0.8.4:
     resolution: {integrity: sha1-jJejOkdwBy4KBfkZOWx2ZafdWfI=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/temp/download/temp-0.8.4.tgz}
     engines: {node: '>=6.0.0'}
 
+=======
+>>>>>>> cc403db (feat: 升级build文件)
   terser@5.37.0:
     resolution: {integrity: sha512-B8wRRkmre4ERucLM/uXx4MOV5cbnOlVAqUst+1+iLKPI0dOgFO28f84ptoQt9HEI537PMzfYa/d+GEPKTRXmYA==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/terser/-/terser-5.37.0.tgz}
     engines: {node: '>=10'}
@@ -4495,6 +4534,14 @@ snapshots:
     optionalDependencies:
       rollup: 4.29.1
 
+  '@rollup/plugin-terser@0.4.4(rollup@4.29.1)':
+    dependencies:
+      serialize-javascript: 6.0.2
+      smob: 1.5.0
+      terser: 5.37.0
+    optionalDependencies:
+      rollup: 4.29.1
+
   '@rollup/plugin-typescript@12.1.2(rollup@4.29.1)(tslib@2.8.1)(typescript@5.7.2)':
     dependencies:
       '@rollup/pluginutils': 5.1.4(rollup@4.29.1)
@@ -5092,8 +5139,11 @@ snapshots:
 
   color-name@1.1.4: {}
 
+<<<<<<< HEAD
   commander@12.1.0: {}
 
+=======
+>>>>>>> cc403db (feat: 升级build文件)
   commander@2.20.3: {}
 
   commondir@1.0.1: {}
@@ -6512,6 +6562,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
+<<<<<<< HEAD
   queue@6.0.2:
     dependencies:
       inherits: 2.0.4
@@ -6527,6 +6578,11 @@ snapshots:
       - utf-8-validate
 
   react-is@16.13.1: {}
+=======
+  randombytes@2.1.0:
+    dependencies:
+      safe-buffer: 5.2.1
+>>>>>>> cc403db (feat: 升级build文件)
 
   react-is@18.3.1: {}
 
@@ -6704,6 +6760,7 @@ snapshots:
     dependencies:
       queue-microtask: 1.2.3
 
+<<<<<<< HEAD
   safe-buffer@5.1.2: {}
 
   scheduler@0.24.0-canary-efb381bbf-20230505:
@@ -6716,11 +6773,15 @@ snapshots:
       node-forge: 1.3.1
 
   semver@5.7.2: {}
+=======
+  safe-buffer@5.2.1: {}
+>>>>>>> cc403db (feat: 升级build文件)
 
   semver@6.3.1: {}
 
   semver@7.6.3: {}
 
+<<<<<<< HEAD
   send@0.19.0:
     dependencies:
       debug: 2.6.9
@@ -6755,6 +6816,11 @@ snapshots:
   shallow-clone@3.0.1:
     dependencies:
       kind-of: 6.0.3
+=======
+  serialize-javascript@6.0.2:
+    dependencies:
+      randombytes: 2.1.0
+>>>>>>> cc403db (feat: 升级build文件)
 
   shebang-command@2.0.0:
     dependencies:
@@ -6800,6 +6866,8 @@ snapshots:
 
   slash@3.0.0: {}
 
+  smob@1.5.0: {}
+
   source-map-support@0.5.13:
     dependencies:
       buffer-from: 1.1.2
@@ -6810,8 +6878,11 @@ snapshots:
       buffer-from: 1.1.2
       source-map: 0.6.1
 
+<<<<<<< HEAD
   source-map@0.5.7: {}
 
+=======
+>>>>>>> cc403db (feat: 升级build文件)
   source-map@0.6.1: {}
 
   sprintf-js@1.0.3: {}
@@ -6875,10 +6946,13 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
+<<<<<<< HEAD
   temp@0.8.4:
     dependencies:
       rimraf: 2.6.3
 
+=======
+>>>>>>> cc403db (feat: 升级build文件)
   terser@5.37.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6

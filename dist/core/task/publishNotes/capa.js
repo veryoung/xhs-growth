@@ -36,4 +36,3 @@ export const genCapaPostDeeplink = (searchConfig) => {
         searchConfig,
     });
 };
-//# sourceMappingURL=capa.js.map

@@ -94,4 +94,3 @@ export default class MiniProgramEnv {
         return res;
     }
 }
-//# sourceMappingURL=index.js.map

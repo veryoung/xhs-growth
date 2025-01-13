@@ -29,4 +29,3 @@ export class TopicTask {
         go(statsPath, { type: 'url' });
     }
 }
-//# sourceMappingURL=index.js.map
