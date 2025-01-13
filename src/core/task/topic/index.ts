@@ -18,19 +18,19 @@ export class TopicTask {
         console.log('complete', res)
       }
     });
-    const queryParams = new URLSearchParams({
-      activityId: 'xyxiaomaibu',
-      taskId: '3124',
-      taskType: 'TOPIC_NOTE_BROWSE',
-      ...(params?.times && { times: params.times.toString() }),
-      ...(params?.source && { source: params.source }),
-      ...(params?.asc && { asc: params.asc.toString() }),
-      ...(params?.totalSize && { totalSize: params.totalSize.toString() })
-    }).toString();
+  //   const queryParams = new URLSearchParams({
+  //     activityId: 'xyxiaomaibu',
+  //     taskId: '3124',
+  //     taskType: 'TOPIC_NOTE_BROWSE',
+  //     ...(params?.times && { times: params.times.toString() }),
+  //     ...(params?.source && { source: params.source }),
+  //     ...(params?.asc && { asc: params.asc.toString() }),
+  //     ...(params?.totalSize && { totalSize: params.totalSize.toString() })
+  //   }).toString();
 
-    const statsPath = `https://yingzheng.xiaohongshu.com/overview?${queryParams}`;
-    console.log("🚀 ~ TopicTask ~ viewTopic ~ statsPath:", statsPath)
-    go(statsPath, { type: 'url' });
+  //   const statsPath = `https://yingzheng.xiaohongshu.com/overview?${queryParams}`;
+  //   console.log("🚀 ~ TopicTask ~ viewTopic ~ statsPath:", statsPath)
+  //   go(statsPath, { type: 'url' });
   }
 }
 

@@ -59,12 +59,11 @@ export default class MiniProgramEnv {
                     if (((_a = res.data) === null || _a === void 0 ? void 0 : _a.code) === 10009) {
                         await this.init();
                         console.log(method, url, data, header);
-                        this.fetch(method, url, data, header);
-                        return;
+                        return await this.fetch(method, url, data, header);
                     }
                     resolve(res.data);
                 },
-                fail: (error) => {
+                fail: async (error) => {
                     console.log("fail", error);
                     reject(error);
                 }
