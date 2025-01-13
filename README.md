@@ -106,7 +106,7 @@ App({
 ```typescript
 interface Config {
   platform: 'webview' | 'miniprogram' | 'rn'; //小程序标识码
-  appId: string， //请求实例
+  appId: string, //请求实例
   fetchCore: any, //活动ID
   activityId: string, //测试模式
   isDebugger: Boolean, //测试模式基地址
