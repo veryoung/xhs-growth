@@ -43,7 +43,7 @@ import growthCore from '@veryoung/xhs-growth';
 
 const TaskComponent: React.FC = () => {
   useEffect(() => {
-    const core = await growthCore.init({
+    growthCore.init({
       platform: 'webview',
     });
   }, []);
@@ -69,7 +69,7 @@ import growthCore from '@veryoung/xhs-growth';
 export default defineComponent({
   name: 'TaskComponent',
   mounted() {
-    const core = await growthCore.init({
+    growthCore.init({
       platform: 'webview',
     });
   },
@@ -89,7 +89,7 @@ import growthCore from '@veryoung/xhs-growth';
 
 App({
   onLaunch() {
-    const core = await growthCore.init({
+    growthCore.init({
       platform: 'miniprogram',
     });
   }
@@ -132,8 +132,7 @@ interface NavigateParams {
 #### getUserType()
 获取用户类型
 
-用户类型说明
-
+用户类型说明:
 NEW 新用户 |
 RECALL 召回用户 |
 REVIVE 拉活 |
@@ -147,24 +146,49 @@ ACTIVE 老用户
 
 - `getTaskList()` 获取任务列表方法
 - `claimTask(taskMetaId: string)` 获取任务列表方法
-- `completeTask(instanceId: string, eventType: eventMissionType, params: any)`完成任务
+    
+     taskMetaId：任务元ID
+- `completeNoteChangeTask(instanceId: string)`完成发布笔记任务
+
+    instanceId: 任务实例ID
+- `completeNoteBrowserTask(instanceId: string)`完成笔记浏览任务
+    
+    instanceId: 任务实例ID
+- `completeNoteLikeTask(instanceId: string)`完成笔记点赞任务
+    
+    instanceId: 任务实例ID
+- `completeFollowTask(instanceId: string)`完成关注任务
+    
+    instanceId: 任务实例ID
+
+- `completeSearchNoteTask(instanceId: string)`完成笔记搜索任务
+    
+    instanceId: 任务实例ID
+
+- `completeInviteAssistTask(instanceId: string, shareCode: string)`完成邀请助力任务
+    
+    instanceId: 任务实例ID
+    shareCode: 助力任务的邀请码
 - `polling(group?: string)` 任务轮询
+    
+    group : 活动下查询的分组，可以对同一活动同一类型的通知进行数据隔离。不传则使用默认COMMON分组
 - `queryRecord(limit: number)`获取助力记录
+    
+    limit：一次查询的数量
 
 
-##### task.follow
+#### task.follow
 专注关注相关方法
 - `takeFollow()`: 发起关注
 - `cancelFollow()`: 取消关注
 
-##### task.publishNotes
+#### task.publishNotes
 专注笔记相关方法
 - `publishNote()`: 发布笔记
 
-##### task.topic
+#### task.topic
 专注话题相关方法
 - `viewTopic()`: 查看话题
-
 
 
 ### BenefitBus（待实现）
@@ -176,7 +200,7 @@ ACTIVE 老用户
 1. **初始化时机**
 ```typescript
 // 在应用入口处初始化
-const core = await growthCore.init({
+growthCore.init({
   platform: process.env.PLATFORM || 'webview',
 });
 ```
