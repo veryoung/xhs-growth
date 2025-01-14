@@ -8,9 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 export class PublishNotesTask {
-    constructor(task) {
-        this.task = task;
+    constructor(core) {
+        this.core = core;
     }
+<<<<<<< HEAD
     publish(taskMetaId) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.task.claimTask(taskMetaId);
@@ -25,5 +26,20 @@ export class PublishNotesTask {
                 message: res.msg,
             };
         });
+=======
+    // 发布笔记
+    async publish(taskMetaId) {
+        const res = await this.core.task.claimTask(taskMetaId);
+        if (res.code === 0) {
+            return {
+                code: 0,
+                message: 'success',
+            };
+        }
+        return {
+            code: res.code,
+            message: res.msg,
+        };
+>>>>>>> 7d7f6f8 (发布笔记改动)
     }
 }

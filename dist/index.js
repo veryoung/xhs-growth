@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+=======
+import { TaskBus } from './core/task';
+>>>>>>> 7d7f6f8 (发布笔记改动)
 import { createEnvironment } from './env';
 export class Core {
     constructor() {
         this.isDebugger = false;
         this.activityId = '';
+        this.task = new TaskBus(this);
     }
     init(config) {
         return __awaiter(this, void 0, void 0, function* () {

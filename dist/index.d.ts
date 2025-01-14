@@ -8,6 +8,7 @@ export declare class Core {
     activityId: string;
     task: TaskBus;
     fetchCore: any;
+    constructor();
     init(config: Config): Promise<this>;
     go(path: string, params?: NavigateParams): any;
     fetch(method: string, url: string, data?: object, header?: object): any;
