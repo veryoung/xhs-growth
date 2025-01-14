@@ -1,4 +1,5 @@
 import { go, claimTask } from "../../../index";
+import { eventMissionType } from "../../../types";
 
 export class FollowTask  {
 
@@ -6,7 +7,7 @@ export class FollowTask  {
   takeFollow(accountId: string, params: any) {
     claimTask({
       instanceId: params?.instanceId,
-      eventType: 'FOLLOW_USER',
+      eventType: eventMissionType.FOLLOW_USER,
       param: {},
     })
     go(`xhsdiscover://user/${accountId}`, {
