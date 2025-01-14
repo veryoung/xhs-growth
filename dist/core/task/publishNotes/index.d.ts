@@ -1,5 +1,9 @@
 export declare class PublishNotesTask {
-    publish(pageId: string): void;
-    completeNoteChangeTask(instanceId: string): Promise<any>;
+    task: any;
+    constructor(task: any);
+    publish(taskMetaId: string): Promise<{
+        code: any;
+        message: any;
+    }>;
 }
 //# sourceMappingURL=index.d.ts.map

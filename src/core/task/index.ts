@@ -13,7 +13,7 @@ export class TaskBus {
   
   constructor() {
     this.follow = new FollowTask();
-    this.publishNotes = new PublishNotesTask();
+    this.publishNotes = new PublishNotesTask(this);
     this.inviteFriends = new InviteFriendsTask();
     this.topic = new TopicTask();
   }
