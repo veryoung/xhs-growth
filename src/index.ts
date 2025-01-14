@@ -23,11 +23,7 @@ export class Core {
 =======
 >>>>>>> 51d55f3 (发布笔记改动)
   constructor() {
-<<<<<<< HEAD
     this.task = new TaskBus(this);
-=======
-    this.task = new TaskBus();
->>>>>>> 4f9e07e (feat: lastEdition)
   }
 
 <<<<<<< HEAD
