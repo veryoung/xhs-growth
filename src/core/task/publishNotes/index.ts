@@ -35,30 +35,30 @@ export class PublishNotesTask  {
     return res;
   }
 
-  // 完成笔记浏览任务
-  async completeNoteBrowserTask(instanceId: string) {
-    const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
-      instanceId: instanceId,
-      eventType: eventMissionType.NOTE_BROWSE,
-    }); 
-    return res;
-  }
+  // // 完成笔记浏览任务
+  // async completeNoteBrowserTask(instanceId: string) {
+  //   const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
+  //     instanceId: instanceId,
+  //     eventType: eventMissionType.NOTE_BROWSE,
+  //   }); 
+  //   return res;
+  // }
 
-   // 完成笔记点赞任务
-   async completeNoteLikeTask(instanceId: string) {
-    const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
-      instanceId: instanceId,
-      eventType: eventMissionType.NOTE_LIKE,
-    }); 
-    return res;
-  }
+  //  // 完成笔记点赞任务
+  //  async completeNoteLikeTask(instanceId: string) {
+  //   const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
+  //     instanceId: instanceId,
+  //     eventType: eventMissionType.NOTE_LIKE,
+  //   }); 
+  //   return res;
+  // }
 
-  // 完成笔记搜索任务
-  async completeSearchNoteTask(instanceId: string) {
-    const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
-      instanceId: instanceId,
-      eventType: eventMissionType.SEARCH_NOTE,
-    }); 
-    return res;
-  }
+  // // 完成笔记搜索任务
+  // async completeSearchNoteTask(instanceId: string) {
+  //   const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
+  //     instanceId: instanceId,
+  //     eventType: eventMissionType.SEARCH_NOTE,
+  //   }); 
+  //   return res;
+  // }
 }

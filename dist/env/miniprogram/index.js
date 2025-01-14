@@ -6,8 +6,6 @@ export default class MiniProgramEnv {
         this.activityId = config.activityId;
     }
     go(path, params) {
-        console.log("🚀 ~ MiniProgramEnv ~ go ~ params:", params);
-        console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path);
         if ((params === null || params === void 0 ? void 0 : params.type) === 'deeplink') {
             xhs.openXhsDeeplink({
                 link: path || '',
@@ -25,7 +23,6 @@ export default class MiniProgramEnv {
             // 添加xhsdiscover://webview/
             const deeplink = `xhsdiscover://webview/${urlPath}?${decodeURIComponent(query)}`;
             // 实现小程序的跳转逻辑
-            console.log("🚀 ~ MiniProgramEnv ~ go ~ deeplink:", deeplink);
             xhs.openXhsDeeplink({
                 link: deeplink,
                 success: params === null || params === void 0 ? void 0 : params.success,
@@ -41,7 +38,6 @@ export default class MiniProgramEnv {
             if (!url.startsWith(this.coreBaseUrl)) {
                 url = this.coreBaseUrl + url;
             }
-            console.log("🚀 ~ MiniProgramEnv ~ returnnewPromise ~ url:", url);
             if (this.requestToken) {
                 header = {
                     ...header,
@@ -88,7 +84,6 @@ export default class MiniProgramEnv {
     }
     async getUserType() {
         var _a;
-        // console.log("🚀 ~ MiniProgramEnv ~ getUserType ~ header:", header)
         try {
             const res = await this.fetch('POST', httpConfig.API_LIST.userType);
             if ((_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.userType) {

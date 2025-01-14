@@ -1,9 +1,7 @@
 import { go } from "../../../index";
 export class TopicTask {
     viewTopic(pageId, params) {
-        console.log('pageId', pageId);
         const path = `https://www.xiaohongshu.com/page/topics/${pageId}?fullscreen=true&naviHidden=yes`;
-        console.log("🚀 ~ TopicTask ~ viewTopic ~ path:", path);
         go(path, {
             type: 'url',
             success: (res) => {

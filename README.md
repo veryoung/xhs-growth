@@ -111,7 +111,7 @@ App({
 | fetchCore | any | 请求实例 | 是 |
 | activityId | string | 活动 ID | 是 |
 | isDebugger | boolean | 是否开启测试模式 | 否 |
-| baseUrl | string | API 基础地址 | 是 |
+| baseUrl | string | API 基础地址 | 否 |
 
 #### go(path: string, navigateParams?: NavigateParams)
 统一的页面跳转方法
@@ -135,8 +135,6 @@ App({
 | `RECALL` | string | 召回用户 |
 | `REVIVE` | string | 拉活用户 |
 | `ACTIVE` | string | 老用户 |
-
-#### fetch(method: string, url: string, data?: object, header?: object) 请求方法
 
 #### Task 任务实例
 任务管理系统，提供任务相关的功能
@@ -169,24 +167,6 @@ App({
 - `publishNote()`: 发布笔记
 
 - `completeNoteChangeTask(instanceId: string)` 完成发布笔记任务
-
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | instanceId | string |任务实例 ID | 是 |
-
-- `completeNoteBrowserTask(instanceId: string)` 完成笔记浏览任务
-
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | instanceId | string |任务实例 ID | 是 |
-
-- `completeNoteLikeTask(instanceId: string)` 完成笔记点赞任务
-
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | instanceId | string |任务实例 ID | 是 |
-
-- `completeSearchNoteTask(instanceId: string)` 完成笔记搜索任务
 
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
