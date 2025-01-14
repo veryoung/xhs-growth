@@ -19,11 +19,7 @@ export class Core {
   public fetchCore: any;
 
   constructor() {
-<<<<<<< HEAD
     this.task = new TaskBus(this);
-=======
-    this.task = new TaskBus();
->>>>>>> 4f9e07e (feat: lastEdition)
   }
 
   async init(config: Config) {

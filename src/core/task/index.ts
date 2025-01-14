@@ -16,13 +16,8 @@ export class TaskBus {
   constructor(core: Core) {
     this.core = core;
     this.follow = new FollowTask();
-<<<<<<< HEAD
     this.publishNotes = new PublishNotesTask(this.core);
     this.inviteFriends = new InviteFriendsTask(this.core);
-=======
-    this.publishNotes = new PublishNotesTask();
-    this.inviteFriends = new InviteFriendsTask();
->>>>>>> 4f9e07e (feat: lastEdition)
     this.topic = new TopicTask();
   }
 
