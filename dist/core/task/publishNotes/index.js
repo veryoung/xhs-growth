@@ -11,6 +11,7 @@ export class PublishNotesTask {
     constructor(core) {
         this.core = core;
     }
+<<<<<<< HEAD
     publish(taskMetaId) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.core.task.claimTask(taskMetaId);
@@ -20,6 +21,11 @@ export class PublishNotesTask {
                     message: 'success',
                 };
             }
+=======
+    async publish(taskMetaId) {
+        const res = await this.core.task.claimTask(taskMetaId);
+        if (res.code === 0) {
+>>>>>>> 9d8f8bc (feat: lastEdition)
             return {
                 code: res.code,
                 message: res.msg,

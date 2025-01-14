@@ -33,8 +33,13 @@ export class TaskBus {
     this.core = core;
 >>>>>>> 51d55f3 (发布笔记改动)
     this.follow = new FollowTask();
+<<<<<<< HEAD
     this.publishNotes = new PublishNotesTask(this.core);
     this.inviteFriends = new InviteFriendsTask(this.core);
+=======
+    this.publishNotes = new PublishNotesTask();
+    this.inviteFriends = new InviteFriendsTask();
+>>>>>>> 4f9e07e (feat: lastEdition)
     this.topic = new TopicTask();
   }
 
