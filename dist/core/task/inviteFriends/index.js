@@ -11,6 +11,7 @@ import { httpConfig } from "../../../config/http.config";
 import { eventMissionType } from "../../../types";
 import GrowthCore from "../../../index";
 <<<<<<< HEAD
+<<<<<<< HEAD
 export class InviteFriendsTask {
     completeInviteAssistTask(instanceId, shareCode) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -26,6 +27,9 @@ export class InviteFriendsTask {
 const getQueryString = (query) => {
     return Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
 };
+=======
+import { getQueryString } from "../../../utils/url";
+>>>>>>> 9d8f8bc (feat: lastEdition)
 export class InviteFriendsTask {
     constructor(core) {
         this.core = core;
