@@ -1,24 +1,21 @@
-import { go } from "../../../index";
+import GrowthCore from "../../../index";
 export class FollowTask {
     /** 关注 */
-    takeFollow(accountId, params) {
-        claimTask({
-            instanceId: params === null || params === void 0 ? void 0 : params.instanceId,
-            eventType: 'FOLLOW_USER',
-            param: {},
-        });
-        go(`xhsdiscover://user/${accountId}`, {
-            type: 'deeplink',
-            success: (res) => {
-                console.log('success', res);
-            },
-            fail: (res) => {
-                console.log('fail', res);
-            },
-            complete: (res) => {
-                console.log('complete', res);
-            }
-        });
+    async takeFollow(accountId, taskMetaId) {
+        const res = await GrowthCore.task.claimTask(taskMetaId);
+        console.log("🚀 ~ FollowTask ~ takeFollow ~ res:", res);
+        // go(`xhsdiscover://user/${accountId}`, {
+        //   type: 'deeplink',
+        //   success: (res: any) => {
+        //     console.log('success', res)
+        //   },
+        //   fail: (res: any) => {
+        //     console.log('fail', res)
+        //   },
+        //   complete: (res: any) => {
+        //     console.log('complete', res)
+        //   }
+        // });
     }
     /** 取消关注 */
     cancelFollow() {

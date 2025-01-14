@@ -1,4 +1,3 @@
-import { TaskBus } from './core/task';
 import { createEnvironment } from './env';
 export class Core {
     constructor() {
@@ -6,9 +5,6 @@ export class Core {
         this.isDebugger = false;
         /** 活动id */
         this.activityId = '';
-        this.task = new TaskBus();
-        // this.benefit = new BenefitBus(this);
-        // this.fetch = () => {};
     }
     async init(config) {
         // 初始化配置
@@ -49,20 +45,7 @@ const GrowthCore = () => {
 export const go = (path, params) => {
     return GrowthCore().go(path, params);
 };
-/** 导出请求方法 */
-export const fetch = (method, url, data, header) => {
-    return GrowthCore().fetch(method, url, data, header);
-};
 export const getUserType = () => {
     return GrowthCore().getUserType();
-};
-export const getActivityId = () => {
-    return GrowthCore().activityId;
-};
-export const getRequestToken = () => {
-    return GrowthCore().getRequestToken();
-};
-export const claimTask = (params) => {
-    return GrowthCore().task.claimTask(params.instanceId, params.eventType, params.param);
 };
 export default GrowthCore();

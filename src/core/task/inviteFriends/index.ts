@@ -1,10 +1,11 @@
 import { httpConfig } from "../../../config/http.config";
 import { eventMissionType } from "../../../types";
-import { fetch } from "../../../index";
+import GrowthCore from "../../../index";
+
 export class InviteFriendsTask {
   // 完成邀请助力任务
   async completeInviteAssistTask(instanceId: string, shareCode: string) {
-    const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
+    const res = await GrowthCore.fetch('POST', httpConfig.API_LIST.completeTask, {
       instanceId,
       eventType: eventMissionType.INVITE_ASSIST,
       param: {

@@ -12,11 +12,10 @@ export class PublishNotesTask  {
         code: 0,
         message: 'success',
       }
-    } else {
-      return {
-        code: res.code,
-        message: res.msg,
-      }
+    } 
+    return {
+      code: res.code,
+      message: res.msg,
     }
   }
 }

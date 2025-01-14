@@ -1,5 +1,5 @@
 import { TaskBus } from './core/task';
-import { Config, eventMissionType, NavigateParams } from './types';
+import { Config, NavigateParams } from './types';
 import { createEnvironment } from './env';
 
 export class Core {
@@ -17,13 +17,6 @@ export class Core {
   public task!: TaskBus;
   /** 请求核心 */
   public fetchCore: any;
-
-  constructor() {
-    this.task = new TaskBus();
-    // this.benefit = new BenefitBus(this);
-    // this.fetch = () => {};
-  }
-
 
   async init(config: Config) {
     // 初始化配置
@@ -72,25 +65,8 @@ export const go = (path: string, params?: NavigateParams) => {
   return GrowthCore().go(path, params);
 }
 
-/** 导出请求方法 */
-export const fetch = (method: string, url: string, data?: object, header?: object) => {
-  return GrowthCore().fetch(method, url, data, header);
-}
-
 export const getUserType = () => {
   return GrowthCore().getUserType();
-}
-
-export const getActivityId = () => {
-  return GrowthCore().activityId;
-}
-
-export const getRequestToken = () => {
-  return GrowthCore().getRequestToken();
-}
-
-export const claimTask = (params: any) => {
-  return GrowthCore().task.claimTask(params.instanceId, params.eventType, params.param);
 }
 
 export default GrowthCore();

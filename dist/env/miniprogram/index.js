@@ -6,6 +6,7 @@ export default class MiniProgramEnv {
         this.activityId = config.activityId;
     }
     go(path, params) {
+        console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path);
         if ((params === null || params === void 0 ? void 0 : params.type) === 'deeplink') {
             xhs.openXhsDeeplink({
                 link: path || '',

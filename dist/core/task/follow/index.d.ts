@@ -1,6 +1,6 @@
 export declare class FollowTask {
     /** 关注 */
-    takeFollow(accountId: string, params: any): void;
+    takeFollow(accountId: string, taskMetaId: string): Promise<void>;
     /** 取消关注 */
     cancelFollow(): void;
 }

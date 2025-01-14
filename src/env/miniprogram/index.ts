@@ -13,6 +13,7 @@ export default class MiniProgramEnv {
   }
 
   go(path: string, params?: NavigateParams) {
+    console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path)
     if(params?.type === 'deeplink') {
       xhs.openXhsDeeplink({
         link: path || '',

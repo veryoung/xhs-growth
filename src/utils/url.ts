@@ -17,3 +17,7 @@ export const handleGoWithCountView = (url: string, h5Url: string) => {
     }
   })
 }
+
+export const countPageBaseUrl = (isDebugger: boolean) => {
+  return isDebugger ? 'https://yingzheng.beta.xiaohongshu.com/growth' : 'https://yingzheng.xiaohongshu.com/growth'
+}

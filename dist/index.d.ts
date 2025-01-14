@@ -15,7 +15,6 @@ export declare class Core {
     task: TaskBus;
     /** 请求核心 */
     fetchCore: any;
-    constructor();
     init(config: Config): Promise<this>;
     go(path: string, params?: NavigateParams): any;
     fetch(method: string, url: string, data?: object, header?: object): any;
@@ -24,12 +23,7 @@ export declare class Core {
 }
 /** 导出跳转方法 */
 export declare const go: (path: string, params?: NavigateParams) => any;
-/** 导出请求方法 */
-export declare const fetch: (method: string, url: string, data?: object, header?: object) => any;
 export declare const getUserType: () => Promise<any>;
-export declare const getActivityId: () => string;
-export declare const getRequestToken: () => any;
-export declare const claimTask: (params: any) => Promise<any>;
 declare const _default: Core;
 export default _default;
 //# sourceMappingURL=index.d.ts.map

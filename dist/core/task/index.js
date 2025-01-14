@@ -3,7 +3,6 @@ import { PublishNotesTask } from './publishNotes';
 import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
 import { httpConfig } from '../../config/http.config';
-import { fetch } from '../../index';
 export class TaskBus {
     constructor() {
         this.follow = new FollowTask();
@@ -13,27 +12,38 @@ export class TaskBus {
     }
     /** 获取任务列表 */
     async getTaskList() {
-        const res = await fetch('GET', httpConfig.API_LIST.taskTable);
+        const res = await GrowthCore.fetch('GET', httpConfig.API_LIST.taskTable);
+        console.log("🚀 ~ TaskBus ~ getTaskList ~ res:", res);
         return res;
     }
     async claimTask(taskMetaId) {
-        const res = await fetch('POST', httpConfig.API_LIST.claimTask, {
+        const res = await GrowthCore.fetch('POST', httpConfig.API_LIST.claimTask, {
+            taskMetaId: taskMetaId
+        });
+        console.log("🚀 ~ TaskBus ~ claimTask ~ res:", res);
+        return res;
+    }
+    async completeTask(instanceId, eventType, params) {
+        const res = await GrowthCore.fetch('POST', httpConfig.API_LIST.completeTask, {
             instanceId: instanceId,
             eventType: eventType,
-            param: params,
+            params: params,
         });
+        console.log("🚀 ~ TaskBus ~ completeTask ~ res:", res);
         return res;
     }
     /** 轮询任务 */
     async polling(group) {
         const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
-        const res = await fetch('POST', url);
+        const res = await GrowthCore.fetch('POST', url);
+        console.log("🚀 ~ TaskBus ~ polling ~ res:", res);
         return res;
     }
     /** 查询任务记录 */
     async queryRecord(limit) {
         const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
-        const res = await fetch('GET', url);
+        const res = await GrowthCore.fetch('GET', url);
+        console.log("🚀 ~ TaskBus ~ queryRecord ~ res:", res);
         return res;
     }
 }

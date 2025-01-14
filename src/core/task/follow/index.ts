@@ -1,27 +1,22 @@
-import { go, claimTask } from "../../../index";
-import { eventMissionType } from "../../../types";
+import GrowthCore from "../../../index";
 
-export class FollowTask  {
-
+export class FollowTask {
   /** 关注 */
-  takeFollow(accountId: string, params: any) {
-    claimTask({
-      instanceId: params?.instanceId,
-      eventType: eventMissionType.FOLLOW_USER,
-      param: {},
-    })
-    go(`xhsdiscover://user/${accountId}`, {
-      type: 'deeplink',
-      success: (res: any) => {
-        console.log('success', res)
-      },
-      fail: (res: any) => {
-        console.log('fail', res)
-      },
-      complete: (res: any) => {
-        console.log('complete', res)
-      }
-    });
+  async takeFollow(accountId: string, taskMetaId: string) {
+    const res = await GrowthCore.task.claimTask(taskMetaId)
+    console.log("🚀 ~ FollowTask ~ takeFollow ~ res:", res)
+    // go(`xhsdiscover://user/${accountId}`, {
+    //   type: 'deeplink',
+    //   success: (res: any) => {
+    //     console.log('success', res)
+    //   },
+    //   fail: (res: any) => {
+    //     console.log('fail', res)
+    //   },
+    //   complete: (res: any) => {
+    //     console.log('complete', res)
+    //   }
+    // });
   }
 
   /** 取消关注 */
