@@ -95,4 +95,10 @@ export default class MiniProgramEnv {
             return '';
         }
     }
+    getActivityId() {
+        return this.activityId;
+    }
+    getRequestToken() {
+        return this.requestToken;
+    }
 }

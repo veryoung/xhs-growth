@@ -16,10 +16,11 @@ export class TaskBus {
         const res = await fetch('GET', httpConfig.API_LIST.taskTable);
         return res;
     }
-    /** 领取任务 */
     async claimTask(taskMetaId) {
         const res = await fetch('POST', httpConfig.API_LIST.claimTask, {
-            taskMetaId: taskMetaId
+            instanceId: instanceId,
+            eventType: eventType,
+            param: params,
         });
         return res;
     }

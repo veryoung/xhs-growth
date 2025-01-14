@@ -1,9 +1,12 @@
-import { httpConfig } from "../../../config/http.config";
-import { fetch, go } from "../../../index";
-import { eventMissionType } from "../../../types";
+import { go } from "../../../index";
 export class FollowTask {
     /** 关注 */
-    takeFollow(accountId) {
+    takeFollow(accountId, params) {
+        claimTask({
+            instanceId: params === null || params === void 0 ? void 0 : params.instanceId,
+            eventType: 'FOLLOW_USER',
+            param: {},
+        });
         go(`xhsdiscover://user/${accountId}`, {
             type: 'deeplink',
             success: (res) => {
@@ -16,14 +19,6 @@ export class FollowTask {
                 console.log('complete', res);
             }
         });
-    }
-    // 完成关注任务
-    async completeFollowTask(instanceId) {
-        const res = await fetch('POST', httpConfig.API_LIST.completeTask, {
-            instanceId: instanceId,
-            eventType: eventMissionType.FOLLOW_USER,
-        });
-        return res;
     }
     /** 取消关注 */
     cancelFollow() {

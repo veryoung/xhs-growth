@@ -1,34 +1,27 @@
-import { fetch, go } from "../../../index";
+import { handleGoWithCountView } from "../../../utils/url";
+import { getActivityId, getRequestToken, claimTask } from "../../../index";
 
 export class TopicTask {
 
   viewTopic(pageId: string, params: any) {
-    const path = `https://www.xiaohongshu.com/page/topics/${pageId}?fullscreen=true&naviHidden=yes`
-    go(path, {
-      type: 'url',
-      success: (res: any) => {
-        console.log('success', res)
-      },
-      fail: (res: any) => {
-        console.log('fail', res)
-      },
-      complete: (res: any) => {
-        console.log('complete', res)
-      }
-    });
-  //   const queryParams = new URLSearchParams({
-  //     activityId: 'xyxiaomaibu',
-  //     taskId: '3124',
-  //     taskType: 'TOPIC_NOTE_BROWSE',
-  //     ...(params?.times && { times: params.times.toString() }),
-  //     ...(params?.source && { source: params.source }),
-  //     ...(params?.asc && { asc: params.asc.toString() }),
-  //     ...(params?.totalSize && { totalSize: params.totalSize.toString() })
-  //   }).toString();
-
-  //   const statsPath = `https://yingzheng.xiaohongshu.com/overview?${queryParams}`;
-  //   console.log("🚀 ~ TopicTask ~ viewTopic ~ statsPath:", statsPath)
-  //   go(statsPath, { type: 'url' });
+    claimTask({
+      instanceId: params?.instanceId,
+      eventType: 'NOTE_BROWSE',
+      param: {},
+    })
+    console.log('pageId', pageId)
+    const queryParams = encodeURIComponent(JSON.stringify({
+      activityId: getActivityId(),
+      eventType: 'NOTE_BROWSE',
+      instanceId: params?.instanceId,
+      times: 0,
+      asc: 1,
+      totalSize: params?.totalTime,
+      token: getRequestToken(),
+    }));
+    const path = `www.xiaohongshu.com/page/topics/${pageId}`
+    const statsPath = `https://yingzheng.xiaohongshu.com/growth?${queryParams}`;
+    handleGoWithCountView(statsPath, path)
   }
 }
 

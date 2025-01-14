@@ -1,10 +1,3 @@
-const filterPageIds = (arrayString) => {
-    const str = arrayString.slice(2, -2);
-    return str;
-    // const arr = str.split(',');
-    // const pageIds = ids.split(',').filter((id: string) => id.trim() !== '')
-    // return pageIds.map(pageId => ({ page_id: pageId.trim() }))
-};
 export class PublishNotesTask {
     constructor(task) {
         this.task = task;

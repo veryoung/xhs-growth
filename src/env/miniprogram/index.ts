@@ -1,4 +1,4 @@
-import { NavigateParams, EnvConfig, eventMissionType, UserTypeResponse } from "../../types";
+import { NavigateParams, EnvConfig, UserTypeResponse } from "../../types";
 import { httpConfig } from "../../config/http.config";
 
 export default class MiniProgramEnv {
@@ -105,5 +105,13 @@ export default class MiniProgramEnv {
     } catch (error) {
       return '';
     }
+  }
+
+  getActivityId() {
+    return this.activityId;
+  }
+
+  getRequestToken() {
+    return this.requestToken;
   }
 }

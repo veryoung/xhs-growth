@@ -1,4 +1,3 @@
-import { go } from "../../../index";
 export class TopicTask {
     viewTopic(pageId, params) {
         const path = `https://www.xiaohongshu.com/page/topics/${pageId}?fullscreen=true&naviHidden=yes`;

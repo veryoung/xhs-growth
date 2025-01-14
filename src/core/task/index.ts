@@ -4,6 +4,7 @@ import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
 import { httpConfig } from '../../config/http.config';
 import { fetch } from '../../index';
+import { eventMissionType } from '../../types';
 
 export class TaskBus {
   public follow: FollowTask;
@@ -24,10 +25,11 @@ export class TaskBus {
     return res;
   }
 
-  /** 领取任务 */
-  async claimTask(taskMetaId: string) {
+  async claimTask(instanceId: string, eventType: eventMissionType, params: any) {
     const res = await fetch('POST', httpConfig.API_LIST.claimTask, {
-      taskMetaId: taskMetaId
+      instanceId: instanceId,
+      eventType: eventType,
+      param: params,
     });
     return res;
   }

@@ -34,6 +34,9 @@ export class Core {
     async getUserType() {
         return await this.env.getUserType();
     }
+    getRequestToken() {
+        return this.env.getRequestToken();
+    }
 }
 let StaticCore;
 const GrowthCore = () => {
@@ -52,5 +55,14 @@ export const fetch = (method, url, data, header) => {
 };
 export const getUserType = () => {
     return GrowthCore().getUserType();
+};
+export const getActivityId = () => {
+    return GrowthCore().activityId;
+};
+export const getRequestToken = () => {
+    return GrowthCore().getRequestToken();
+};
+export const claimTask = (params) => {
+    return GrowthCore().task.claimTask(params.instanceId, params.eventType, params.param);
 };
 export default GrowthCore();

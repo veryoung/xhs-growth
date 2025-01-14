@@ -11,5 +11,7 @@ export default class MiniProgramEnv {
     /** 设置授权 */
     setAuthorization(code: string): Promise<void>;
     getUserType(): Promise<string>;
+    getActivityId(): string;
+    getRequestToken(): any;
 }
 //# sourceMappingURL=index.d.ts.map

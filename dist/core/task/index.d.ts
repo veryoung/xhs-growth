@@ -10,7 +10,6 @@ export declare class TaskBus {
     constructor();
     /** 获取任务列表 */
     getTaskList(): Promise<any>;
-    /** 领取任务 */
     claimTask(taskMetaId: string): Promise<any>;
     /** 轮询任务 */
     polling(group?: string): Promise<any>;
