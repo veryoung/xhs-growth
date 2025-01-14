@@ -1,8 +1,15 @@
 import { httpConfig } from "../../../config/http.config";
 import { eventMissionType } from "../../../types";
-import GrowthCore from "../../../index";
+import GrowthCore, { Core, go } from "../../../index";
 
+const getQueryString = (query: any) => {
+  return Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
+}
 export class InviteFriendsTask {
+  core: Core;
+  constructor(core: Core) {
+    this.core = core;
+  }
   // 完成邀请助力任务
   async completeInviteAssistTask(instanceId: string, shareCode: string) {
     const res = await GrowthCore.fetch('POST', httpConfig.API_LIST.completeTask, {
@@ -13,5 +20,21 @@ export class InviteFriendsTask {
       }
     }); 
     return res;
+  }
+
+  async shareFriends (taskMetaId: string, extraQuery?: any){
+    const res = await GrowthCore.task.claimTask(taskMetaId);
+    if(res.code === 0) {
+      const { data: { extra: { shareCode }, instanceId } } = res;
+        let path = `https://yingzheng.xiaohongshu.com/miniprogram?shareCode=${shareCode}&instanceid=${instanceId}&activityId=${this.core.activityId}&activityType=${this.core.activityId}`;
+      if(extraQuery) {
+        path += `&${getQueryString(extraQuery)}`;
+      }
+      return path;
+    }
+    return {
+      code: res.code,
+      message: res.msg,
+    }
   }
 }

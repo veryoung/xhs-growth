@@ -1,1 +1,1 @@
-{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/core/task/inviteFriends/index.ts"],"names":[],"mappings":"AAQA,qBAAa,iBAAiB;IAEtB,wBAAwB,CAAC,UAAU,EAAE,MAAM,EAAE,SAAS,EAAE,MAAM;CAUrE"}
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/core/task/inviteFriends/index.ts"],"names":[],"mappings":"AAEA,OAAmB,EAAE,IAAI,EAAM,MAAM,gBAAgB,CAAC;AAKtD,qBAAa,iBAAiB;IAC5B,IAAI,EAAE,IAAI,CAAC;gBACC,IAAI,EAAE,IAAI;IAIhB,wBAAwB,CAAC,UAAU,EAAE,MAAM,EAAE,SAAS,EAAE,MAAM;IAW9D,YAAY,CAAE,UAAU,EAAE,MAAM,EAAE,UAAU,CAAC,EAAE,GAAG;;;;CAezD"}

@@ -18,6 +18,10 @@ export class Core {
   /** 请求核心 */
   public fetchCore: any;
 
+  constructor() {
+    this.task = new TaskBus(this);
+  }
+
   async init(config: Config) {
     // 初始化配置
     this.config = config;

@@ -3,11 +3,13 @@ import { PublishNotesTask } from './publishNotes';
 import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
 import { httpConfig } from '../../config/http.config';
+import GrowthCore from '../../index';
 export class TaskBus {
-    constructor() {
+    constructor(core) {
+        this.core = core;
         this.follow = new FollowTask();
-        this.publishNotes = new PublishNotesTask(this);
-        this.inviteFriends = new InviteFriendsTask();
+        this.publishNotes = new PublishNotesTask(this.core);
+        this.inviteFriends = new InviteFriendsTask(this.core);
         this.topic = new TopicTask();
     }
     /** 获取任务列表 */

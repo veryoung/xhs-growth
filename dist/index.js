@@ -1,3 +1,4 @@
+import { TaskBus } from './core/task';
 import { createEnvironment } from './env';
 export class Core {
     constructor() {
@@ -5,6 +6,7 @@ export class Core {
         this.isDebugger = false;
         /** 活动id */
         this.activityId = '';
+        this.task = new TaskBus(this);
     }
     async init(config) {
         // 初始化配置

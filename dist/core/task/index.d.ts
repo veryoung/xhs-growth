@@ -3,12 +3,14 @@ import { PublishNotesTask } from './publishNotes';
 import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
 import { eventMissionType } from '../../types';
+import { Core } from '../../index';
 export declare class TaskBus {
+    core: Core;
     follow: FollowTask;
     publishNotes: PublishNotesTask;
     inviteFriends: InviteFriendsTask;
     topic: TopicTask;
-    constructor();
+    constructor(core: Core);
     /** 获取任务列表 */
     getTaskList(): Promise<any>;
     claimTask(taskMetaId: string): Promise<any>;
