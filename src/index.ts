@@ -18,10 +18,13 @@ export class Core {
   /** 请求核心 */
   public fetchCore: any;
 
+<<<<<<< HEAD
   constructor() {
     this.task = new TaskBus(this);
   }
 
+=======
+>>>>>>> 949e608 (feat: 修改任务实现)
   async init(config: Config) {
     // 初始化配置
     this.config = config;

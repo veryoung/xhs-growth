@@ -1,7 +1,11 @@
 import { httpConfig } from "../../../config/http.config";
 import { eventMissionType } from "../../../types";
+<<<<<<< HEAD
 import GrowthCore, { Core, go } from "../../../index";
 import { getQueryString } from "../../../utils/url";
+=======
+import GrowthCore from "../../../index";
+>>>>>>> 949e608 (feat: 修改任务实现)
 
 export class InviteFriendsTask {
   core: Core;
