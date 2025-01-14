@@ -32,9 +32,13 @@ export class InviteFriendsTask {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   // 分享邀请助力任务
 =======
 >>>>>>> 51d55f3 (发布笔记改动)
+=======
+  // 分享邀请助力任务
+>>>>>>> 4b345bd (发布笔记改动)
   async shareFriends (taskMetaId: string, extraQuery?: any){
     const res = await GrowthCore.task.claimTask(taskMetaId);
     if(res.code === 0) {

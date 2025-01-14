@@ -14,7 +14,16 @@ export class PublishNotesTask {
     publish(taskMetaId) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.core.task.claimTask(taskMetaId);
-            return res;
+            if (res.code === 0) {
+                return {
+                    code: 0,
+                    message: 'success',
+                };
+            }
+            return {
+                code: res.code,
+                message: res.msg,
+            };
         });
     }
 }
