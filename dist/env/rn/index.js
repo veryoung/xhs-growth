@@ -3,6 +3,13 @@ export default class RNEnv {
         this.fetchCore = config.fetchCore;
     }
     go(path, params) {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        // 实现 React Native 的跳转逻辑
+=======
+>>>>>>> b932bf8 (feat: 修复发布问题)
+>>>>>>> e45e8c3 (feat: 修复发布问题)
         console.log('React Native go to:', path, params);
     }
 }

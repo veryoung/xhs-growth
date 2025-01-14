@@ -4,6 +4,13 @@ export const httpConfig = {
         production: 'https://edith.xiaohongshu.com',
     },
     BASE_CONFIG: {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        // default http config
+=======
+>>>>>>> b932bf8 (feat: 修复发布问题)
+>>>>>>> e45e8c3 (feat: 修复发布问题)
         defaults: {
             transform: true,
             timeout: 100000,
