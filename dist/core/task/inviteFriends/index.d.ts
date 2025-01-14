@@ -1,4 +1,4 @@
 export declare class InviteFriendsTask {
-    shareFriend(title: string, desc: string, imgUrl: string): Promise<void>;
+    completeInviteAssistTask(instanceId: string, shareCode: string): Promise<any>;
 }
 //# sourceMappingURL=index.d.ts.map

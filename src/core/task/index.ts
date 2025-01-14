@@ -4,7 +4,6 @@ import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
 import { httpConfig } from '../../config/http.config';
 import { fetch } from '../../index';
-import { eventMissionType } from 'src/types';
 
 export class TaskBus {
   public follow: FollowTask;

@@ -30,7 +30,7 @@ pnpm add @veryoung/xhs-growth
 import GrowthCore from '@veryoung/xhs-growth';
 
 // 初始化配置
-const core = await GrowthCore.init(config);
+GrowthCore.init(config);
 ```
 
 ## 在不同框架中使用
@@ -100,93 +100,110 @@ App({
 
 ### Core
 
-#### init(config: Config)
-初始化 SDK
+#### init(config) 初始化 SDK
 
-```typescript
-interface Config {
-  platform: 'webview' | 'miniprogram' | 'rn'; //小程序标识码
-  appId: string, //请求实例
-  fetchCore: any, //活动ID
-  activityId: string, //测试模式
-  isDebugger: Boolean, //测试模式基地址
-  baseUrl: string, 
-}
-```
+###### config 参数说明
+    
+| 参数名 | 类型 | 说明 | 必填 |
+|--------|------|------|------|
+| platform | `'webview'` \| `'miniprogram'` \| `'rn'` | 平台标识 | 是 |
+| appId | string | 应用标识 | 是 |
+| fetchCore | any | 请求实例 | 是 |
+| activityId | string | 活动 ID | 是 |
+| isDebugger | boolean | 是否开启测试模式 | 否 |
+| baseUrl | string | API 基础地址 | 是 |
 
 #### go(path: string, navigateParams?: NavigateParams)
 统一的页面跳转方法
 
 ###### navigateParams 参数说明
 
-```typescript
-interface NavigateParams {
-  event?: any;
-  type?: 'url' | 'deeplink'
-  success?: (res?:any) => void;
-  fail?: (err?: any) => void;
-  complete?: (res: any) => void;
-}
-```
+| 参数名 | 类型 | 说明 | 必填 |
+|--------|------|------|------|
+| event | any | 事件对象 | 否 |
+| type | `'url'` \| `'deeplink'` | 跳转类型 | 否 |
+| success | `(res?: any) => void` | 成功回调函数 | 否 |
+| fail | `(err?: any) => void` | 失败回调函数 | 否 |
+| complete | `(res: any) => void` | 完成回调函数（无论成功失败） | 否 |
 
-#### getUserType()
-获取用户类型
+#### getUserType() 获取用户类型
+用户类型说明：
+| 类型 | 说明 |
+|------|------|
+| NEW | 新用户 |
+| RECALL | 召回用户 |
+| REVIVE | 拉活用户 |
+| ACTIVE | 老用户 |
 
-用户类型说明:
-NEW 新用户 |
-RECALL 召回用户 |
-REVIVE 拉活 |
-ACTIVE 老用户
+#### fetch(method: string, url: string, data?: object, header?: object) 请求方法
 
-#### fetch(method: string, url: string, data?: object, header?: object)
-请求方法
-
-#### TaskBus
+#### Task 任务实例
 任务管理系统，提供任务相关的功能
 
-- `getTaskList()` 获取任务列表
-  
-- `claimTask(taskMetaId: string)` 领取任务
-  - `taskMetaId`: 任务元数据 ID
-
 - `polling(group?: string)` 任务轮询
-  - `group`: 活动分组标识，用于数据隔离，默认为 COMMON 分组
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | group | string |活动下查询的分组，不传则使用默认 COMMON 分组 | 是 |
+
 
 - `queryRecord(limit: number)` 获取助力记录
-  - `limit`: 单次查询的数量限制
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | limit | string |单次查询的数量限制 | 是 |
 
 
-#### task.follow
-专注关注相关方法
+##### task.follow
+关注任务相关方法
 - `takeFollow()`: 发起关注
-- `cancelFollow()`: 取消关注
 - `completeFollowTask(instanceId: string)` 完成关注任务
-  - `instanceId`: 任务实例 ID
 
-#### task.publishNotes
-专注笔记相关方法
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | instanceId | string |任务实例 ID | 是 |
+
+##### task.publishNotes
+笔记任务相关方法
 - `publishNote()`: 发布笔记
+
 - `completeNoteChangeTask(instanceId: string)` 完成发布笔记任务
-  - `instanceId`: 任务实例 ID
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | instanceId | string |任务实例 ID | 是 |
 
 - `completeNoteBrowserTask(instanceId: string)` 完成笔记浏览任务
-  - `instanceId`: 任务实例 ID
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | instanceId | string |任务实例 ID | 是 |
 
 - `completeNoteLikeTask(instanceId: string)` 完成笔记点赞任务
-  - `instanceId`: 任务实例 ID
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | instanceId | string |任务实例 ID | 是 |
 
 - `completeSearchNoteTask(instanceId: string)` 完成笔记搜索任务
-  - `instanceId`: 任务实例 ID
 
-#### task.topic
-专注话题相关方法
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | instanceId | string |任务实例 ID | 是 |
+
+##### task.topic
+话题任务相关方法
 - `viewTopic()`: 查看话题
 
 #### task.inviteFriends
-专注邀请助力相关方法
+好友助力任务相关方法
+
 - `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
-  - `instanceId`: 任务实例 ID
-  - `shareCode`: 助力任务的邀请码
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | instanceId | string |任务实例 ID | 是 |
+    | shareCode | string |任务实例 ID | 是 |
 
 ### BenefitBus（待实现）
 
@@ -199,6 +216,8 @@ ACTIVE 老用户
 // 在应用入口处初始化
 growthCore.init({
   platform: process.env.PLATFORM || 'webview',
+}).then(core => {
+    // 确保拿到core初始化的实例
 });
 ```
 

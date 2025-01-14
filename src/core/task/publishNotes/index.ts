@@ -1,7 +1,7 @@
-import { httpConfig } from "src/config/http.config";
+import { httpConfig } from "../../../config/http.config";
 import { fetch, go } from "../../../index";
 import { genCapaPostDeeplink } from './capa'
-import { eventMissionType } from "src/types";
+import { eventMissionType } from "../../../types";
 
 const filterPageIds = (ids: string) => {
     const pageIds = ids.split(',').filter((id: string) => id.trim() !== '')

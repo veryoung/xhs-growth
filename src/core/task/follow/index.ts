@@ -1,6 +1,6 @@
-import { httpConfig } from "src/config/http.config";
+import { httpConfig } from "../../../config/http.config";
 import { fetch, go } from "../../../index";
-import { eventMissionType } from "src/types";
+import { eventMissionType } from "../../../types";
 export class FollowTask  {
 
   /** 关注 */
