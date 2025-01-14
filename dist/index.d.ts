@@ -26,14 +26,11 @@ export declare class Core {
     go(path: string, params?: NavigateParams): any;
     fetch(method: string, url: string, data?: object, header?: object): any;
     getUserType(): Promise<any>;
-<<<<<<< HEAD
     getRequestToken(): any;
-=======
->>>>>>> 584cd82 (feat: changeToPromiseType)
 }
 export declare const go: (path: string, params?: NavigateParams) => any;
-<<<<<<< HEAD
 export declare const getUserType: () => Promise<any>;
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 export declare const getUserType: () => Promise<any>;
@@ -49,6 +46,8 @@ export declare const getUserType: () => any;
 export declare const getUserType: () => Promise<any>;
 >>>>>>> 584cd82 (feat: changeToPromiseType)
 >>>>>>> 24408f1 (feat: changeToPromiseType)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
 declare const _default: Core;
 export default _default;
 //# sourceMappingURL=index.d.ts.map

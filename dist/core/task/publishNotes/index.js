@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9354520 (feat: 新增能力)
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+<<<<<<< HEAD
 export class PublishNotesTask {
     constructor(core) {
         this.core = core;
@@ -36,10 +40,13 @@ export class PublishNotesTask {
         const res = await this.core.task.claimTask(taskMetaId);
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 9354520 (feat: 新增能力)
 export class PublishNotesTask {
     constructor(task) {
         this.task = task;
     }
+<<<<<<< HEAD
     // 发布笔记
     async publish(taskMetaId) {
         const res = await this.task.claimTask(taskMetaId);
@@ -58,26 +65,23 @@ export class PublishNotesTask {
 >>>>>>> 7d7f6f8 (发布笔记改动)
 =======
         else {
+=======
+    publish(taskMetaId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield this.task.claimTask(taskMetaId);
+            if (res.code === 0) {
+                return {
+                    code: 0,
+                    message: 'success',
+                };
+            }
+>>>>>>> 9354520 (feat: 新增能力)
             return {
                 code: res.code,
                 message: res.msg,
             };
-        }
-=======
-import { go } from "../../../index";
-import { genCapaPostDeeplink } from './capa';
-const filterPageIds = (ids) => {
-    const pageIds = ids.split(',').filter((id) => id.trim() !== '');
-    return pageIds.map(pageId => ({ page_id: pageId.trim() }));
-};
-export class PublishNotesTask {
-    publish(pageId) {
-        const publishNotePage = genCapaPostDeeplink({
-            attach: { topics: filterPageIds(pageId) },
-            config: {
-                is_post_jump: 0,
-            },
         });
+<<<<<<< HEAD
         go(publishNotePage, {
             type: 'deeplink',
             fail: (res) => {
@@ -93,5 +97,7 @@ export class PublishNotesTask {
 =======
 >>>>>>> 584cd82 (feat: changeToPromiseType)
 >>>>>>> 24408f1 (feat: changeToPromiseType)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
     }
 }

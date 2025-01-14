@@ -1,8 +1,11 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -13,9 +16,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
 import { httpConfig } from "../../config/http.config";
 export default class MiniProgramEnv {
     constructor(config) {
@@ -25,12 +31,15 @@ export default class MiniProgramEnv {
     }
     go(path, params) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
         console.log("🚀 ~ MiniProgramEnv ~ go ~ params:", params);
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
         console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path);
         if ((params === null || params === void 0 ? void 0 : params.type) === 'deeplink') {
             xhs.openXhsDeeplink({
@@ -42,6 +51,7 @@ export default class MiniProgramEnv {
             return;
         }
         if ((params === null || params === void 0 ? void 0 : params.type) === 'url') {
+<<<<<<< HEAD
 <<<<<<< HEAD
             const url = path.replace('https://', '');
             const [urlPath, query] = url.split('?');
@@ -62,6 +72,11 @@ export default class MiniProgramEnv {
             console.log("🚀 ~ MiniProgramEnv ~ go ~ deeplink:", deeplink);
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+            const url = path.replace('https://', '');
+            const [urlPath, query] = url.split('?');
+            const deeplink = `xhsdiscover://webview/${urlPath}?${decodeURIComponent(query)}`;
+>>>>>>> 9354520 (feat: 新增能力)
             xhs.openXhsDeeplink({
                 link: deeplink,
                 success: params === null || params === void 0 ? void 0 : params.success,
@@ -78,6 +93,7 @@ export default class MiniProgramEnv {
                 url = this.coreBaseUrl + url;
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (this.requestToken) {
                 header = Object.assign(Object.assign({}, header), { 'authorization': `${this.requestToken}` });
 =======
@@ -93,12 +109,17 @@ export default class MiniProgramEnv {
                 header = Object.assign(Object.assign({}, header), { 'authorization': `${this.requestToken}` });
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+            if (this.requestToken) {
+                header = Object.assign(Object.assign({}, header), { 'authorization': `${this.requestToken}` });
+>>>>>>> 9354520 (feat: 新增能力)
             }
             this.fetchCore.request({
                 url,
                 method,
                 data,
                 header,
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
@@ -115,12 +136,15 @@ export default class MiniProgramEnv {
                 fail: async (error) => {
 =======
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
                 success: (res) => __awaiter(this, void 0, void 0, function* () {
                     var _a;
                     console.log("success", res);
                     if (((_a = res.data) === null || _a === void 0 ? void 0 : _a.code) === 10009) {
                         yield this.init();
                         console.log(method, url, data, header);
+<<<<<<< HEAD
 <<<<<<< HEAD
                         return yield this.fetch(method, url, data, header);
                     }
@@ -136,17 +160,20 @@ export default class MiniProgramEnv {
 =======
                         this.fetch(method, url, data, header);
                         return;
+=======
+                        return yield this.fetch(method, url, data, header);
+>>>>>>> 9354520 (feat: 新增能力)
                     }
                     resolve(res.data);
                 }),
-                fail: (error) => {
->>>>>>> b932bf8 (feat: 修复发布问题)
+                fail: (error) => __awaiter(this, void 0, void 0, function* () {
                     console.log("fail", error);
                     reject(error);
-                }
+                })
             });
         });
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
     async init() {
         const { code } = await xhs.login();
@@ -184,6 +211,8 @@ export default class MiniProgramEnv {
         return this.requestToken;
 =======
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
     init() {
         return __awaiter(this, void 0, void 0, function* () {
             const { code } = yield xhs.login();
@@ -234,7 +263,16 @@ export default class MiniProgramEnv {
 =======
 >>>>>>> 24408f1 (feat: changeToPromiseType)
         });
+<<<<<<< HEAD
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+    }
+    getActivityId() {
+        return this.activityId;
+    }
+    getRequestToken() {
+        return this.requestToken;
+>>>>>>> 9354520 (feat: 新增能力)
     }
 }

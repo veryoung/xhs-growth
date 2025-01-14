@@ -5,12 +5,15 @@ export const httpConfig = {
     },
     BASE_CONFIG: {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
         // default http config
 =======
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
         defaults: {
             transform: true,
             timeout: 100000,

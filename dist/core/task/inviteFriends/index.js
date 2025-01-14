@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 import { httpConfig } from "../../../config/http.config";
@@ -16,6 +17,8 @@ export class InviteFriendsTask {
         return res;
 =======
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -25,6 +28,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+<<<<<<< HEAD
 <<<<<<< HEAD
 import { httpConfig } from "../../../config/http.config";
 import { eventMissionType } from "../../../types";
@@ -79,11 +83,27 @@ export class InviteFriendsTask {
             message: res.msg,
         };
 =======
+=======
+import { httpConfig } from "../../../config/http.config";
+import { eventMissionType } from "../../../types";
+import GrowthCore from "../../../index";
+>>>>>>> 9354520 (feat: 新增能力)
 export class InviteFriendsTask {
-    shareFriend(title, desc, imgUrl) {
+    completeInviteAssistTask(instanceId, shareCode) {
         return __awaiter(this, void 0, void 0, function* () {
+            const res = yield GrowthCore.fetch('POST', httpConfig.API_LIST.completeTask, {
+                instanceId,
+                eventType: eventMissionType.INVITE_ASSIST,
+                param: {
+                    shareCode,
+                }
+            });
+            return res;
         });
+<<<<<<< HEAD
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
     }
 }

@@ -1,6 +1,7 @@
 export declare class FollowTask {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     takeFollow(accountId: string, taskMetaId: string): Promise<void>;
 =======
     /** 关注 */
@@ -15,6 +16,9 @@ export declare class FollowTask {
     takeFollow(accountId: string): void;
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+    takeFollow(accountId: string, taskMetaId: string): Promise<void>;
+>>>>>>> 9354520 (feat: 新增能力)
     cancelFollow(): void;
 }
 //# sourceMappingURL=index.d.ts.map

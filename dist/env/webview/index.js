@@ -4,12 +4,15 @@ export default class WebviewEnv {
     }
     go(path, params) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
         // 实现 webview 的跳转逻辑
 =======
 >>>>>>> b932bf8 (feat: 修复发布问题)
 >>>>>>> e45e8c3 (feat: 修复发布问题)
+=======
+>>>>>>> 9354520 (feat: 新增能力)
         window.open(path, '_blank');
     }
     fetch(method, url, data, header) {
