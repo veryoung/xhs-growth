@@ -1,9 +1,7 @@
 import { httpConfig } from "../../../config/http.config";
 import { eventMissionType } from "../../../types";
 import GrowthCore from "../../../index";
-const getQueryString = (query) => {
-    return Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
-};
+import { getQueryString } from "../../../utils/url";
 export class InviteFriendsTask {
     constructor(core) {
         this.core = core;

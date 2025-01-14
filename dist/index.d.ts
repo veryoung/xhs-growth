@@ -4,7 +4,7 @@ export declare class Core {
     /** 初始化原始配置 */
     private config;
     /** 环境 */
-    private env;
+    env: any;
     /** 是否是调试模式 */
     isDebugger: boolean;
     /** 请求根域名 */

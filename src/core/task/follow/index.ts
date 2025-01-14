@@ -4,7 +4,10 @@ export class FollowTask {
   /** 关注 */
   async takeFollow(accountId: string, taskMetaId: string) {
     const res = await GrowthCore.task.claimTask(taskMetaId)
-    console.log("🚀 ~ FollowTask ~ takeFollow ~ res:", res)
+    if (res.code === 0) {
+      console.log("🚀 ~ FollowTask ~ takeFollow ~ res:", res)
+    }
+    return res
     // go(`xhsdiscover://user/${accountId}`, {
     //   type: 'deeplink',
     //   success: (res: any) => {

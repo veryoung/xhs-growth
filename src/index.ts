@@ -6,7 +6,7 @@ export class Core {
   /** 初始化原始配置 */
   private config!: Config;
   /** 环境 */
-  private env: any;
+  public env: any;
   /** 是否是调试模式 */
   public isDebugger: boolean = false;
   /** 请求根域名 */
@@ -19,7 +19,11 @@ export class Core {
   public fetchCore: any;
 
   constructor() {
+<<<<<<< HEAD
     this.task = new TaskBus(this);
+=======
+    this.task = new TaskBus();
+>>>>>>> 4f9e07e (feat: lastEdition)
   }
 
   async init(config: Config) {
@@ -27,6 +31,7 @@ export class Core {
     this.config = config;
     // 初始化活动id
     this.activityId = config.activityId;
+    this.isDebugger = config.isDebugger ?? false;
     // 初始化环境
     this.env = createEnvironment(config.platform, {
       fetchCore: config.fetchCore,

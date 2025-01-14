@@ -9,10 +9,12 @@ export class Core {
         this.task = new TaskBus(this);
     }
     async init(config) {
+        var _a;
         // 初始化配置
         this.config = config;
         // 初始化活动id
         this.activityId = config.activityId;
+        this.isDebugger = (_a = config.isDebugger) !== null && _a !== void 0 ? _a : false;
         // 初始化环境
         this.env = createEnvironment(config.platform, {
             fetchCore: config.fetchCore,
