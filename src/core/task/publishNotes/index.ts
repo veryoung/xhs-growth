@@ -1,15 +1,3 @@
-import { httpConfig } from "../../../config/http.config";
-import { fetch, go } from "../../../index";
-// import { genCapaPostDeeplink } from './capa'
-import { eventMissionType } from "../../../types";
-
-const filterPageIds = (arrayString: string) => {
-  const str = arrayString.slice(2, -2);
-  return str;
-  // const arr = str.split(',');
-    // const pageIds = ids.split(',').filter((id: string) => id.trim() !== '')
-    // return pageIds.map(pageId => ({ page_id: pageId.trim() }))
-}
 
 export class PublishNotesTask  {
   public task: any;
