@@ -128,12 +128,12 @@ App({
 
 #### getUserType() 获取用户类型
 用户类型说明：
-| 类型 | 说明 |
-|------|------|
-| NEW | 新用户 |
-| RECALL | 召回用户 |
-| REVIVE | 拉活用户 |
-| ACTIVE | 老用户 |
+  | 类型 | 说明 |
+  |------|------|
+  | NEW | 新用户 |
+  | RECALL | 召回用户 |
+  | REVIVE | 拉活用户 |
+  | ACTIVE | 老用户 |
 
 #### fetch(method: string, url: string, data?: object, header?: object) 请求方法
 
