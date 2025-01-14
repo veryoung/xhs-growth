@@ -39,7 +39,7 @@ GrowthCore.init(config);
 
 ```typescript
 import React, { useEffect } from 'react';
-import growthCore from '@veryoung/xhs-growth';
+import type { Config } from '@veryoung/xhs-growth/src/types';
 
 const TaskComponent: React.FC = () => {
   useEffect(() => {
@@ -106,7 +106,7 @@ App({
     
 | 参数名 | 类型 | 说明 | 必填 |
 |--------|------|------|------|
-| platform | `'webview'` \| `'miniprogram'` \| `'rn'` | 平台标识 | 是 |
+| platform | `'webview'` \| `'miniprogram'` \| `'rn'` | 平台标识（-webview  h5页面 -miniprogram  小程序 -rn  ReactNAtive应用） | 是 |
 | appId | string | 应用标识 | 是 |
 | fetchCore | any | 请求实例 | 是 |
 | activityId | string | 活动 ID | 是 |
