@@ -204,6 +204,12 @@ growthCore.task.follow.takeFollow('64bdd8820000000014036ef4', '202501131142').th
     |--------|------|------|------|
     | topicId | string | 笔记话题ID | 是 |
 
+- `onlyPublish(topicIdList: string[])`: 仅发布笔记
+  - 参数
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | topicIdList | string[] | 话题ID列表 | 是 |
 
 ##### task.topic
 话题任务相关方法
