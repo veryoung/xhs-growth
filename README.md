@@ -113,19 +113,6 @@ App({
 | isDebugger | boolean | 是否开启测试模式 | 否 |
 | baseUrl | string | API 基础地址 | 否 |
 
-#### go(path: string, navigateParams?: NavigateParams)
-统一的页面跳转方法
-
-###### navigateParams 参数说明
-
-| 参数名 | 类型 | 说明 | 必填 |
-|--------|------|------|------|
-| event | any | 事件对象 | 否 |
-| type | `'url'` \| `'deeplink'` | 跳转类型 | 否 |
-| success | `(res?: any) => void` | 成功回调函数 | 否 |
-| fail | `(err?: any) => void` | 失败回调函数 | 否 |
-| complete | `(res: any) => void` | 完成回调函数（无论成功失败） | 否 |
-
 #### getUserType() 获取用户类型
 用户类型说明：
 
@@ -171,6 +158,7 @@ App({
 
 - `queryRecord(limit: number)` 获取助力记录
   - 请求参数
+
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | limit | string |单次查询的数量限制 | 是 |
@@ -202,25 +190,20 @@ growthCore.task.follow.takeFollow('64bdd8820000000014036ef4', '202501131142').th
 
 ##### task.publishNotes
 笔记任务相关方法
-- `publishNote()`: 发布笔记
 
-- `completeNoteChangeTask(instanceId: string)` 完成发布笔记任务
+- `publish(taskMetaId: string)` 发布笔记
+  - 参数
 
-- `completeFollowTask(instanceId: string)` 完成关注任务
-  - 请求参数
-  
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
-    | instanceId | string |任务实例 ID | 是 |
+    | taskMetaId | string | 任务元ID | 是 |
 
-##### task.publishNotes
-笔记任务相关方法
-- `publishNote(taskMetaId: string)`: 发布笔记
-  - 请求参数
-  
+  - 返回值
+
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
-    | taskMetaId | string |任务元ID | 是 |
+    | topicId | string | 笔记话题ID | 是 |
+
 
 ##### task.topic
 话题任务相关方法
