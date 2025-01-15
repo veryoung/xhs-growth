@@ -246,12 +246,12 @@ growthCore.task.topic.viewTopic('668fef32b432f300013be439', '2025011411', {
 
   
 - `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
-  - 请求参数
+  - 请求参数，instanceId 和 shareCode 可以从分享页url的query中获取
   
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | instanceId | string |任务实例 ID | 是 |
-    | shareCode | string |任务实例 ID | 是 |
+    | shareCode | string | 分享码 | 是 |
 
 ### BenefitBus（待实现）
 
