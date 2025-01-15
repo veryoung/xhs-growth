@@ -13,8 +13,8 @@ export class PublishNotesTask  {
       return res;
     }
     const topicId = res?.data?.triggerMeta?.triggerCondition;
-    const topicIds = topicId.slice(2,-2).split(',');
-    const idStr = topicIds.map((id: string) => ({ page_id: id.replace('"','').trim() }));
+    const topicIds = JSON.parse(topicId);
+    const idStr = topicIds.map((id: string) => ({ page_id: id.trim() }));
     const publishNotePage = genCapaPostDeeplink({
       attach: { topics: idStr },
       config: {
