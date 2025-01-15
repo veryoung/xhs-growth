@@ -140,24 +140,55 @@ App({
 任务管理系统，提供任务相关的功能
 
 - `polling(group?: string)` 任务轮询
-
+  - 请求参数
+  
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
-    | group | string |活动下查询的分组，不传则使用默认 COMMON 分组 | 是 |
+    | group | string | 活动下查询的分组，不传则使用默认 COMMON 分组 | 是 | 
 
+  - 返回值
+  
+    | 参数名 | 类型 | 说明 |
+    |--------|------|------|
+    | nextQueryAfter | number | 下一次轮训间隔 |
+    | notifications | object | 消息通知 |
+
+- `getTaskList()` 获取任务列表
+
+  - 返回值：
+  
+    | 参数名 | 类型 | 说明 |
+    |--------|------|------|
+    | taskMetaId | string | 任务元ID |
+    | instanceId | string | 任务实例ID |
+    | taskType | string | 任务类型 |
+    | progress | string | 进度 |
+    | expireTime | string | 失效时间 |
+    | triggerMeta | object | 任务信息 |
+    | triggerMeta.triggerCondition | array | 根据任务类型返回不同的ID集合：关注任务返回关注userId、发布笔记任务返回话题ID、浏览任务返回pageId |
+    | extra | object | 额外信息 |
+    | extra.shareCode | string | 分享码 |
 
 - `queryRecord(limit: number)` 获取助力记录
-
+  - 请求参数
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | limit | string |单次查询的数量限制 | 是 |
 
+  - 返回值
+
+    | 参数名 | 类型 | 说明 |
+    |--------|------|------|
+    | avatar | string | 助力人头像 |
+    | nickname | string | 助力人昵称 |
 
 ##### task.follow
 关注任务相关方法
 - `takeFollow()`: 发起关注
-- `completeFollowTask(instanceId: string)` 完成关注任务
 
+- `completeFollowTask(instanceId: string)` 完成关注任务
+  - 请求参数
+  
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | instanceId | string |任务实例 ID | 是 |
@@ -165,7 +196,8 @@ App({
 ##### task.publishNotes
 笔记任务相关方法
 - `publishNote(taskMetaId: string)`: 发布笔记
-
+  - 请求参数
+  
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | taskMetaId | string |任务元ID | 是 |
@@ -177,13 +209,16 @@ App({
 #### task.inviteFriends
 好友助力任务相关方法
 - `shareFriends (taskMetaId: string, extraQuery?: any)` 完成邀请助力任务
-
+  - 请求参数
+  
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | taskMetaId | string |任务元ID | 是 |
     | extraQuery | any | 需要拼接到分享页面url上的参数，支持一个object | 否 |
   
 - `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
+  - 请求参数
+  
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | instanceId | string |任务实例 ID | 是 |
