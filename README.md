@@ -230,13 +230,20 @@ growthCore.task.topic.viewTopic('668fef32b432f300013be439', '2025011411', {
 
 #### task.inviteFriends
 好友助力任务相关方法
-- `shareFriends (taskMetaId: string, extraQuery?: any)` 完成邀请助力任务
+- `shareFriends (taskMetaId: string, extraQuery?: any)` 分享邀请助力任务
   - 请求参数
   
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | taskMetaId | string |任务元ID | 是 |
     | extraQuery | any | 需要拼接到分享页面url上的参数，支持一个object | 否 |
+  
+  - 返回值
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | path | string | 分享页url | 是 |
+
   
 - `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
   - 请求参数
