@@ -1,0 +1,31 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+export class PublishNotesTask {
+    constructor(core) {
+        this.core = core;
+    }
+    // 发布笔记
+    publish(taskMetaId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield this.core.task.claimTask(taskMetaId);
+            if (res.code !== 0) {
+                return res;
+            }
+            return {
+                code: 0,
+                success: true,
+                msg: "成功",
+                data: {
+                    topicId: res.data.triggerMeta.triggerCondition
+                },
+            };
+        });
+    }
+}

@@ -184,7 +184,27 @@ App({
 
 ##### task.follow
 关注任务相关方法
-- `takeFollow()`: 发起关注
+- `takeFollow(accountId:string, taskMetaId:string)`: 发起关注
+```typescript
+interface inputParams{
+  accountId: string //账户ID
+  taskMetaId: string //任务元信息ID
+}
+//usage
+import growthCore from '@veryoung/xhs-growth';
+growthCore.init({
+  //neededParams
+})
+growthCore.task.follow.takeFollow('64bdd8820000000014036ef4', '202501131142').then((res) => {
+  console.log('res: ', res)//返回任务领取结果
+})
+```
+
+##### task.publishNotes
+笔记任务相关方法
+- `publishNote()`: 发布笔记
+
+- `completeNoteChangeTask(instanceId: string)` 完成发布笔记任务
 
 - `completeFollowTask(instanceId: string)` 完成关注任务
   - 请求参数
@@ -204,7 +224,26 @@ App({
 
 ##### task.topic
 话题任务相关方法
-- `viewTopic()`: 查看话题
+- `viewTopic(pageId:string, taskMetaId:string, params: any)`: 查看话题
+```typescript
+interface inputParams{
+  pageId:string //话题Id
+  taskMetaId:string // 任务元信息
+  params:{
+    totalSize:number//话题浏览任务完成时间
+  }  
+}
+//usage
+import growthCore from '@veryoung/xhs-growth';
+growthCore.init({
+  //neededParams
+})
+growthCore.task.topic.viewTopic('668fef32b432f300013be439', '2025011411', {
+  totalSize: 5,
+}).then((res) => {
+  console.log("res: ",res)//返回任务领取结果
+})
+```
 
 #### task.inviteFriends
 好友助力任务相关方法
