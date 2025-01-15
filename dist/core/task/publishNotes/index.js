@@ -13,6 +13,23 @@ export class PublishNotesTask {
     constructor(core) {
         this.core = core;
     }
+    onlyPublish(topicIdList) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const idStr = topicIdList === null || topicIdList === void 0 ? void 0 : topicIdList.map((item) => ({ page_id: item.trim() }));
+            const publishNotePage = genCapaPostDeeplink({
+                attach: { topics: idStr },
+                config: {
+                    is_post_jump: 0,
+                },
+            });
+            go(publishNotePage, {
+                type: 'deeplink',
+                fail: (err) => {
+                    console.log('error', err);
+                }
+            });
+        });
+    }
     // 发布笔记
     publish(taskMetaId) {
         return __awaiter(this, void 0, void 0, function* () {

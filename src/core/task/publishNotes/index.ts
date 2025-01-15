@@ -6,6 +6,22 @@ export class PublishNotesTask  {
   constructor(core: any) {
     this.core = core;
   }
+
+  async onlyPublish(topicIdList: string[]){
+    const idStr = topicIdList?.map((item) => ({ page_id: item.trim() }));
+    const publishNotePage = genCapaPostDeeplink({
+      attach: { topics: idStr },
+      config: {
+        is_post_jump: 0,
+      },
+    })
+    go(publishNotePage, {
+      type: 'deeplink',
+      fail: (err: any) => {
+        console.log('error', err)
+      }
+    })
+  }
   // 发布笔记
   async publish(taskMetaId: string){
     const res = await this.core.task.claimTask(taskMetaId);  
