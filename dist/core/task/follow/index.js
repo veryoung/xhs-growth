@@ -36,3 +36,4 @@ export class FollowTask {
         console.log("Cancel follow task");
     }
 }
+//# sourceMappingURL=index.js.map

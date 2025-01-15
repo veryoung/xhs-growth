@@ -20,3 +20,4 @@ export const httpConfig = {
         qureyRecord: '/api/growth/haydn/{activityId}/fission/record',
     }
 };
+//# sourceMappingURL=http.config.js.map

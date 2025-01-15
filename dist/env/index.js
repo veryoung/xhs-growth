@@ -25,3 +25,4 @@ export function createEnvironment(platform, config) {
             throw new Error(`Unsupported platform: ${platform}`);
     }
 }
+//# sourceMappingURL=index.js.map

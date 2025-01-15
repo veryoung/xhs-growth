@@ -7,3 +7,4 @@ export default class RNEnv {
         console.log('React Native go to:', path, params);
     }
 }
+//# sourceMappingURL=index.js.map

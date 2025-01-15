@@ -46,3 +46,4 @@ export class InviteFriendsTask {
         });
     }
 }
+//# sourceMappingURL=index.js.map

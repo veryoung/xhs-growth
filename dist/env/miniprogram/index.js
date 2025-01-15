@@ -115,3 +115,4 @@ export default class MiniProgramEnv {
         return this.requestToken;
     }
 }
+//# sourceMappingURL=index.js.map

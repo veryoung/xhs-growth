@@ -66,3 +66,4 @@ export const getUserType = () => {
     return GrowthCore().getUserType();
 };
 export default GrowthCore();
+//# sourceMappingURL=index.js.map
