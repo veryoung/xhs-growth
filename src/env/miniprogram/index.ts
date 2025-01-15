@@ -115,14 +115,4 @@ export default class MiniProgramEnv {
   getRequestToken() {
     return this.requestToken;
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-=======
->>>>>>> 584cd82 (feat: changeToPromiseType)
->>>>>>> 24408f1 (feat: changeToPromiseType)
-=======
-
->>>>>>> 9354520 (feat: 新增能力)
 }
