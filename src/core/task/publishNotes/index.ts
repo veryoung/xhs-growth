@@ -1,4 +1,3 @@
-import GrowthCore from "../../../index";
 export class PublishNotesTask  {
   public core: any;
   constructor(core: any) {
