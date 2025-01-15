@@ -172,10 +172,9 @@ App({
 
 ##### task.follow
 关注任务相关方法
-- `takeFollow(accountId:string, taskMetaId:string)`: 发起关注
+- `takeFollow(taskMetaId:string)`: 发起关注
 ```typescript
 interface inputParams{
-  accountId: string //账户ID
   taskMetaId: string //任务元信息ID
 }
 //usage
@@ -183,7 +182,7 @@ import growthCore from '@veryoung/xhs-growth';
 growthCore.init({
   //neededParams
 })
-growthCore.task.follow.takeFollow('64bdd8820000000014036ef4', '202501131142').then((res) => {
+growthCore.task.follow.takeFollow('202501131142').then((res) => {
   console.log('res: ', res)//返回任务领取结果
 })
 ```
@@ -213,23 +212,17 @@ growthCore.task.follow.takeFollow('64bdd8820000000014036ef4', '202501131142').th
 
 ##### task.topic
 话题任务相关方法
-- `viewTopic(pageId:string, taskMetaId:string, params: any)`: 查看话题
+- `viewTopic(taskMetaId:string)`: 查看话题
 ```typescript
 interface inputParams{
-  pageId:string //话题Id
   taskMetaId:string // 任务元信息
-  params:{
-    totalSize:number//话题浏览任务完成时间
-  }  
 }
 //usage
 import growthCore from '@veryoung/xhs-growth';
 growthCore.init({
   //neededParams
 })
-growthCore.task.topic.viewTopic('668fef32b432f300013be439', '2025011411', {
-  totalSize: 5,
-}).then((res) => {
+growthCore.task.topic.viewTopic('2025011411').then((res) => {
   console.log("res: ",res)//返回任务领取结果
 })
 ```
