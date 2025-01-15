@@ -7,6 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { go } from "../../../index";
+import { genCapaPostDeeplink } from "./capay";
 export class PublishNotesTask {
     constructor(core) {
         this.core = core;
@@ -14,18 +16,27 @@ export class PublishNotesTask {
     // 发布笔记
     publish(taskMetaId) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
             const res = yield this.core.task.claimTask(taskMetaId);
             if (res.code !== 0) {
                 return res;
             }
-            return {
-                code: 0,
-                success: true,
-                msg: "成功",
-                data: {
-                    topicId: res.data.triggerMeta.triggerCondition
+            const topicId = (_b = (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.triggerMeta) === null || _b === void 0 ? void 0 : _b.triggerCondition;
+            const topicIds = topicId.slice(2, -2).split(',');
+            const idStr = topicIds.map((id) => ({ page_id: id.replace('"', '').trim() }));
+            const publishNotePage = genCapaPostDeeplink({
+                attach: { topics: idStr },
+                config: {
+                    is_post_jump: 0,
                 },
-            };
+            });
+            go(publishNotePage, {
+                type: 'deeplink',
+                fail: (err) => {
+                    console.log('error', err);
+                }
+            });
         });
     }
 }
+//# sourceMappingURL=index.js.map
