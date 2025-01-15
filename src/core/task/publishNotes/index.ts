@@ -1,5 +1,5 @@
 import { go } from "../../../index";
-import { genCapaPostDeeplink } from "./capay";
+import { genCapaPostDeeplink } from "./capa";
 
 export class PublishNotesTask  {
   public core: any;

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { go } from "../../../index";
-import { genCapaPostDeeplink } from "./capay";
+import { genCapaPostDeeplink } from "./capa";
 export class PublishNotesTask {
     constructor(core) {
         this.core = core;
