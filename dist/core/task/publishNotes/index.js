@@ -23,7 +23,7 @@ export class PublishNotesTask {
             }
             const topicId = (_b = (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.triggerMeta) === null || _b === void 0 ? void 0 : _b.triggerCondition;
             const topicIds = JSON.parse(topicId);
-            const idStr = topicIds.map((id) => ({ page_id: id.trim() }));
+            const idStr = topicIds === null || topicIds === void 0 ? void 0 : topicIds.map((id) => ({ page_id: id.trim() }));
             const publishNotePage = genCapaPostDeeplink({
                 attach: { topics: idStr },
                 config: {

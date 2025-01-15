@@ -14,7 +14,7 @@ export class PublishNotesTask  {
     }
     const topicId = res?.data?.triggerMeta?.triggerCondition;
     const topicIds = JSON.parse(topicId);
-    const idStr = topicIds.map((id: string) => ({ page_id: id.trim() }));
+    const idStr = topicIds?.map((id: string) => ({ page_id: id.trim() }));
     const publishNotePage = genCapaPostDeeplink({
       attach: { topics: idStr },
       config: {
@@ -23,7 +23,7 @@ export class PublishNotesTask  {
     })
     go(publishNotePage, {
       type: 'deeplink',
-      fail: (err: any)=>{
+      fail: (err: any) => {
         console.log('error', err)
       }
     })
