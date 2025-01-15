@@ -155,35 +155,60 @@ App({
 
 ##### task.follow
 关注任务相关方法
-- `takeFollow()`: 发起关注
-- `completeFollowTask(instanceId: string)` 完成关注任务
+- `takeFollow(accountId:string, taskMetaId:string)`: 发起关注
+```typescript
+interface inputParams{
+  accountId: string //账户ID
+  taskMetaId: string //任务元信息ID
+}
+//usage
+import growthCore from '@veryoung/xhs-growth';
+growthCore.init({
+  //neededParams
+})
+growthCore.task.follow.takeFollow('64bdd8820000000014036ef4', '202501131142').then((res) => {
+  console.log('res: ', res)//返回任务领取结果
+})
+```
+
+##### task.publishNotes
+笔记任务相关方法
+- `publishNote()`: 发布笔记
+
+- `completeNoteChangeTask(instanceId: string)` 完成发布笔记任务
 
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | instanceId | string |任务实例 ID | 是 |
 
-##### task.publishNotes
-笔记任务相关方法
-- `publishNote(taskMetaId: string)`: 发布笔记
-
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | taskMetaId | string |任务元ID | 是 |
-
 ##### task.topic
 话题任务相关方法
-- `viewTopic()`: 查看话题
+- `viewTopic(pageId:string, taskMetaId:string, params: any)`: 查看话题
+```typescript
+interface inputParams{
+  pageId:string //话题Id
+  taskMetaId:string // 任务元信息
+  params:{
+    totalSize:number//话题浏览任务完成时间
+  }  
+}
+//usage
+import growthCore from '@veryoung/xhs-growth';
+growthCore.init({
+  //neededParams
+})
+growthCore.task.topic.viewTopic('668fef32b432f300013be439', '2025011411', {
+  totalSize: 5,
+}).then((res) => {
+  console.log("res: ",res)//返回任务领取结果
+})
+```
 
 #### task.inviteFriends
 好友助力任务相关方法
-- `shareFriends (taskMetaId: string, extraQuery?: any)` 完成邀请助力任务
 
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | taskMetaId | string |任务元ID | 是 |
-    | extraQuery | any | 需要拼接到分享页面url上的参数，支持一个object | 否 |
-  
 - `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
+
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | instanceId | string |任务实例 ID | 是 |
