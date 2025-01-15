@@ -28,11 +28,13 @@ export class InviteFriendsTask {
       if(extraQuery) {
         path += `&${getQueryString(extraQuery)}`;
       }
-      return path;
+      return {
+        ...res,
+        data: {
+          path,
+        }
+      }
     }
-    return {
-      code: res.code,
-      message: res.msg,
-    }
+    return res;
   }
 }
