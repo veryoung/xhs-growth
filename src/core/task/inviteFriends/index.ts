@@ -20,6 +20,7 @@ export class InviteFriendsTask {
     return res;
   }
 
+  // 分享邀请助力任务
   async shareFriends (taskMetaId: string, extraQuery?: any){
     const res = await GrowthCore.task.claimTask(taskMetaId);
     if(res.code === 0) {

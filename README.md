@@ -164,13 +164,11 @@ App({
 
 ##### task.publishNotes
 笔记任务相关方法
-- `publishNote()`: 发布笔记
-
-- `completeNoteChangeTask(instanceId: string)` 完成发布笔记任务
+- `publishNote(taskMetaId: string)`: 发布笔记
 
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
-    | instanceId | string |任务实例 ID | 是 |
+    | taskMetaId | string |任务元ID | 是 |
 
 ##### task.topic
 话题任务相关方法
@@ -178,9 +176,14 @@ App({
 
 #### task.inviteFriends
 好友助力任务相关方法
+- `shareFriends (taskMetaId: string, extraQuery?: any)` 完成邀请助力任务
 
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | taskMetaId | string |任务元ID | 是 |
+    | extraQuery | any | 需要拼接到分享页面url上的参数，支持一个object | 否 |
+  
 - `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
-
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
     | instanceId | string |任务实例 ID | 是 |
