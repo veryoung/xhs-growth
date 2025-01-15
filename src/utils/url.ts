@@ -20,13 +20,9 @@ export const handleGoWithCountView = (url: string, h5Url: string) => {
 }
 
 export const countPageBaseUrl = (isDebugger: boolean) => {
-  console.log("🚀 ~ countPageBaseUrl ~ isDebugger:", isDebugger)
   return isDebugger ? 'https://yingzheng.beta.xiaohongshu.com/growth' : 'https://yingzheng.xiaohongshu.com/growth'
-<<<<<<< HEAD
 }
 
 export const getQueryString = (query: QueryParams) => {
   return Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
-=======
->>>>>>> 949e608 (feat: 修改任务实现)
 }

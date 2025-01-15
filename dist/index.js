@@ -15,7 +15,6 @@ export class Core {
         this.activityId = '';
         this.task = new TaskBus(this);
     }
-<<<<<<< HEAD
     init(config) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
@@ -30,21 +29,6 @@ export class Core {
             });
             yield this.env.init();
             return this;
-=======
-    async init(config) {
-        var _a;
-        // 初始化配置
-        this.config = config;
-        // 初始化活动id
-        this.activityId = config.activityId;
-        this.isDebugger = (_a = config.isDebugger) !== null && _a !== void 0 ? _a : false;
-        // 初始化环境
-        this.env = createEnvironment(config.platform, {
-            fetchCore: config.fetchCore,
-            isDebugger: config.isDebugger,
-            activityId: config.activityId,
-            baseUrl: config.baseUrl,
->>>>>>> 9d8f8bc (feat: lastEdition)
         });
     }
     go(path, params) {

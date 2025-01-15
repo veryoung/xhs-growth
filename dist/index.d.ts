@@ -2,13 +2,7 @@ import { TaskBus } from './core/task';
 import { Config, NavigateParams } from './types';
 export declare class Core {
     private config;
-<<<<<<< HEAD
     env: any;
-=======
-    /** 环境 */
-    env: any;
-    /** 是否是调试模式 */
->>>>>>> 9d8f8bc (feat: lastEdition)
     isDebugger: boolean;
     baseUrl: string;
     activityId: string;
