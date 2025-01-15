@@ -1,4 +1,4 @@
 export declare class TopicTask {
-    viewTopic(pageId: string, taskMetaId: string, params: any): Promise<any>;
+    viewTopic(taskMetaId: string): Promise<any>;
 }
 //# sourceMappingURL=index.d.ts.map

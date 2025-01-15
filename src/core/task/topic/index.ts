@@ -1,31 +1,25 @@
-import { handleGoWithCountView, countPageBaseUrl } from "../../../utils/url";
 import { eventMissionType } from "../../../types";
-import GrowthCore from "../../../index";
+import GrowthCore, { go } from "../../../index";
 
 export class TopicTask {
-  async viewTopic(pageId: string, taskMetaId: string, params: any) {
+  async viewTopic(taskMetaId: string) {
     const res = await GrowthCore.task.claimTask(taskMetaId)
     console.log("🚀 ~ TopicTask ~ viewTopic ~ res:", res)
-    console.log('pageId', pageId)
     if (res.code === 0) {
-      const queryParams = encodeURIComponent(Object.entries({
-        activityId: GrowthCore.activityId,
-        eventType: eventMissionType.NOTE_BROWSE,
-        instanceId: res?.data?.instanceId,
-        times: params?.totalSize,
-        asc: 0,
-        totalSize: params?.totalSize,
-        token: GrowthCore.getRequestToken(),
+      const triggerCondition = JSON.parse(res.data.triggerMeta.triggerCondition)[0];
+      const path = `www.xiaohongshu.com/page/topics/${triggerCondition}`;
+      const microAppUrl = `xhsdiscover://webview/${path}`
+      console.log("🚀 ~ TopicTask ~ viewTopic ~ microAppUrl:", microAppUrl)
+      go(microAppUrl, {
+        type: 'deeplink',
       })
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&'))
-      const path = `www.xiaohongshu.com/page/topics/${pageId}`
-      const statsBasePath = countPageBaseUrl(true || GrowthCore.isDebugger)
-      console.log("🚀 ~ TopicTask ~ viewTopic ~ GrowthCore.isDebugger:", GrowthCore.isDebugger)
-      const statsPath = `${statsBasePath}?${queryParams}`;
-      console.log("🚀 ~ TopicTask ~ viewTopic ~ statsPath:", statsPath)
-      handleGoWithCountView(statsPath, path)
+      const completeRes = await GrowthCore.task.completeTask(res.data.instanceId, eventMissionType.NOTE_BROWSE, {})
+      console.log("🚀 ~ TopicTask ~ viewTopic ~ completeRes:", completeRes)
+      return completeRes
     }
-    return res
+    return {
+      code: -200,
+      msg: '领取任务失败',
+    }
   }
 }

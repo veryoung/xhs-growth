@@ -1,7 +1,8 @@
 export declare class FollowTask {
     /** 关注 */
-    takeFollow(accountId: string, taskMetaId: string): Promise<any>;
-    /** 取消关注 */
-    cancelFollow(): void;
+    takeFollow(taskMetaId: string): Promise<{
+        code: any;
+        msg: any;
+    }>;
 }
 //# sourceMappingURL=index.d.ts.map
