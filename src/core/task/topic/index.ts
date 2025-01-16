@@ -16,7 +16,7 @@ export class TopicTask {
           }
         }
         const fliteredTriggerMetaData = filterTriggerMetaData(res.data?.triggerMeta)
-        const { triggerCondition, viewAttribute, action = 'ONLY_VIEW' } = fliteredTriggerMetaData
+        const { triggerCondition, viewAttribute = {}, action = 'ONLY_VIEW' } = fliteredTriggerMetaData
         switch (action) {
           case 'ONLY_VIEW':
             return handleOnlyView(triggerCondition, res.data.instanceId)
