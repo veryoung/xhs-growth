@@ -32,12 +32,8 @@ class NotificationPoller {
         response = await poll()
         this.interval = response?.data?.nextQueryAfter || 3000;
         if (response) {
-            const res = {
-                ...response?.data,
-                notifications: response?.data?.notifications || []
-            }
           try {
-            this.callback(res)
+            this.callback({notifications: response?.data?.notifications || []})
           } catch (emitError) {
             console.warn(`轮播失败`, emitError)
           }

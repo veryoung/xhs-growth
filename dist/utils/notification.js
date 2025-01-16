@@ -34,9 +34,8 @@ class NotificationPoller {
                 response = yield poll();
                 this.interval = ((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.nextQueryAfter) || 3000;
                 if (response) {
-                    const res = Object.assign(Object.assign({}, response === null || response === void 0 ? void 0 : response.data), { notifications: ((_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.notifications) || [] });
                     try {
-                        this.callback(res);
+                        this.callback({ notifications: ((_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.notifications) || [] });
                     }
                     catch (emitError) {
                         console.warn(`轮播失败`, emitError);

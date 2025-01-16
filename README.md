@@ -156,14 +156,14 @@ App({
     | avatar | string | 助力人头像 |
     | nickname | string | 助力人昵称 |
 
-- `notificationList(callback(notification: Notification) => any)` 轮询助力记录通知
+- `notificationList(callback(notifications: Notification) => any)` 轮询助力记录通知
   - 请求参数
 
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
-    | callback | (notification: []) => any | 获取任务完成的回调,callback每间隔一段时间都会执行，不断刷新最新的任务完成记录 | 是 |
+    | callback | (notifications: []) => any | 获取任务完成的回调,callback每间隔一段时间都会执行，不断刷新最新的任务完成记录 | 是 |
 
-    - notification 类型
+    - Notification 类型
 
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
