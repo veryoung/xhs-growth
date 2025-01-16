@@ -55,8 +55,8 @@ export default class MiniProgramEnv {
           'authorization': `${this.requestToken}`
         }
       }
-      
-      this.fetchCore.xhsRequest({
+
+      this.fetchCore.request({
         url,
         method,
         data,

@@ -23,9 +23,9 @@ export class TopicTask {
                         };
                     }
                     const fliteredTriggerMetaData = filterTriggerMetaData((_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta);
-                    const { triggerCondition, viewAttribute, action = 'ONLY_VIEW' } = fliteredTriggerMetaData;
+                    const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData;
                     switch (action) {
-                        case 'ONLY_VIEW':
+                        case 'SIMPLE_VIEW':
                             return handleOnlyView(triggerCondition, res.data.instanceId);
                         case 'VIEW_COUNT_NUM':
                             return {};
