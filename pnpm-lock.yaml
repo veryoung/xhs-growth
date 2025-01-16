@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
     devDependencies:
       '@rollup/plugin-commonjs':
         specifier: ^28.0.2
@@ -23,6 +27,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
+      '@types/lodash':
+        specifier: ^4.17.14
+        version: 4.17.14
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.19.0
         version: 8.19.0(@typescript-eslint/parser@8.19.0(eslint@9.17.0)(typescript@5.7.2))(eslint@9.17.0)(typescript@5.7.2)
@@ -533,6 +540,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/@types/json-schema/-/json-schema-7.0.15.tgz}
+
+  '@types/lodash@4.17.14':
+    resolution: {integrity: sha512-jsxagdikDiDBeIRaPYtArcT8my4tN1og7MtMRquFT3XNA6axxyHDRUemqDz/taRDdOUn0GnGHRCuff4q48sW9A==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/@types/lodash/-/lodash-4.17.14.tgz}
 
   '@types/node@22.10.4':
     resolution: {integrity: sha512-99l6wv4HEzBQhvaU/UGoeBoCK61SCROQaCCGyQSgX2tEQ3rKkNZ2S7CEWnS/4s1LV+8ODdK21UeyR1fHP2mXug==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/@types/node/-/node-22.10.4.tgz}
@@ -1316,6 +1326,9 @@ packages:
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha1-VYqlO0O2YeGSWgr9+japoQhf5Xo=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/lodash.merge/download/lodash.merge-4.6.2.tgz}
+
+  lodash@4.17.21:
+    resolution: {integrity: sha1-Z5WRxWTDv/quhFTPCz3zcMPWkRw=, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/lodash/download/lodash-4.17.21.tgz}
 
   lru-cache@11.0.2:
     resolution: {integrity: sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==, tarball: https://artifactory.devops.xiaohongshu.com/artifactory/api/npm/npm-public/lru-cache/-/lru-cache-11.0.2.tgz}
@@ -2396,6 +2409,8 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
+  '@types/lodash@4.17.14': {}
+
   '@types/node@22.10.4':
     dependencies:
       undici-types: 6.20.0
@@ -3387,6 +3402,8 @@ snapshots:
   lodash.memoize@4.1.2: {}
 
   lodash.merge@4.6.2: {}
+
+  lodash@4.17.21: {}
 
   lru-cache@11.0.2: {}
 

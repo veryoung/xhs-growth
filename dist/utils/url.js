@@ -1,6 +1,16 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { go } from "../index";
 import GrowthCore from "../index";
 import { eventMissionType } from "../types/index";
+import { set } from 'lodash';
 export const handleGoWithCountView = (url, h5Url) => {
     const targetURL = `xhsdiscover://webview/${h5Url}?fullscreen=true&naviHidden=yes&widget_size=60.60&widget_position=0.24&openPage=yes&widget_url=${url}`;
     // todo: 实现跳转
@@ -45,4 +55,35 @@ function countTimePageLogic(res, params) {
     console.log("🚀 ~ TopicTask ~ viewTopic ~ statsPath:", statsPath);
     handleGoWithCountView(statsPath, path);
 }
+export const setTaskNeedInfo = (taskMetaId, triggerMetaInfo) => __awaiter(void 0, void 0, void 0, function* () {
+    let res = {};
+    if (triggerMetaInfo) {
+        set(res, 'code', 0);
+        set(res, 'data.triggerMeta', triggerMetaInfo);
+        set(res, 'msg', 'triggerMetaInfoValid');
+        console.log('res', res);
+        return res;
+    }
+    return yield GrowthCore.task.claimTask(taskMetaId);
+});
+export const filterTriggerMetaData = (triggerMeta) => {
+    const result = {};
+    if (!triggerMeta)
+        return result;
+    Object.entries(triggerMeta).forEach(([key, value]) => {
+        result[key] = JSON.parse(value);
+    });
+    return result;
+};
+export const handleOnlyView = (triggerCondition, instanceId) => __awaiter(void 0, void 0, void 0, function* () {
+    const path = `www.xiaohongshu.com/page/topics/${triggerCondition[0]}`;
+    const microAppUrl = `xhsdiscover://webview/${path}`;
+    console.log("🚀 ~ handleOnlyView ~ microAppUrl:", microAppUrl);
+    go(microAppUrl, {
+        type: 'deeplink',
+    });
+    const completeRes = yield GrowthCore.task.completeTask(instanceId, eventMissionType.NOTE_BROWSE, {});
+    console.log("🚀 ~ handleOnlyView ~ completeRes:", completeRes);
+    return completeRes;
+});
 //# sourceMappingURL=url.js.map

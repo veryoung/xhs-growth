@@ -21,8 +21,8 @@ export class FollowTask {
                 };
             }
             return {
-                code: -200,
-                msg: '领取任务失败',
+                code: res.code || -200,
+                msg: res.msg || '领取任务失败',
             };
         });
     }

@@ -42,4 +42,9 @@ export interface UserTypeResponse {
 export type QueryParams = {
     [key: string]: string | number | boolean | undefined;
 };
+export interface ItriggerMeta {
+    triggerCondition: string;
+    viewAttribute?: string;
+    action?: string;
+}
 //# sourceMappingURL=index.d.ts.map
