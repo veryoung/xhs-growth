@@ -56,7 +56,7 @@ export default class MiniProgramEnv {
         }
       }
       
-      this.fetchCore.request({
+      this.fetchCore.xhsRequest({
         url,
         method,
         data,

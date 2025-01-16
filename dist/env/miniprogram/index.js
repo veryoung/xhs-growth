@@ -51,7 +51,7 @@ export default class MiniProgramEnv {
             if (this.requestToken) {
                 header = Object.assign(Object.assign({}, header), { 'authorization': `${this.requestToken}` });
             }
-            this.fetchCore.request({
+            this.fetchCore.xhsRequest({
                 url,
                 method,
                 data,
