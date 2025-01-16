@@ -19,6 +19,7 @@ export declare class TaskBus {
     polling(group?: string): Promise<any>;
     /** 查询任务记录 */
     queryRecord(limit: number): Promise<any>;
+    /** 轮询任务完成通知 */
     startNotification(callback: (notification: Notification) => any): void;
 }
 //# sourceMappingURL=index.d.ts.map

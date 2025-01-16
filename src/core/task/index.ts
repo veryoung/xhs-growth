@@ -63,6 +63,7 @@ export class TaskBus {
     return res;
   }
 
+  /** 轮询任务完成通知 */
   public startNotification(callback: (notification: Notification) => any) {
     return openNotification(this.polling, callback);
   }

@@ -68,6 +68,7 @@ export class TaskBus {
             return res;
         });
     }
+    /** 轮询任务完成通知 */
     startNotification(callback) {
         return openNotification(this.polling, callback);
     }
