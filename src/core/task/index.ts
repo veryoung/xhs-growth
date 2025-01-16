@@ -3,8 +3,9 @@ import { PublishNotesTask } from './publishNotes';
 import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
 import { httpConfig } from '../../config/http.config';
-import { eventMissionType } from '../../types';
+import { eventMissionType, Notification } from '../../types';
 import GrowthCore, { Core } from '../../index';
+import { openNotification } from '../../utils/notification';
 
 export class TaskBus {
   public core: Core;
@@ -60,5 +61,9 @@ export class TaskBus {
     const res = await GrowthCore.fetch('GET', url);
     console.log("🚀 ~ TaskBus ~ queryRecord ~ res:", res)
     return res;
+  }
+
+  public startNotification(callback: (notification: Notification) => any) {
+    return openNotification(this.polling, callback);
   }
 }

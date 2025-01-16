@@ -126,20 +126,6 @@ App({
 #### Task 任务实例
 任务管理系统，提供任务相关的功能
 
-- `polling(group?: string)` 任务轮询
-  - 请求参数
-  
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | group | string | 活动下查询的分组，不传则使用默认 COMMON 分组 | 是 | 
-
-  - 返回值
-  
-    | 参数名 | 类型 | 说明 |
-    |--------|------|------|
-    | nextQueryAfter | number | 下一次轮训间隔 |
-    | notifications | object | 消息通知 |
-
 - `getTaskList()` 获取任务列表
 
   - 返回值：
@@ -169,6 +155,23 @@ App({
     |--------|------|------|
     | avatar | string | 助力人头像 |
     | nickname | string | 助力人昵称 |
+
+- `notificationList(callback(notification: Notification) => any)` 轮询助力记录通知
+  - 请求参数
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | callback | (notification: []) => any | 获取任务完成的回调,callback每间隔一段时间都会执行，不断刷新最新的任务完成记录 | 是 |
+
+    - notification 类型
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | notificationData | object | 通知详细数据 | 是 |
+    | notificationData.taskType | string | 任务类型 | 是 |
+    | notificationData.avatarUrl | string | 用户头像地址 | 是 |
+    | notificationData.useIName | string | 用户昵称 | 是 |
+    | notificationId | string | 通知ID | 是 |
 
 ##### task.follow
 关注任务相关方法

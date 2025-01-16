@@ -42,4 +42,13 @@ export interface UserTypeResponse {
 export type QueryParams = {
     [key: string]: string | number | boolean | undefined;
 };
+export interface Notification {
+    notificationData: NotificationData;
+    notificationId: string;
+}
+export interface NotificationData {
+    taskType: string;
+    avatarUrl: string;
+    useIName: string;
+}
 //# sourceMappingURL=index.d.ts.map

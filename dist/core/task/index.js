@@ -13,6 +13,7 @@ import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
 import { httpConfig } from '../../config/http.config';
 import GrowthCore from '../../index';
+import { openNotification } from '../../utils/notification';
 export class TaskBus {
     constructor(core) {
         this.core = core;
@@ -66,6 +67,9 @@ export class TaskBus {
             console.log("🚀 ~ TaskBus ~ queryRecord ~ res:", res);
             return res;
         });
+    }
+    startNotification(callback) {
+        return openNotification(this.polling, callback);
     }
 }
 //# sourceMappingURL=index.js.map

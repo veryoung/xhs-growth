@@ -2,7 +2,7 @@ import { FollowTask } from './follow';
 import { PublishNotesTask } from './publishNotes';
 import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
-import { eventMissionType } from '../../types';
+import { eventMissionType, Notification } from '../../types';
 import { Core } from '../../index';
 export declare class TaskBus {
     core: Core;
@@ -19,5 +19,6 @@ export declare class TaskBus {
     polling(group?: string): Promise<any>;
     /** 查询任务记录 */
     queryRecord(limit: number): Promise<any>;
+    startNotification(callback: (notification: Notification) => any): void;
 }
 //# sourceMappingURL=index.d.ts.map
