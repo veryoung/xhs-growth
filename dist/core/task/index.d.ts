@@ -16,7 +16,7 @@ export declare class TaskBus {
     claimTask(taskMetaId: string): Promise<any>;
     completeTask(instanceId: string, eventType: eventMissionType, params: any): Promise<any>;
     /** 轮询任务 */
-    polling(group?: string): Promise<any>;
+    private polling;
     /** 查询任务记录 */
     queryRecord(limit: number): Promise<any>;
     /** 轮询任务完成通知 */

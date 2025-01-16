@@ -156,7 +156,7 @@ App({
     | avatar | string | 助力人头像 |
     | nickname | string | 助力人昵称 |
 
-- `notificationList(callback(notifications: Notification) => any)` 轮询助力记录通知
+- `startNotification(callback(notifications: Notification) => any)` 轮询助力记录通知
   - 请求参数
 
     | 参数名 | 类型 | 说明 | 必填 |

@@ -48,7 +48,7 @@ export class TaskBus {
   }
 
   /** 轮询任务 */
-  async polling(group?: string) {
+  private async polling(group?: string) {
     const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
     const res = await GrowthCore.fetch('POST', url);
     console.log("🚀 ~ TaskBus ~ polling ~ res:", res)
