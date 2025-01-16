@@ -3,7 +3,6 @@ import { QueryParams } from "../types/index";
 import { go } from "../index";
 import GrowthCore from "../index";
 import { eventMissionType, ItriggerMeta } from "../types/index";
-import { set } from 'lodash';
 
 export const handleGoWithCountView = (url: string, h5Url: string) => {
   const targetURL = `xhsdiscover://webview/${h5Url}?fullscreen=true&naviHidden=yes&widget_size=60.60&widget_position=0.24&openPage=yes&widget_url=${url}`
@@ -55,9 +54,13 @@ function countTimePageLogic (res:any, params:any) {
 export const setTaskNeedInfo = async (taskMetaId: string, triggerMetaInfo?: ItriggerMeta) => {
   let res = {};
   if (triggerMetaInfo) {
-    set(res, 'code', 0);
-    set(res, 'data.triggerMeta', triggerMetaInfo)
-    set(res, 'msg', 'triggerMetaInfoValid')
+    res = {
+      code: 0,
+      data: {
+        triggerMeta: triggerMetaInfo
+      },
+      msg: 'triggerMetaInfoValid'
+    };
     console.log('res', res)
     return res
   }
