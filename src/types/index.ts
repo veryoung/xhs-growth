@@ -71,3 +71,9 @@ export interface NotificationData {
   avatarUrl: string;
   useIName: string;
 }
+
+export interface ItriggerMeta {
+  triggerCondition: string;
+  viewAttribute?: string;
+  action?: string;
+}

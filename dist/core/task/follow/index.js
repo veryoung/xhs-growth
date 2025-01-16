@@ -10,30 +10,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import GrowthCore from "../../../index";
 export class FollowTask {
     /** 关注 */
-    takeFollow(accountId, taskMetaId) {
+    takeFollow(taskMetaId) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield GrowthCore.task.claimTask(taskMetaId);
             if (res.code === 0) {
                 console.log("🚀 ~ FollowTask ~ takeFollow ~ res:", res);
+                return {
+                    code: res.code,
+                    msg: res.msg,
+                };
             }
-            return res;
-            // go(`xhsdiscover://user/${accountId}`, {
-            //   type: 'deeplink',
-            //   success: (res: any) => {
-            //     console.log('success', res)
-            //   },
-            //   fail: (res: any) => {
-            //     console.log('fail', res)
-            //   },
-            //   complete: (res: any) => {
-            //     console.log('complete', res)
-            //   }
-            // });
+            return {
+                code: res.code || -200,
+                msg: res.msg || '领取任务失败',
+            };
         });
-    }
-    /** 取消关注 */
-    cancelFollow() {
-        console.log("Cancel follow task");
     }
 }
 //# sourceMappingURL=index.js.map

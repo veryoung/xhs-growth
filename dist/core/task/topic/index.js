@@ -7,36 +7,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { handleGoWithCountView, countPageBaseUrl } from "../../../utils/url";
-import { eventMissionType } from "../../../types";
-import GrowthCore from "../../../index";
+import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView } from "../../../utils/url";
 export class TopicTask {
-    viewTopic(pageId, taskMetaId, params) {
+    viewTopic(taskMetaId, triggerMetaInfo) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            const res = yield GrowthCore.task.claimTask(taskMetaId);
-            console.log("🚀 ~ TopicTask ~ viewTopic ~ res:", res);
-            console.log('pageId', pageId);
-            if (res.code === 0) {
-                const queryParams = encodeURIComponent(Object.entries({
-                    activityId: GrowthCore.activityId,
-                    eventType: eventMissionType.NOTE_BROWSE,
-                    instanceId: (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.instanceId,
-                    times: params === null || params === void 0 ? void 0 : params.totalSize,
-                    asc: 0,
-                    totalSize: params === null || params === void 0 ? void 0 : params.totalSize,
-                    token: GrowthCore.getRequestToken(),
-                })
-                    .map(([key, value]) => `${key}=${value}`)
-                    .join('&'));
-                const path = `www.xiaohongshu.com/page/topics/${pageId}`;
-                const statsBasePath = countPageBaseUrl(true || GrowthCore.isDebugger);
-                console.log("🚀 ~ TopicTask ~ viewTopic ~ GrowthCore.isDebugger:", GrowthCore.isDebugger);
-                const statsPath = `${statsBasePath}?${queryParams}`;
-                console.log("🚀 ~ TopicTask ~ viewTopic ~ statsPath:", statsPath);
-                handleGoWithCountView(statsPath, path);
+            var _a, _b;
+            try {
+                const res = yield setTaskNeedInfo(taskMetaId, triggerMetaInfo);
+                console.log("🚀 ~ TopicTask ~ viewTopic ~ res:", res);
+                if (res.code === 0) {
+                    if (!((_a = res.data) === null || _a === void 0 ? void 0 : _a.triggerMeta)) {
+                        return {
+                            code: -406,
+                            msg: '任务领取错误',
+                        };
+                    }
+                    const fliteredTriggerMetaData = filterTriggerMetaData((_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta);
+                    const { triggerCondition, viewAttribute = {}, action = 'ONLY_VIEW' } = fliteredTriggerMetaData;
+                    switch (action) {
+                        case 'ONLY_VIEW':
+                            return handleOnlyView(triggerCondition, res.data.instanceId);
+                        case 'VIEW_COUNT_NUM':
+                            return {};
+                        case 'VIEW_COUNT_TIME':
+                            return {};
+                    }
+                }
+                return {
+                    code: res.code || -200,
+                    msg: res.msg || '领取任务失败',
+                };
             }
-            return res;
+            catch (error) {
+                console.error('TopicTask viewTopic error:', error);
+                return error;
+            }
         });
     }
 }

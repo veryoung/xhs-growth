@@ -1,4 +1,5 @@
+import { ItriggerMeta } from "../../../types";
 export declare class TopicTask {
-    viewTopic(pageId: string, taskMetaId: string, params: any): Promise<any>;
+    viewTopic(taskMetaId: string, triggerMetaInfo?: ItriggerMeta): Promise<any>;
 }
 //# sourceMappingURL=index.d.ts.map
