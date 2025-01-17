@@ -112,6 +112,7 @@ App({
 | activityId | string | 活动 ID | 是 |
 | isDebugger | boolean | 是否开启测试模式 | 否 |
 | baseUrl | string | API 基础地址 | 否 |
+| deviceId | string | 设备Id | 否 |
 
 #### getUserType() 获取用户类型
 用户类型说明：
@@ -215,18 +216,49 @@ growthCore.task.follow.takeFollow('202501131142').then((res) => {
 
 ##### task.topic
 话题任务相关方法
-- `viewTopic(taskMetaId:string)`: 查看话题
+- `viewTopic(taskMetaId:string, triggerMetaInfo?: ItriggerMeta)`: 查看话题
 ```typescript
 interface inputParams{
   taskMetaId:string // 任务元信息
+  triggerMetaInfo?: ItriggerMeta //跳过领取任务需要完成任务选填内容，如果不需要为空
+}
+
+interface ItriggerMeta {
+  triggerMeta: {
+    triggerCondition: string 
+    viewAttribute?: string 
+    action?: string    
+  } // 该对象可以通过获取任务列表接口直接填充
+  instanceId?: string // 任务实例id
 }
 //usage
 import growthCore from '@veryoung/xhs-growth';
 growthCore.init({
   //neededParams
 })
+
+//useType1
 growthCore.task.topic.viewTopic('2025011411').then((res) => {
   console.log("res: ",res)//返回任务领取结果
+})
+
+//useType2
+const metaInfo = {
+  action: 'VIEW_COUNT_NUM',
+  triggerCondition: '["62db0ed71d27af0001b4a199"]',
+  viewAttribute: '{"singleNoteViewTime":15,"totalSize":45}',
+}// const index = n
+// const metaInfo euqals to growthCore.getTaskList().[n].triggerMeta
+
+growthCore.task.topic.viewTopic('202501152058', {
+  instanceId: '14684',
+  triggerMeta: metaInfo,
+}).then((res) => {
+  ans6.value = res
+  console.log('res: ', res)
+}).catch((err) => {
+  ans6.value = err
+  console.log('err: ', err)
 })
 ```
 
