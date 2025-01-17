@@ -15,6 +15,7 @@ export declare class Core {
     task: TaskBus;
     /** 请求核心 */
     fetchCore: any;
+    deviceId: string;
     constructor();
     init(config: Config): Promise<this>;
     go(path: string, params?: NavigateParams): any;

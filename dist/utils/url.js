@@ -60,11 +60,12 @@ export const setTaskNeedInfo = (taskMetaId, triggerMetaInfo) => __awaiter(void 0
         res = {
             code: 0,
             data: {
-                triggerMeta: triggerMetaInfo
+                triggerMeta: triggerMetaInfo.triggerMeta,
+                instanceId: triggerMetaInfo.instanceId
             },
             msg: 'triggerMetaInfoValid'
         };
-        console.log('res', res);
+        console.log('origin res: ', res);
         return res;
     }
     return yield GrowthCore.task.claimTask(taskMetaId);
@@ -74,7 +75,13 @@ export const filterTriggerMetaData = (triggerMeta) => {
     if (!triggerMeta)
         return result;
     Object.entries(triggerMeta).forEach(([key, value]) => {
-        result[key] = JSON.parse(value);
+        try {
+            result[key] = JSON.parse(value);
+        }
+        catch (e) {
+            // 如果不是 JSON 字符串，直接使用原值
+            result[key] = value;
+        }
     });
     return result;
 };
@@ -88,5 +95,25 @@ export const handleOnlyView = (triggerCondition, instanceId) => __awaiter(void 0
     const completeRes = yield GrowthCore.task.completeTask(instanceId, eventMissionType.NOTE_BROWSE, {});
     console.log("🚀 ~ handleOnlyView ~ completeRes:", completeRes);
     return completeRes;
+});
+export const handleViewWithCountParams = (instanceId, viewAttribute, actionNum) => __awaiter(void 0, void 0, void 0, function* () {
+    const baseUrlForView = 'xhsdiscover://rn/growthfeeds?';
+    const queryParams = Object.entries({
+        activityId: GrowthCore.activityId,
+        singleMaxCount: viewAttribute.singleNoteViewTime,
+        taskId: instanceId,
+        taskType: actionNum,
+        totalSize: viewAttribute.totalSize,
+        type: 'xhsCore',
+        token: GrowthCore.getRequestToken(),
+    })
+        .map(([key, value]) => `${key}=${value}`)
+        .join('&');
+    const serializedQueryParams = encodeURIComponent(queryParams);
+    const path = `${baseUrlForView}${serializedQueryParams}`;
+    console.log("🚀 ~ handleViewNum ~ path:", path);
+    go(path, {
+        type: 'deeplink',
+    });
 });
 //# sourceMappingURL=url.js.map

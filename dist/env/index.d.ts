@@ -11,5 +11,7 @@ export declare function createEnvironment(platform: Platform, config: {
     isDebugger?: boolean;
     /** 请求根域名 */
     baseUrl?: string;
+    /** 设备id */
+    deviceId?: string;
 }): WebviewEnv | MiniProgramEnv | RNEnv;
 //# sourceMappingURL=index.d.ts.map

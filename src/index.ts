@@ -18,6 +18,8 @@ export class Core {
   /** 请求核心 */
   public fetchCore: any;
 
+  public deviceId: string = '';
+
   constructor() {
     this.task = new TaskBus(this);
   }
@@ -28,12 +30,14 @@ export class Core {
     // 初始化活动id
     this.activityId = config.activityId;
     this.isDebugger = config.isDebugger ?? false;
+    this.deviceId = config.deviceId || '';
     // 初始化环境
     this.env = createEnvironment(config.platform, {
       fetchCore: config.fetchCore,
       isDebugger: config.isDebugger,
       activityId: config.activityId,
       baseUrl: config.baseUrl,
+      deviceId: config.deviceId,
     });
     await this.env.init();
     return this;

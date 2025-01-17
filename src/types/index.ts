@@ -7,6 +7,7 @@ export interface Config {
   activityId: string;
   isDebugger?: boolean;
   baseUrl?: string;
+  deviceId?: string;
 }
 
 export interface NavigateParams {
@@ -22,6 +23,7 @@ export interface EnvConfig {
   activityId: string;
   isDebugger?: boolean;
   baseUrl?: string;
+  deviceId?: string;
 }
 
 export enum eventMissionType {
@@ -73,7 +75,10 @@ export interface NotificationData {
 }
 
 export interface ItriggerMeta {
-  triggerCondition: string;
-  viewAttribute?: string;
-  action?: string;
+  triggerMeta: {
+    triggerCondition: string;
+    viewAttribute?: string;
+    action?: string;    
+  }
+  instanceId?: string;
 }

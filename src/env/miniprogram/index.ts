@@ -6,10 +6,12 @@ export default class MiniProgramEnv {
   private coreBaseUrl: string;
   private activityId: string;
   private requestToken!: any;
+  private deviceId: string;
   constructor(config: EnvConfig) {
     this.fetchCore = config.fetchCore;
     this.coreBaseUrl = config.baseUrl || '';
-    this.activityId = config.activityId;
+    this.activityId = config.activityId || '';
+    this.deviceId = config.deviceId || '';
   }
 
   go(path: string, params?: NavigateParams) {
@@ -49,11 +51,10 @@ export default class MiniProgramEnv {
         url = this.coreBaseUrl + url;
       }
 
-      if(this.requestToken) {
-        header = {
-          ...header,
-          'authorization': `${this.requestToken}`
-        }
+      header = {
+        ...header,
+        ...(this.requestToken && { 'authorization': `${this.requestToken}` }),
+        ...(this.deviceId && { 'X-Legacy-Did': `${this.deviceId}` })
       }
 
       this.fetchCore.request({

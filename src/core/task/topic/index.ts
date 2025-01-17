@@ -1,6 +1,5 @@
-import { eventMissionType, ItriggerMeta } from "../../../types";
-import GrowthCore, { go } from "../../../index";
-import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView } from "../../../utils/url";
+import { ItriggerMeta } from "../../../types";
+import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
 
 export class TopicTask {
   async viewTopic(taskMetaId: string, triggerMetaInfo?: ItriggerMeta) {
@@ -15,15 +14,17 @@ export class TopicTask {
             msg: '任务领取错误',
           }
         }
+
+        //using JSON.parse fixing possible errors
         const fliteredTriggerMetaData = filterTriggerMetaData(res.data?.triggerMeta)
         const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData
         switch (action) {
           case 'SIMPLE_VIEW':
             return handleOnlyView(triggerCondition, res.data.instanceId)
           case 'VIEW_COUNT_NUM':
-            return {}
+            return handleViewWithCountParams(res.data.instanceId, viewAttribute, 2)
           case 'VIEW_COUNT_TIME':
-            return {}
+            return handleViewWithCountParams(res.data.instanceId, viewAttribute, 1)
         }
       }
       

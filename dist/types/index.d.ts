@@ -6,6 +6,7 @@ export interface Config {
     activityId: string;
     isDebugger?: boolean;
     baseUrl?: string;
+    deviceId?: string;
 }
 export interface NavigateParams {
     event?: any;
@@ -19,6 +20,7 @@ export interface EnvConfig {
     activityId: string;
     isDebugger?: boolean;
     baseUrl?: string;
+    deviceId?: string;
 }
 export declare enum eventMissionType {
     NOTE_CHANGE = "NOTE_CHANGE",
@@ -52,8 +54,11 @@ export interface NotificationData {
     useIName: string;
 }
 export interface ItriggerMeta {
-    triggerCondition: string;
-    viewAttribute?: string;
-    action?: string;
+    triggerMeta: {
+        triggerCondition: string;
+        viewAttribute?: string;
+        action?: string;
+    };
+    instanceId?: string;
 }
 //# sourceMappingURL=index.d.ts.map

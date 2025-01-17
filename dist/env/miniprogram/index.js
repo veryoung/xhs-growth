@@ -12,7 +12,8 @@ export default class MiniProgramEnv {
     constructor(config) {
         this.fetchCore = config.fetchCore;
         this.coreBaseUrl = config.baseUrl || '';
-        this.activityId = config.activityId;
+        this.activityId = config.activityId || '';
+        this.deviceId = config.deviceId || '';
     }
     go(path, params) {
         console.log("🚀 ~ MiniProgramEnv ~ go ~ path:", path);
@@ -48,9 +49,7 @@ export default class MiniProgramEnv {
             if (!url.startsWith(this.coreBaseUrl)) {
                 url = this.coreBaseUrl + url;
             }
-            if (this.requestToken) {
-                header = Object.assign(Object.assign({}, header), { 'authorization': `${this.requestToken}` });
-            }
+            header = Object.assign(Object.assign(Object.assign({}, header), (this.requestToken && { 'authorization': `${this.requestToken}` })), (this.deviceId && { 'X-Legacy-Did': `${this.deviceId}` }));
             this.fetchCore.request({
                 url,
                 method,

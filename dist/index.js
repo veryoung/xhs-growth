@@ -15,6 +15,7 @@ export class Core {
         this.isDebugger = false;
         /** 活动id */
         this.activityId = '';
+        this.deviceId = '';
         this.task = new TaskBus(this);
     }
     init(config) {
@@ -25,12 +26,14 @@ export class Core {
             // 初始化活动id
             this.activityId = config.activityId;
             this.isDebugger = (_a = config.isDebugger) !== null && _a !== void 0 ? _a : false;
+            this.deviceId = config.deviceId || '';
             // 初始化环境
             this.env = createEnvironment(config.platform, {
                 fetchCore: config.fetchCore,
                 isDebugger: config.isDebugger,
                 activityId: config.activityId,
                 baseUrl: config.baseUrl,
+                deviceId: config.deviceId,
             });
             yield this.env.init();
             return this;

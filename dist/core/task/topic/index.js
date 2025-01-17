@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView } from "../../../utils/url";
+import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
 export class TopicTask {
     viewTopic(taskMetaId, triggerMetaInfo) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22,15 +22,16 @@ export class TopicTask {
                             msg: '任务领取错误',
                         };
                     }
+                    //using JSON.parse fixing possible errors
                     const fliteredTriggerMetaData = filterTriggerMetaData((_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta);
                     const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData;
                     switch (action) {
                         case 'SIMPLE_VIEW':
                             return handleOnlyView(triggerCondition, res.data.instanceId);
                         case 'VIEW_COUNT_NUM':
-                            return {};
+                            return handleViewWithCountParams(res.data.instanceId, viewAttribute, 2);
                         case 'VIEW_COUNT_TIME':
-                            return {};
+                            return handleViewWithCountParams(res.data.instanceId, viewAttribute, 1);
                     }
                 }
                 return {

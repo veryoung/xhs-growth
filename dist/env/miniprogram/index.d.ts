@@ -4,6 +4,7 @@ export default class MiniProgramEnv {
     private coreBaseUrl;
     private activityId;
     private requestToken;
+    private deviceId;
     constructor(config: EnvConfig);
     go(path: string, params?: NavigateParams): void;
     fetch(method: string, url: string, data?: object, header?: object): Promise<unknown>;
