@@ -110,8 +110,7 @@ export const handleViewWithCountParams = async (instanceId: string, viewAttribut
   })
   .map(([key, value]) => `${key}=${value}`)
   .join('&')
-  const serializedQueryParams = encodeURIComponent(queryParams)
-  const path = `${baseUrlForView}${serializedQueryParams}`
+  const path = `${baseUrlForView}${queryParams}`
   console.log("🚀 ~ handleViewNum ~ path:", path)
   go(path, {
     type: 'deeplink',
