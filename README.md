@@ -218,6 +218,7 @@ growthCore.task.follow.takeFollow('202501131142').then((res) => {
 话题任务相关方法
 - `viewTopic(taskMetaId:string, triggerMetaInfo?: ItriggerMeta)`: 查看话题
 ```typescript
+//接受普通浏览话题页，浏览计时，浏览计次的功能
 interface inputParams{
   taskMetaId:string // 任务元信息
   triggerMetaInfo?: ItriggerMeta //跳过领取任务需要完成任务选填内容，如果不需要为空
