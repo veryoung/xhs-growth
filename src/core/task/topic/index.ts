@@ -1,6 +1,6 @@
 import { ItriggerMeta } from "../../../types";
 import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
-import GrowthCore from "../../../index";
+
 export class TopicTask {
   async viewTopic(taskMetaId: string, triggerMetaInfo?: ItriggerMeta) {
     try {
