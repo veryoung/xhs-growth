@@ -103,16 +103,36 @@ App({
 #### init(config) 初始化 SDK
 
 ###### config 参数说明
-    
-| 参数名 | 类型 | 说明 | 必填 |
-|--------|------|------|------|
-| platform | `'webview'` \| `'miniprogram'` \| `'rn'` | 平台标识（-webview  h5页面 -miniprogram  小程序 -rn  ReactNAtive应用） | 是 |
-| appId | string | 应用标识 | 是 |
-| fetchCore | any | 请求实例 | 是 |
-| activityId | string | 活动 ID | 是 |
-| isDebugger | boolean | 是否开启测试模式 | 否 |
-| baseUrl | string | API 基础地址 | 否 |
-| deviceId | string | 设备Id | 否 |
+```typescript
+interface inputParams {
+  platform: string //平台类型, 'miniprogram'|'rn'|'webview'
+  appId: string //小程序标识码
+  fetchCore: any // 当前平台请求实例
+  activityId: string //小程序名称
+  deviceId: string //当前设备信息
+  isdebugger: boolean//当前运行环境 true:beta | false:prod
+  baseUrl?: string//测试环境接口调用基地址，选填
+}
+//usage
+import growthCore from '@veryoung/xhs-growth';
+
+let core = null
+
+onLoad(async () => {
+  // console.log(GrowthCore)
+
+  core = await growthCore.init({
+    platform: 'miniprogram',
+    appId: '677d1625993c2f0001fe0778',
+    fetchCore: xhs,
+    isDebugger: false,
+    activityId: 'inner',
+    deviceId: 'aaad3838-9262-37eb-8afa-e881e9ceaf38',
+  })
+  console.log('1a11', core)
+})
+```    
+
 
 #### getUserType() 获取用户类型
 用户类型说明：
@@ -137,6 +157,7 @@ App({
     | instanceId | string | 任务实例ID |
     | taskType | string | 任务类型 |
     | progress | string | 进度 |
+    | taskStauts | string | 任务状态 | 
     | expireTime | string | 失效时间 |
     | triggerMeta | object | 任务信息 |
     | triggerMeta.triggerCondition | array | 根据任务类型返回不同的ID集合：关注任务返回关注userId、发布笔记任务返回话题ID、浏览任务返回pageId |
@@ -221,7 +242,7 @@ growthCore.task.follow.takeFollow('202501131142').then((res) => {
 //接受普通浏览话题页，浏览计时，浏览计次的功能
 interface inputParams{
   taskMetaId:string // 任务元信息
-  triggerMetaInfo?: ItriggerMeta //跳过领取任务需要完成任务选填内容，如果不需要为空
+  triggerMetaInfo?: ItriggerMeta //选填任务信息 'UNCLAIMED‘：不需要要填写 ’UNFINISHED‘: 可传入
 }
 
 interface ItriggerMeta {
@@ -238,12 +259,12 @@ growthCore.init({
   //neededParams
 })
 
-//useType1
+//useType1 growthCore.getTaskList().[n].taskStaTus:UNCLAIMED
 growthCore.task.topic.viewTopic('2025011411').then((res) => {
   console.log("res: ",res)//返回任务领取结果
 })
 
-//useType2
+//useType2 growthCore.getTaskList().[n].taskStaTus:UNFINISHED
 const metaInfo = {
   action: 'VIEW_COUNT_NUM',
   triggerCondition: '["62db0ed71d27af0001b4a199"]',
