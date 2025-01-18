@@ -75,6 +75,7 @@ export default class MiniProgramEnv {
     init() {
         return __awaiter(this, void 0, void 0, function* () {
             const { code } = yield xhs.login();
+            console.log("🚀 ~ MiniProgramEnv ~ init ~ code:", code);
             if (!code) {
                 throw new Error('请完成小程序登录');
             }

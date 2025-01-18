@@ -8,7 +8,7 @@ declare namespace XHS {
     login(): LoginResult;
     navigateTo(options: any): void;
     openXhsDeeplink(options: any): void;
-    // 可以根据需要添加更多 SDK 方法
+    checkSession(options?: any): void;
   }
 }
 

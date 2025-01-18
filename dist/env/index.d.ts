@@ -13,5 +13,5 @@ export declare function createEnvironment(platform: Platform, config: {
     baseUrl?: string;
     /** 设备id */
     deviceId?: string;
-}): WebviewEnv | MiniProgramEnv | RNEnv;
+}): MiniProgramEnv | WebviewEnv | RNEnv;
 //# sourceMappingURL=index.d.ts.map

@@ -28,6 +28,8 @@ export class PublishNotesTask  {
     if (res.code !== 0) {
       return res;
     }
+
+    const url = `yingzheng.xiaohongshu.com/miniprogram?acitvityid=${this.core.activityId}&acitivityType=${this.core.acitivityId}`
     const topicId = res?.data?.triggerMeta?.triggerCondition;
     const topicIds = JSON.parse(topicId);
     const idStr = topicIds?.map((id: string) => ({ page_id: id.trim() }));
@@ -35,6 +37,7 @@ export class PublishNotesTask  {
       attach: { topics: idStr },
       config: {
         is_post_jump: 0,
+        callback: `xhsdiscover://webview/${url}&from=post`,
       },
     })
     go(publishNotePage, {

@@ -18,7 +18,6 @@ export class TopicTask {
         //using JSON.parse fixing possible errors
         const fliteredTriggerMetaData = filterTriggerMetaData(res.data?.triggerMeta)
         const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData
-        GrowthCore.env.init()
         switch (action) {
           case 'SIMPLE_VIEW':
             return handleOnlyView(triggerCondition, res.data.instanceId)

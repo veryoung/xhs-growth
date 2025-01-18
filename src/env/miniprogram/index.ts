@@ -81,6 +81,7 @@ export default class MiniProgramEnv {
 
   async init() {
     const { code } = await xhs.login();
+    console.log("🚀 ~ MiniProgramEnv ~ init ~ code:", code)
     if(!code) {
       throw new Error('请完成小程序登录');
     }
