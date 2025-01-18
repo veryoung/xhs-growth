@@ -1,5 +1,6 @@
 import { NavigateParams, EnvConfig, UserTypeResponse } from "../../types";
 import { httpConfig } from "../../config/http.config";
+import GrowthCore from "../../index";
 
 export default class MiniProgramEnv {
   private fetchCore: any;
@@ -80,11 +81,17 @@ export default class MiniProgramEnv {
   }
 
   async init() {
-    const { code } = await xhs.login();
-    if(!code) {
+    let currentCode = GrowthCore.code;
+    // 没有设置code，则获取code
+    if(!currentCode) {
+      const { code } = await xhs.login();
+      GrowthCore.setCode(code)
+      currentCode = code;
+    }
+    if(!currentCode) {
       throw new Error('请完成小程序登录');
     }
-    await this.setAuthorization(code);
+    await this.setAuthorization(currentCode);
   }
 
   /** 设置授权 */

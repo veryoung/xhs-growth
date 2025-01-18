@@ -15,17 +15,31 @@ export declare class Core {
     task: TaskBus;
     /** 请求核心 */
     fetchCore: any;
+    /** 外部设置的code */
+    code: string;
+    /** 设备id */
     deviceId: string;
     constructor();
     init(config: Config): Promise<this>;
     go(path: string, params?: NavigateParams): any;
     fetch(method: string, url: string, data?: object, header?: object): any;
     getUserType(): Promise<any>;
+    /** 外部重新设置code
+     *  因小程序登录后，code会失效，需要重新设置
+     *  如果外部未设置code，core核心会自动设置code, 如果外部设置code，则外部设置的code会覆盖core核心设置的code
+     */
+    setCode(code: string): void;
     getRequestToken(): any;
 }
 /** 导出跳转方法 */
 export declare const go: (path: string, params?: NavigateParams) => any;
+/** 获取用户类型 */
 export declare const getUserType: () => Promise<any>;
+/** 外部重新设置code
+ *  因小程序登录后，code会失效，需要重新设置
+ *  如果外部未设置code，core核心会自动设置code, 如果外部设置code，则外部设置的code会覆盖core核心设置的code
+ */
+export declare const setCode: (code: string) => void;
 declare const _default: Core;
 export default _default;
 //# sourceMappingURL=index.d.ts.map

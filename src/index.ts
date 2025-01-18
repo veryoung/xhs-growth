@@ -17,7 +17,9 @@ export class Core {
   public task!: TaskBus;
   /** 请求核心 */
   public fetchCore: any;
-
+  /** 外部设置的code */
+  public code: string = '';
+  /** 设备id */
   public deviceId: string = '';
 
   constructor() {
@@ -54,7 +56,15 @@ export class Core {
   public async getUserType() {
     return await this.env.getUserType();
   }
-  
+
+  /** 外部重新设置code
+   *  因小程序登录后，code会失效，需要重新设置
+   *  如果外部未设置code，core核心会自动设置code, 如果外部设置code，则外部设置的code会覆盖core核心设置的code
+   */
+  public setCode(code: string) {
+    this.code = code;
+  }
+
   public getRequestToken() {
     return this.env.getRequestToken();
   }
@@ -74,8 +84,17 @@ export const go = (path: string, params?: NavigateParams) => {
   return GrowthCore().go(path, params);
 }
 
+/** 获取用户类型 */
 export const getUserType = () => {
   return GrowthCore().getUserType();
+}
+
+/** 外部重新设置code
+ *  因小程序登录后，code会失效，需要重新设置
+ *  如果外部未设置code，core核心会自动设置code, 如果外部设置code，则外部设置的code会覆盖core核心设置的code
+ */
+export const setCode = (code: string) => {
+  return GrowthCore().setCode(code);
 }
 
 export default GrowthCore();

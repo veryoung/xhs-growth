@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { httpConfig } from "../../config/http.config";
+import GrowthCore from "../../index";
 export default class MiniProgramEnv {
     constructor(config) {
         this.fetchCore = config.fetchCore;
@@ -74,11 +75,17 @@ export default class MiniProgramEnv {
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
-            const { code } = yield xhs.login();
-            if (!code) {
+            let currentCode = GrowthCore.code;
+            // 没有设置code，则获取code
+            if (!currentCode) {
+                const { code } = yield xhs.login();
+                GrowthCore.setCode(code);
+                currentCode = code;
+            }
+            if (!currentCode) {
                 throw new Error('请完成小程序登录');
             }
-            yield this.setAuthorization(code);
+            yield this.setAuthorization(currentCode);
         });
     }
     /** 设置授权 */
