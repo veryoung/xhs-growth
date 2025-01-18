@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
+import GrowthCore from "../../../index";
 export class TopicTask {
     viewTopic(taskMetaId, triggerMetaInfo) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -25,6 +26,7 @@ export class TopicTask {
                     //using JSON.parse fixing possible errors
                     const fliteredTriggerMetaData = filterTriggerMetaData((_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta);
                     const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData;
+                    GrowthCore.env.init();
                     switch (action) {
                         case 'SIMPLE_VIEW':
                             return handleOnlyView(triggerCondition, res.data.instanceId);

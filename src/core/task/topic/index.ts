@@ -1,6 +1,6 @@
 import { ItriggerMeta } from "../../../types";
 import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
-
+import GrowthCore from "../../../index";
 export class TopicTask {
   async viewTopic(taskMetaId: string, triggerMetaInfo?: ItriggerMeta) {
     try {
@@ -18,6 +18,7 @@ export class TopicTask {
         //using JSON.parse fixing possible errors
         const fliteredTriggerMetaData = filterTriggerMetaData(res.data?.triggerMeta)
         const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData
+        GrowthCore.env.init()
         switch (action) {
           case 'SIMPLE_VIEW':
             return handleOnlyView(triggerCondition, res.data.instanceId)

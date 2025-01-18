@@ -107,6 +107,8 @@ export const handleViewWithCountParams = async (instanceId: string, viewAttribut
     totalSize: viewAttribute.totalSize,
     type: 'xhsCore',
     token: GrowthCore.getRequestToken(),
+    fullscreen: 'true',
+    disableNativeLoading: 'yes',
   })
   .map(([key, value]) => `${key}=${value}`)
   .join('&')
