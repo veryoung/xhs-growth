@@ -28,13 +28,9 @@ export default class MiniProgramEnv {
             return;
         }
         if ((params === null || params === void 0 ? void 0 : params.type) === 'url') {
-            // 去掉https://
             const url = path.replace('https://', '');
-            // 分离url和query
             const [urlPath, query] = url.split('?');
-            // 添加xhsdiscover://webview/
             const deeplink = `xhsdiscover://webview/${urlPath}?${decodeURIComponent(query)}`;
-            // 实现小程序的跳转逻辑
             xhs.openXhsDeeplink({
                 link: deeplink,
                 success: params === null || params === void 0 ? void 0 : params.success,
@@ -76,7 +72,6 @@ export default class MiniProgramEnv {
     init() {
         return __awaiter(this, void 0, void 0, function* () {
             let currentCode = GrowthCore.code;
-            // 没有设置code，则获取code
             if (!currentCode) {
                 const { code } = yield xhs.login();
                 GrowthCore.setCode(code);
@@ -88,10 +83,8 @@ export default class MiniProgramEnv {
             yield this.setAuthorization(currentCode);
         });
     }
-    /** 设置授权 */
     setAuthorization(code) {
         return __awaiter(this, void 0, void 0, function* () {
-            // 实现小程序的授权逻辑
             const res = yield this.fetch('POST', httpConfig.API_LIST.login, {
                 code: code,
             });
@@ -121,4 +114,3 @@ export default class MiniProgramEnv {
         return this.requestToken;
     }
 }
-//# sourceMappingURL=index.js.map

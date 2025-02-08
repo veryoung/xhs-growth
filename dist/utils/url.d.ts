@@ -1,4 +1,3 @@
-/** 携带挂件进行跳转 */
 import { QueryParams } from "../types/index";
 import { ItriggerMeta } from "../types/index";
 export declare const handleGoWithCountView: (url: string, h5Url: string) => void;

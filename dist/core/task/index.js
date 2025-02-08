@@ -22,7 +22,6 @@ export class TaskBus {
         this.inviteFriends = new InviteFriendsTask(this.core);
         this.topic = new TopicTask();
     }
-    /** 获取任务列表 */
     getTaskList() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield GrowthCore.fetch('GET', httpConfig.API_LIST.taskTable);
@@ -50,7 +49,6 @@ export class TaskBus {
             return res;
         });
     }
-    /** 轮询任务 */
     polling(group) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
@@ -59,7 +57,6 @@ export class TaskBus {
             return res;
         });
     }
-    /** 查询任务记录 */
     queryRecord(limit) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
@@ -68,9 +65,7 @@ export class TaskBus {
             return res;
         });
     }
-    /** 轮询任务完成通知 */
     startNotification(callback) {
         return openNotification(this.polling, callback);
     }
 }
-//# sourceMappingURL=index.js.map

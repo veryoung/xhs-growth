@@ -22,7 +22,6 @@ export class TopicTask {
                             msg: '任务领取错误',
                         };
                     }
-                    //using JSON.parse fixing possible errors
                     const fliteredTriggerMetaData = filterTriggerMetaData((_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta);
                     const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData;
                     switch (action) {
@@ -46,4 +45,3 @@ export class TopicTask {
         });
     }
 }
-//# sourceMappingURL=index.js.map

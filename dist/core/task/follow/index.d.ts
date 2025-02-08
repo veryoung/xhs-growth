@@ -1,8 +1,7 @@
 export declare class FollowTask {
-    /** 关注 */
-    takeFollow(taskMetaId: string): Promise<{
+    takeFollow(taskMetaId: string, isAutoFollow?: boolean): Promise<{
         code: any;
         msg: any;
-    }>;
+    } | undefined>;
 }
 //# sourceMappingURL=index.d.ts.map

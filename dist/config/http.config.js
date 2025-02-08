@@ -4,7 +4,6 @@ export const httpConfig = {
         production: 'https://edith.xiaohongshu.com',
     },
     BASE_CONFIG: {
-        // default http config
         defaults: {
             transform: true,
             timeout: 100000,
@@ -20,4 +19,3 @@ export const httpConfig = {
         qureyRecord: '/api/growth/haydn/{activityId}/fission/record',
     }
 };
-//# sourceMappingURL=http.config.js.map

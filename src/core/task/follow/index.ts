@@ -1,4 +1,4 @@
-import { TaskStatus } from "../../../types/task.d";
+import { TaskStatus } from "../../../types/task";
 import GrowthCore, { go } from "../../../index";
 
 export class FollowTask {
@@ -7,9 +7,9 @@ export class FollowTask {
     try {
       const res = await GrowthCore.task.claimTask(taskMetaId)
       if (res.code === 0) {
-        const { taskStatus, triggerCondition } = res.data
-        if(taskStatus === TaskStatus.UNFINISHED && isAutoFollow) { 
-          const ids = JSON.parse(triggerCondition)
+        const { taskStatus, triggerMeta } = res.data
+        if(taskStatus === TaskStatus.UNFINISHED && isAutoFollow && triggerMeta) { 
+          const ids = JSON.parse(triggerMeta.triggerCondition)
           go(`xhsdiscover://user/${ids[0]}`, {
             type: 'deeplink',
             success: (res) => {
