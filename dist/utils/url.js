@@ -27,7 +27,7 @@ export const handleGoWithCountView = (url, h5Url) => {
     });
 };
 export const countPageBaseUrl = (isDebugger) => {
-    return isDebugger ? 'https://yingzheng.beta.xiaohongshu.com/growth' : 'https://yingzheng.xiaohongshu.com/growth';
+    return isDebugger ? 'https://miniprogram.beta.xiaohongshu.com/growth' : 'https://miniprogram.xiaohongshu.com/growth';
 };
 export const getQueryString = (query) => {
     return Object.keys(query).map(key => `${key}=${query[key]}`).join('&');

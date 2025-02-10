@@ -82,3 +82,15 @@ export interface ItriggerMeta {
   }
   instanceId?: string;
 }
+
+/** 防封返回的链接 */
+export interface IStrategyResult {
+  // 处理后的 url，当前返回值一定是个 url，可以是原链接、处理后的 url、短链 等
+  url: string
+  // 原始 url，只有当开启短链时会返回（即 短链对应的原始 url）
+  realUrl?: string
+  // 只有开启口令策略时才会生效，返回此字段，且如果口令返回无效，请使用 url 参数或自己兜底
+  commandString?: string
+
+  strategyType: number // 防封的标识，当返回 99 时，标识所有防封策略均失效
+}

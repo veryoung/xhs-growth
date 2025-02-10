@@ -25,10 +25,17 @@ export class InviteFriendsTask {
     const res = await GrowthCore.task.claimTask(taskMetaId);
     if(res.code === 0) {
       const { data: { extra: { shareCode }, instanceId } } = res;
-        let path = `https://yingzheng.xiaohongshu.com/miniprogram?shareCode=${shareCode}&instanceid=${instanceId}&activityId=${this.core.activityId}&activityType=${this.core.activityId}`;
+      let path = `https://miniprogram.xiaohongshu.com/miniprogram/entry?shareCode=${shareCode}&instanceid=${instanceId}&activityId=${this.core.activityId}&activityType=${this.core.activityId}`;
       if(extraQuery) {
         path += `&${getQueryString(extraQuery)}`;
       }
+      const strategyUrls = await GrowthCore.task.getAntiBannedStrategyUrl(path);
+      console.log('原分享路径：', strategyUrls[1]);
+      console.log('应用路径：', strategyUrls[0]);
+      if(strategyUrls[0] !== strategyUrls[1]) {
+        path = strategyUrls[0]
+      }
+      // todo: 降级口令，目前没有这个可能性
       return {
         ...res,
         data: {

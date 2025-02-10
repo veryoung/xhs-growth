@@ -1,8 +1,10 @@
 /** 携带挂件进行跳转 */
-import { QueryParams } from "../types/index";
+import { IStrategyResult, QueryParams } from "../types/index";
 import { go } from "../index";
 import GrowthCore from "../index";
 import { eventMissionType, ItriggerMeta } from "../types/index";
+
+
 
 export const handleGoWithCountView = (url: string, h5Url: string) => {
   const targetURL = `xhsdiscover://webview/${h5Url}?fullscreen=true&naviHidden=yes&widget_size=60.60&widget_position=0.24&openPage=yes&widget_url=${url}`
@@ -23,7 +25,7 @@ export const handleGoWithCountView = (url: string, h5Url: string) => {
 }
 
 export const countPageBaseUrl = (isDebugger: boolean) => {
-  return isDebugger ? 'https://yingzheng.beta.xiaohongshu.com/growth' : 'https://yingzheng.xiaohongshu.com/growth'
+  return isDebugger ? 'https://miniprogram.beta.xiaohongshu.com/growth' : 'https://miniprogram.xiaohongshu.com/growth'
 }
 
 export const getQueryString = (query: QueryParams) => {

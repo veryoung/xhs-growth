@@ -17,6 +17,7 @@ export declare const httpConfig: {
         completeTask: string;
         polling: string;
         qureyRecord: string;
+        PHOENIX_URL: string;
     };
 };
 //# sourceMappingURL=http.config.d.ts.map

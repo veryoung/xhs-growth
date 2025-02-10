@@ -37,7 +37,7 @@ export class PublishNotesTask {
             if (res.code !== 0) {
                 return res;
             }
-            const url = `yingzheng.xiaohongshu.com/miniprogram?activityId=${this.core.activityId}&activityType=${this.core.activityId}`;
+            const url = `miniprogram.xiaohongshu.com/miniprogram/${this.core.activityId}/${Math.random().toString(36).slice(2)}/entry?activityId=${this.core.activityId}&activityType=${this.core.activityId}`;
             const topicId = (_b = (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.triggerMeta) === null || _b === void 0 ? void 0 : _b.triggerCondition;
             const topicIds = JSON.parse(topicId);
             const idStr = topicIds === null || topicIds === void 0 ? void 0 : topicIds.map((id) => ({ page_id: id.trim() }));

@@ -29,7 +29,7 @@ export class PublishNotesTask  {
       return res;
     }
 
-    const url = `yingzheng.xiaohongshu.com/miniprogram?activityId=${this.core.activityId}&activityType=${this.core.activityId}`
+    const url = `miniprogram.xiaohongshu.com/miniprogram/${this.core.activityId}/${Math.random().toString(36).slice(2)}/entry?activityId=${this.core.activityId}&activityType=${this.core.activityId}`
     const topicId = res?.data?.triggerMeta?.triggerCondition;
     const topicIds = JSON.parse(topicId);
     const idStr = topicIds?.map((id: string) => ({ page_id: id.trim() }));

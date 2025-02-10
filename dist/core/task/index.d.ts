@@ -17,5 +17,6 @@ export declare class TaskBus {
     private polling;
     queryRecord(limit: number): Promise<any>;
     startNotification(callback: (notification: Notification) => any): void;
+    getAntiBannedStrategyUrl(url: string): Promise<any>;
 }
 //# sourceMappingURL=index.d.ts.map

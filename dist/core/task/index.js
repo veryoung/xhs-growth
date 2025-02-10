@@ -14,6 +14,7 @@ import { TopicTask } from './topic';
 import { httpConfig } from '../../config/http.config';
 import GrowthCore from '../../index';
 import { openNotification } from '../../utils/notification';
+import { PROJECT_NAME } from '../../const/index';
 export class TaskBus {
     constructor(core) {
         this.core = core;
@@ -67,5 +68,37 @@ export class TaskBus {
     }
     startNotification(callback) {
         return openNotification(this.polling, callback);
+    }
+    getAntiBannedStrategyUrl(url) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const start = Date.now();
+            const params = {
+                projectName: PROJECT_NAME,
+                url: url,
+                needRealUrl: true
+            };
+            try {
+                const resoponse = yield GrowthCore.fetch('POST', httpConfig.API_LIST.PHOENIX_URL, params, {});
+                const res = resoponse.data;
+                console.log('getAntiBannedStrategyUrl end', Date.now() - start);
+                const url = res.url || res.realUrl || params.url;
+                let realUrl = res.realUrl || params.url;
+                if (res.strategyType === 99) {
+                    realUrl = params.url;
+                }
+                if (params.needRealUrl) {
+                    return [url, realUrl];
+                }
+                return res.url || res.realUrl || params.url;
+            }
+            catch (error) {
+                console.log('防封接口 => [error]', error);
+            }
+            const returnUrl = `${params.url}&useRealUrl=1`;
+            if (params.needRealUrl) {
+                return [returnUrl, returnUrl];
+            }
+            return returnUrl;
+        });
     }
 }

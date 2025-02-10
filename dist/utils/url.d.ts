@@ -1,7 +1,7 @@
 import { QueryParams } from "../types/index";
 import { ItriggerMeta } from "../types/index";
 export declare const handleGoWithCountView: (url: string, h5Url: string) => void;
-export declare const countPageBaseUrl: (isDebugger: boolean) => "https://yingzheng.beta.xiaohongshu.com/growth" | "https://yingzheng.xiaohongshu.com/growth";
+export declare const countPageBaseUrl: (isDebugger: boolean) => "https://miniprogram.beta.xiaohongshu.com/growth" | "https://miniprogram.xiaohongshu.com/growth";
 export declare const getQueryString: (query: QueryParams) => string;
 export declare const setTaskNeedInfo: (taskMetaId: string, triggerMetaInfo?: ItriggerMeta) => Promise<any>;
 export declare const filterTriggerMetaData: (triggerMeta: ItriggerMeta) => Record<string, any>;

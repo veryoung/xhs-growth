@@ -61,4 +61,10 @@ export interface ItriggerMeta {
     };
     instanceId?: string;
 }
+export interface IStrategyResult {
+    url: string;
+    realUrl?: string;
+    commandString?: string;
+    strategyType: number;
+}
 //# sourceMappingURL=index.d.ts.map
