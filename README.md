@@ -29,8 +29,11 @@ pnpm add @veryoung/xhs-growth
 ```typescript
 import GrowthCore from '@veryoung/xhs-growth';
 
-// 初始化配置
-GrowthCore.init(config);
+/**
+ * 必须等待init完成
+ */
+const confing = await GrowthCore.init(config);
+
 ```
 
 ## 在不同框架中使用
@@ -69,9 +72,10 @@ import growthCore from '@veryoung/xhs-growth';
 export default defineComponent({
   name: 'TaskComponent',
   mounted() {
-    growthCore.init({
+    await growthCore.init({
       platform: 'webview',
     });
+    this.handleStartTask();
   },
   methods: {
     handleStartTask() {
@@ -88,8 +92,8 @@ export default defineComponent({
 import growthCore from '@veryoung/xhs-growth';
 
 App({
-  onLaunch() {
-    growthCore.init({
+  async onLaunch() {
+    await growthCore.init({
       platform: 'miniprogram',
     });
   }
@@ -125,7 +129,6 @@ onLoad(async () => {
     platform: 'miniprogram',
     appId: '677d1625993c2f0001fe0778',
     fetchCore: xhs,
-    isDebugger: false,
     activityId: 'inner',
     deviceId: 'aaad3838-9262-37eb-8afa-e881e9ceaf38',
   })
