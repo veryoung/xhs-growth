@@ -63,9 +63,6 @@ const GrowthCore = () => {
 export const go = (path, params) => {
     return GrowthCore().go(path, params);
 };
-export const getUserType = () => {
-    return GrowthCore().getUserType();
-};
 export const setCode = (code) => {
     return GrowthCore().setCode(code);
 };

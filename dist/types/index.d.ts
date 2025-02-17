@@ -36,9 +36,15 @@ export interface ViewTopicParams {
     asc?: number;
     totalSize?: number;
 }
+export declare enum UserType {
+    NEW = "NEW",
+    RECALL = "RECALL",
+    REVIVE = "REVIVE",
+    ACTIVE = "ACTIVE"
+}
 export interface UserTypeResponse {
     data: {
-        userType: string;
+        userType: UserType;
     };
 }
 export type QueryParams = {

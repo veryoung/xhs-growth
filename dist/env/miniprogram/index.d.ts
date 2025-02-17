@@ -1,4 +1,4 @@
-import { NavigateParams, EnvConfig } from "../../types";
+import { NavigateParams, EnvConfig, UserType } from "../../types";
 export default class MiniProgramEnv {
     private fetchCore;
     private coreBaseUrl;
@@ -10,7 +10,7 @@ export default class MiniProgramEnv {
     fetch(method: string, url: string, data?: object, header?: object): Promise<unknown>;
     init(): Promise<void>;
     setAuthorization(code: string): Promise<void>;
-    getUserType(): Promise<string>;
+    getUserType(): Promise<UserType | ''>;
     getActivityId(): string;
     getRequestToken(): any;
 }

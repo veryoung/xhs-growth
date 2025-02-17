@@ -53,9 +53,20 @@ export interface ViewTopicParams {
   totalSize?: number;
 }
 
+export enum UserType {
+  /** 新用户 */
+  NEW = 'NEW',
+  /** 召回用户 */
+  RECALL = 'RECALL',
+  /** 拉活用户 */
+  REVIVE = 'REVIVE',
+  /** 老用户 */
+  ACTIVE = 'ACTIVE'
+}
+
 export interface UserTypeResponse {
   data: {
-    userType: string;
+    userType: UserType;
   }
 }
 

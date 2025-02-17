@@ -1,12 +1,11 @@
 # XHS Growth Core SDK
 
-Growth Core SDK 是一个跨平台的成长体系核心库，支持 Webview、小程序和 React Native 等多个平台，提供统一的任务管理和权益系统接口。
+Growth Core SDK 是一个跨平台的成长体系核心库，支持 Webview、小程序和 React Native 等多个平台，提供统一的任务管理能力。
 
 ## 特性
 
-- 🎯 跨平台支持（Webview、小程序、React Native）
+- 🎯 跨平台支持（Webview、小红书小程序、React Native）
 - 🔄 统一的任务管理系统
-- 🎁 完整的权益系统
 - 📱 平台无关的路由跳转
 - 💡 TypeScript 支持
 - 🔒 单例模式确保全局状态一致
@@ -30,10 +29,10 @@ pnpm add @veryoung/xhs-growth
 import GrowthCore from '@veryoung/xhs-growth';
 
 /**
- * 必须等待init完成
+ * init 方法是一个异步函数
+ * 所有方法必须等待init完成
  */
-const confing = await GrowthCore.init(config);
-
+await GrowthCore.init(config);
 ```
 
 ## 在不同框架中使用
@@ -42,22 +41,22 @@ const confing = await GrowthCore.init(config);
 
 ```typescript
 import React, { useEffect } from 'react';
-import type { Config } from '@veryoung/xhs-growth/src/types';
+import GrowthCore from '@veryoung/xhs-growth';
 
 const TaskComponent: React.FC = () => {
-  useEffect(() => {
-    growthCore.init({
+  useEffect(async () => {
+    await GrowthCore.init({
       platform: 'webview',
     });
   }, []);
 
-  const handleStartTask = () => {
-    growthCore.task.follow.takeFollow();
-  };
+  const getTaskList = () => {
+      const list = await GrowthCore.task.getTaskList()
+  }
 
   return (
-    <button onClick={handleStartTask}>
-      关注
+    <button onClick={getTaskList}>
+      获取任务列表
     </button>
   );
 };
@@ -67,19 +66,19 @@ const TaskComponent: React.FC = () => {
 
 ```typescript
 import { defineComponent } from 'vue';
-import growthCore from '@veryoung/xhs-growth';
+import GrowthCore from '@veryoung/xhs-growth';
 
 export default defineComponent({
   name: 'TaskComponent',
   mounted() {
-    await growthCore.init({
+    await GrowthCore.init({
       platform: 'webview',
     });
-    this.handleStartTask();
+    this.getTaskList();
   },
   methods: {
-    handleStartTask() {
-        growthCore.task.follow.takeFollow();
+    async getTaskList() {
+      const list = await GrowthCore.task.getTaskList()
     },
   },
 });
@@ -89,55 +88,52 @@ export default defineComponent({
 
 ```typescript
 // app.ts
-import growthCore from '@veryoung/xhs-growth';
+import GrowthCore from '@veryoung/xhs-growth';
 
 App({
   async onLaunch() {
-    await growthCore.init({
+    await GrowthCore.init({
       platform: 'miniprogram',
     });
+    const list = await GrowthCore.task.getTaskList()
   }
 });
 ```
 
 ## API 文档
 
-### Core
+### GrowthCore 通用方法
 
-#### init(config) 初始化 SDK
+#### GrowthCore.init(config) 初始化 SDK
 
 ###### config 参数说明
 ```typescript
-interface inputParams {
+interface initParams {
   platform: string //平台类型, 'miniprogram'|'rn'|'webview'
   appId: string //小程序标识码
   fetchCore: any // 当前平台请求实例
   activityId: string //小程序名称
   deviceId: string //当前设备信息
-  isdebugger: boolean//当前运行环境 true:beta | false:prod
-  baseUrl?: string//测试环境接口调用基地址，选填
 }
 //usage
-import growthCore from '@veryoung/xhs-growth';
+import GrowthCore from '@veryoung/xhs-growth';
 
-let core = null
+let isInit = fasle
 
 onLoad(async () => {
-  // console.log(GrowthCore)
-
-  core = await growthCore.init({
+  await GrowthCore.init({
     platform: 'miniprogram',
     appId: '677d1625993c2f0001fe0778',
     fetchCore: xhs,
     activityId: 'inner',
     deviceId: 'aaad3838-9262-37eb-8afa-e881e9ceaf38',
   })
-  console.log('1a11', core)
+  isInit = true // 初始化完成
 })
 ```    
 
 
-#### getUserType() 获取用户类型
+#### GrowthCore.getUserType() 获取增长侧判断的用户类型
 用户类型说明：
 
 | 枚举值 | 类型 | 说明 |
@@ -146,13 +142,23 @@ onLoad(async () => {
 | `RECALL` | string | 召回用户 |
 | `REVIVE` | string | 拉活用户 |
 | `ACTIVE` | string | 老用户 |
+| `''` | string | 获取用户类型失败 |
 
-#### Task 任务实例
-任务管理系统，提供任务相关的功能
+```typescript
+import GrowthCore from '@veryoung/xhs-growth';
 
-- `getTaskList()` 获取任务列表
+onLoad(async () => {
+  const res = await GrowthCore.getUserType()
+  console.log('用户类型：', res)
+})
+```    
 
-  - 返回值：
+#### GrowthCore.task 任务实例
+任务相关示例，提供任务相关的功能
+
+- `GrowthCore.task.getTaskList()` 获取任务列表
+
+  - 返回值 taskItem 类型：
   
     | 参数名 | 类型 | 说明 |
     |--------|------|------|
@@ -160,19 +166,19 @@ onLoad(async () => {
     | instanceId | string | 任务实例ID |
     | taskType | string | 任务类型 |
     | progress | string | 进度 |
-    | taskStauts | string | 任务状态 | 
+    | taskStauts | string | 任务状态: 区分三种状态：1. UNFINISHED: 未完成 2.FINISHED: 已完成 3.UNCLAIMED: 未领取 备注: 每个任务都会需要领取才能生效，增长侧方法会在第一次执行任务的时候,自动领取任务并且执行对应任务 | 
     | expireTime | string | 失效时间 |
     | triggerMeta | object | 任务信息 |
-    | triggerMeta.triggerCondition | array | 根据任务类型返回不同的ID集合：关注任务返回关注userId、发布笔记任务返回话题ID、浏览任务返回pageId |
+    | triggerMeta.triggerCondition | array | 根据任务类型返回不同的ID集合，例如：关注任务返回关注userId、发布笔记任务返回话题ID、浏览任务返回pageId |
     | extra | object | 额外信息 |
     | extra.shareCode | string | 分享码 |
 
-- `queryRecord(limit: number)` 获取助力记录
+- `GrowthCore.task.queryRecord(limit: number)` 获取助力记录
   - 请求参数
 
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
-    | limit | string |单次查询的数量限制 | 是 |
+    | limit | number |单次查询数量 | 是 |
 
   - 返回值
 
@@ -181,7 +187,7 @@ onLoad(async () => {
     | avatar | string | 助力人头像 |
     | nickname | string | 助力人昵称 |
 
-- `startNotification(callback(notifications: Notification) => any)` 轮询助力记录通知
+- `GrowthCore.task.startNotification(callback(notifications: Notification) => any)` 轮询助力记录通知
   - 请求参数
 
     | 参数名 | 类型 | 说明 | 必填 |
@@ -190,35 +196,36 @@ onLoad(async () => {
 
     - Notification 类型
 
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | notificationData | object | 通知详细数据 | 是 |
-    | notificationData.taskType | string | 任务类型 | 是 |
-    | notificationData.avatarUrl | string | 用户头像地址 | 是 |
-    | notificationData.useIName | string | 用户昵称 | 是 |
-    | notificationId | string | 通知ID | 是 |
+    | 参数名 | 类型 | 说明  |
+    |--------|------|------|
+    | notificationData | object | 通知详细数据  |
+    | notificationData.taskType | string | 任务类型  |
+    | notificationData.avatarUrl | string | 用户头像地址  |
+    | notificationData.useIName | string | 用户昵称  |
+    | notificationId | string | 通知ID  |
 
-##### task.follow
+##### GrowthCore.task.follow
 关注任务相关方法
+
+###### GrowthCore.task.follow.takeFollow(taskMetaId:string) 发起关注
 - `takeFollow(taskMetaId:string)`: 发起关注
 ```typescript
-interface inputParams{
+interface taskParams{
   taskMetaId: string //任务元信息ID
 }
-//usage
-import growthCore from '@veryoung/xhs-growth';
-growthCore.init({
+import GrowthCore from '@veryoung/xhs-growth';
+GrowthCore.init({
   //neededParams
 })
-growthCore.task.follow.takeFollow('202501131142').then((res) => {
-  console.log('res: ', res)//返回任务领取结果
+GrowthCore.task.follow.takeFollow('202501131142').then((res) => {
+  console.log('res: ', res) //返回任务状态
 })
 ```
 
-##### task.publishNotes
+##### GrowthCore.task.publishNotes
 笔记任务相关方法
 
-- `publish(taskMetaId: string)` 发布笔记
+- `GrowthCore.task.publishNotes.publish(taskMetaId: string)` 发布笔记
   - 参数
 
     | 参数名 | 类型 | 说明 | 必填 |
@@ -227,25 +234,25 @@ growthCore.task.follow.takeFollow('202501131142').then((res) => {
 
   - 返回值
 
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | topicId | string | 笔记话题ID | 是 |
+    | 参数名 | 类型 | 说明 |
+    |--------|------|-----|
+    | topicId | string | 笔记话题ID |
 
-- `onlyPublish(topicIdList: string[])`: 仅发布笔记
+- `GrowthCore.task.publishNotes.onlyPublish(topicIdList: string[])`: 仅发布笔记,不进行任务完成
   - 参数
 
     | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
+    |--------|------|------|------| 
     | topicIdList | string[] | 话题ID列表 | 是 |
 
-##### task.topic
+##### GrowthCore.task.topic
 话题任务相关方法
-- `viewTopic(taskMetaId:string, triggerMetaInfo?: ItriggerMeta)`: 查看话题
+- `GrowthCore.task.topic.viewTopic(taskMetaId:string, triggerMetaInfo?: ItriggerMeta)`: 查看话题
 ```typescript
-//接受普通浏览话题页，浏览计时，浏览计次的功能
-interface inputParams{
+// 进行普通浏览话题页，浏览计时，浏览计次的功能
+interface taskParams{
   taskMetaId:string // 任务元信息
-  triggerMetaInfo?: ItriggerMeta //选填任务信息 'UNCLAIMED‘：不需要要填写 ’UNFINISHED‘: 可传入
+  triggerMetaInfo?: ItriggerMeta 
 }
 
 interface ItriggerMeta {
@@ -256,40 +263,32 @@ interface ItriggerMeta {
   } // 该对象可以通过获取任务列表接口直接填充
   instanceId?: string // 任务实例id
 }
-//usage
 import growthCore from '@veryoung/xhs-growth';
-growthCore.init({
-  //neededParams
-})
 
-//useType1 growthCore.getTaskList().[n].taskStaTus:UNCLAIMED
+// 使用类型方法1: 直接传入任务元ID
 growthCore.task.topic.viewTopic('2025011411').then((res) => {
   console.log("res: ",res)//返回任务领取结果
 })
-
-//useType2 growthCore.getTaskList().[n].taskStaTus:UNFINISHED
+// 使用类型方法2: 按格式自定义参数传入，可以指定任务效果
 const metaInfo = {
   action: 'VIEW_COUNT_NUM',
   triggerCondition: '["62db0ed71d27af0001b4a199"]',
   viewAttribute: '{"singleNoteViewTime":15,"totalSize":45}',
-}// const index = n
-// const metaInfo euqals to growthCore.getTaskList().[n].triggerMeta
+}
 
 growthCore.task.topic.viewTopic('202501152058', {
   instanceId: '14684',
   triggerMeta: metaInfo,
 }).then((res) => {
-  ans6.value = res
   console.log('res: ', res)
 }).catch((err) => {
-  ans6.value = err
   console.log('err: ', err)
 })
 ```
 
-#### task.inviteFriends
+#### GrowthCore.task.inviteFriends
 好友助力任务相关方法
-- `shareFriends (taskMetaId: string, extraQuery?: any)` 分享邀请助力任务
+- `GrowthCore.task.inviteFriends.shareFriends (taskMetaId: string, extraQuery?: any)` 分享邀请助力任务
   - 请求参数
   
     | 参数名 | 类型 | 说明 | 必填 |
@@ -299,12 +298,12 @@ growthCore.task.topic.viewTopic('202501152058', {
   
   - 返回值
 
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | path | string | 分享页url | 是 |
+    | 参数名 | 类型 | 说明 |
+    |--------|------|------|
+    | path | string | 分享页url |
 
   
-- `completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
+- `GrowthCore.task.inviteFriends.completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
   - 请求参数，instanceId 和 shareCode 可以从分享页url的query中获取
   
     | 参数名 | 类型 | 说明 | 必填 |

@@ -1,4 +1,4 @@
-import { NavigateParams, EnvConfig, UserTypeResponse } from "../../types";
+import { NavigateParams, EnvConfig, UserTypeResponse, UserType } from "../../types";
 import { httpConfig } from "../../config/http.config";
 import GrowthCore from "../../index";
 
@@ -104,7 +104,7 @@ export default class MiniProgramEnv {
     this.requestToken = res.data.authorization;
   }
 
-  async getUserType() {
+  async getUserType(): Promise<UserType | ''> {
     try {
       const res = await this.fetch('POST', httpConfig.API_LIST.userType) as UserTypeResponse;
       if(res?.data?.userType) {

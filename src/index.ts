@@ -1,5 +1,5 @@
 import { TaskBus } from './core/task';
-import { Config, NavigateParams } from './types';
+import { Config, NavigateParams, UserType } from './types';
 import { createEnvironment } from './env';
 
 export class Core {
@@ -53,7 +53,7 @@ export class Core {
     return this.env.fetch(method, url, data, header);
   }
 
-  public async getUserType() {
+  public async getUserType(): Promise<UserType | ''> {
     return await this.env.getUserType();
   }
 
@@ -82,11 +82,6 @@ const GrowthCore = () => {
 /** 导出跳转方法 */
 export const go = (path: string, params?: NavigateParams) => {
   return GrowthCore().go(path, params);
-}
-
-/** 获取用户类型 */
-export const getUserType = () => {
-  return GrowthCore().getUserType();
 }
 
 /** 外部重新设置code

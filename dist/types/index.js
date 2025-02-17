@@ -7,3 +7,10 @@ export var eventMissionType;
     eventMissionType["SEARCH_NOTE"] = "SEARCH_NOTE";
     eventMissionType["INVITE_ASSIST"] = "INVITE_ASSIST";
 })(eventMissionType || (eventMissionType = {}));
+export var UserType;
+(function (UserType) {
+    UserType["NEW"] = "NEW";
+    UserType["RECALL"] = "RECALL";
+    UserType["REVIVE"] = "REVIVE";
+    UserType["ACTIVE"] = "ACTIVE";
+})(UserType || (UserType = {}));
