@@ -57,6 +57,7 @@ class NotificationPoller {
             }
             catch (error) {
                 console.error('executeNotifications error:', error);
+                // 如果出现错误，等待一段时间后重试
                 if (this.lastAnimationFrameId !== null) {
                     setTimeout(() => {
                         this.executeNotifications();
@@ -69,6 +70,7 @@ class NotificationPoller {
         if (this.lastAnimationFrameId) {
             return;
         }
+        // console.log('启动通知轮询，间隔:', this.interval, 'ms')
         this.executeNotifications();
         this.lastExecutionTime = new Date().getTime();
         this.lastAnimationFrameId = setTimeout(this.scheduleNextExecution, this.interval);
@@ -87,3 +89,4 @@ export const openNotification = (polling, callback) => {
         poller.start();
     }
 };
+//# sourceMappingURL=notification.js.map

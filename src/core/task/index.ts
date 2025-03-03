@@ -3,10 +3,12 @@ import { PublishNotesTask } from './publishNotes';
 import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
 import { httpConfig } from '../../config/http.config';
-import { eventMissionType, Notification } from '../../types';
+import { eventMissionType, ITaskElement, Notification } from '../../types';
 import GrowthCore, { Core } from '../../index';
 import { openNotification } from '../../utils/notification';
 import { PROJECT_NAME } from '../../const/index';
+import { infoEncapsulation} from '../../utils/infoEncapsulation';
+import { filterTriggerMetaData } from '../../utils/url';
 
 export class TaskBus {
   public core: Core;
@@ -25,17 +27,39 @@ export class TaskBus {
 
   /** 获取任务列表 */
   async getTaskList() {
-    const res = await GrowthCore.fetch('GET', httpConfig.API_LIST.taskTable);
-    console.log("🚀 ~ TaskBus ~ getTaskList ~ res:", res)
-    return res;
+    const res = await GrowthCore.fetch('GET', httpConfig.API_LIST.taskTable)
+    let requestInfo = {
+      code: res.code,
+      msg: res.msg,
+      success: res.success,
+      data: [],
+    }
+    if(res.code === 0){
+      requestInfo.data = res.data.tasks.map((item: ITaskElement) => {
+        return {
+          name: item.name,
+          status: item.taskStatus,
+          type: item.taskType,
+          metaId: item.taskMetaId,
+          completeTaskId: item.instanceId,
+          ...infoEncapsulation(item.taskType, item),
+        }
+      })
+      return requestInfo
+    }
+    return res
   }
 
   async claimTask(taskMetaId: string) {
     const res = await GrowthCore.fetch('POST', httpConfig.API_LIST.claimTask, {
       taskMetaId: taskMetaId
-    });
+    })
+    if (res.code === 0) {
+      const taskInfo = filterTriggerMetaData(res.data?.triggerMeta)
+      res.data.triggerMeta = taskInfo
+    }
     console.log("🚀 ~ TaskBus ~ claimTask ~ res:", res)
-    return res;
+    return res
   }
 
   async completeTask(instanceId: string, eventType: eventMissionType, params: any) {

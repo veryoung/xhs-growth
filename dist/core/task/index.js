@@ -15,6 +15,8 @@ import { httpConfig } from '../../config/http.config';
 import GrowthCore from '../../index';
 import { openNotification } from '../../utils/notification';
 import { PROJECT_NAME } from '../../const/index';
+import { infoEncapsulation } from '../../utils/infoEncapsulation';
+import { filterTriggerMetaData } from '../../utils/url';
 export class TaskBus {
     constructor(core) {
         this.core = core;
@@ -23,18 +25,35 @@ export class TaskBus {
         this.inviteFriends = new InviteFriendsTask(this.core);
         this.topic = new TopicTask();
     }
+    /** 获取任务列表 */
     getTaskList() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield GrowthCore.fetch('GET', httpConfig.API_LIST.taskTable);
-            console.log("🚀 ~ TaskBus ~ getTaskList ~ res:", res);
+            let requestInfo = {
+                code: res.code,
+                msg: res.msg,
+                success: res.success,
+                data: [],
+            };
+            if (res.code === 0) {
+                requestInfo.data = res.data.tasks.map((item) => {
+                    return Object.assign({ name: item.name, status: item.taskStatus, type: item.taskType, metaId: item.taskMetaId, completeTaskId: item.instanceId }, infoEncapsulation(item.taskType, item));
+                });
+                return requestInfo;
+            }
             return res;
         });
     }
     claimTask(taskMetaId) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const res = yield GrowthCore.fetch('POST', httpConfig.API_LIST.claimTask, {
                 taskMetaId: taskMetaId
             });
+            if (res.code === 0) {
+                const taskInfo = filterTriggerMetaData((_a = res.data) === null || _a === void 0 ? void 0 : _a.triggerMeta);
+                res.data.triggerMeta = taskInfo;
+            }
             console.log("🚀 ~ TaskBus ~ claimTask ~ res:", res);
             return res;
         });
@@ -50,6 +69,7 @@ export class TaskBus {
             return res;
         });
     }
+    /** 轮询任务 */
     polling(group) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
@@ -58,6 +78,7 @@ export class TaskBus {
             return res;
         });
     }
+    /** 查询任务记录 */
     queryRecord(limit) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
@@ -66,6 +87,7 @@ export class TaskBus {
             return res;
         });
     }
+    /** 轮询任务完成通知 */
     startNotification(callback) {
         return openNotification(this.polling, callback);
     }
@@ -83,12 +105,14 @@ export class TaskBus {
                 console.log('getAntiBannedStrategyUrl end', Date.now() - start);
                 const url = res.url || res.realUrl || params.url;
                 let realUrl = res.realUrl || params.url;
+                // 防封失效了，自行降级即可，99 时，会强制返回原 url
                 if (res.strategyType === 99) {
                     realUrl = params.url;
                 }
                 if (params.needRealUrl) {
                     return [url, realUrl];
                 }
+                // 兜底，如果短链服务异常，则返回短链前的 url，如防封服务返回异常，则返回未经防封处理的原链接
                 return res.url || res.realUrl || params.url;
             }
             catch (error) {
@@ -98,7 +122,9 @@ export class TaskBus {
             if (params.needRealUrl) {
                 return [returnUrl, returnUrl];
             }
+            // 防封服务异常，返回原 url
             return returnUrl;
         });
     }
 }
+//# sourceMappingURL=index.js.map

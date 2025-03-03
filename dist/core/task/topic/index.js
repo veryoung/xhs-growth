@@ -7,13 +7,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
+import { setTaskNeededInfo, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
 export class TopicTask {
-    viewTopic(taskMetaId, triggerMetaInfo) {
+    viewTopic(taskMetaId, completeTaskId, viewTaskType, pageId, timeLimit) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
             try {
-                const res = yield setTaskNeedInfo(taskMetaId, triggerMetaInfo);
+                const taskInfo = {
+                    instanceId: completeTaskId,
+                    triggerMeta: {
+                        action: viewTaskType,
+                        triggerCondition: pageId,
+                        viewAttribute: timeLimit,
+                    },
+                };
+                const res = yield setTaskNeededInfo(taskMetaId, taskInfo);
                 console.log("🚀 ~ TopicTask ~ viewTopic ~ res:", res);
                 if (res.code === 0) {
                     if (!((_a = res.data) === null || _a === void 0 ? void 0 : _a.triggerMeta)) {
@@ -22,7 +30,7 @@ export class TopicTask {
                             msg: '任务领取错误',
                         };
                     }
-                    const fliteredTriggerMetaData = filterTriggerMetaData((_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta);
+                    const fliteredTriggerMetaData = (_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta;
                     const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData;
                     switch (action) {
                         case 'SIMPLE_VIEW':
@@ -45,3 +53,4 @@ export class TopicTask {
         });
     }
 }
+//# sourceMappingURL=index.js.map

@@ -1,10 +1,18 @@
-import { ItriggerMeta } from "../../../types";
-import { setTaskNeedInfo, filterTriggerMetaData, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
+import { ITaskInfo } from "../../../types";
+import { setTaskNeededInfo, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
 
 export class TopicTask {
-  async viewTopic(taskMetaId: string, triggerMetaInfo?: ItriggerMeta) {
+  async viewTopic(taskMetaId: string, completeTaskId?: string, viewTaskType?: string, pageId?: Array<string>, timeLimit?: Record<string, any>) {
     try {
-      const res = await setTaskNeedInfo(taskMetaId, triggerMetaInfo)
+      const taskInfo = {
+        instanceId: completeTaskId,
+        triggerMeta: {
+          action: viewTaskType,
+          triggerCondition: pageId,
+          viewAttribute: timeLimit,
+        },
+      }
+      const res = await setTaskNeededInfo(taskMetaId, taskInfo)
       console.log("🚀 ~ TopicTask ~ viewTopic ~ res:", res)
       
       if (res.code === 0) {
@@ -15,8 +23,7 @@ export class TopicTask {
           }
         }
 
-        //using JSON.parse fixing possible errors
-        const fliteredTriggerMetaData = filterTriggerMetaData(res.data?.triggerMeta)
+        const fliteredTriggerMetaData = res.data?.triggerMeta
         const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData
         switch (action) {
           case 'SIMPLE_VIEW':

@@ -8,16 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { TaskStatus } from "../../../types/task";
-import GrowthCore, { go } from "../../../index";
+import { go } from "../../../index";
+import { setTaskNeededInfo } from "../../../utils/url";
 export class FollowTask {
+    /** 关注 */
     takeFollow(taskMetaId_1) {
-        return __awaiter(this, arguments, void 0, function* (taskMetaId, isAutoFollow = true) {
+        return __awaiter(this, arguments, void 0, function* (taskMetaId, isAutoFollow = true, completeTaskId, userId) {
             try {
-                const res = yield GrowthCore.task.claimTask(taskMetaId);
+                const taskInfo = {
+                    instanceId: completeTaskId,
+                    triggerMeta: {
+                        triggerCondition: userId,
+                    },
+                };
+                const res = yield setTaskNeededInfo(taskMetaId, taskInfo);
                 if (res.code === 0) {
-                    const { taskStatus, triggerMeta } = res.data;
+                    const { taskStatus, triggerMeta = {} } = res.data;
                     if (taskStatus === TaskStatus.UNFINISHED && isAutoFollow && triggerMeta) {
-                        const ids = JSON.parse(triggerMeta.triggerCondition);
+                        const ids = triggerMeta === null || triggerMeta === void 0 ? void 0 : triggerMeta.triggerCondition;
                         go(`xhsdiscover://user/${ids[0]}`, {
                             type: 'deeplink',
                             success: (res) => {
@@ -55,3 +63,4 @@ export class FollowTask {
         });
     }
 }
+//# sourceMappingURL=index.js.map

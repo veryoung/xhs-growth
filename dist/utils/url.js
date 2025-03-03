@@ -12,6 +12,7 @@ import GrowthCore from "../index";
 import { eventMissionType } from "../types/index";
 export const handleGoWithCountView = (url, h5Url) => {
     const targetURL = `xhsdiscover://webview/${h5Url}?fullscreen=true&naviHidden=yes&widget_size=60.60&widget_position=0.24&openPage=yes&widget_url=${url}`;
+    // todo: 实现跳转
     console.log("🚀 ~ handleGoWithCountView ~ targetURL:", targetURL);
     go(targetURL, {
         type: 'deeplink',
@@ -53,14 +54,15 @@ function countTimePageLogic(res, params) {
     console.log("🚀 ~ TopicTask ~ viewTopic ~ statsPath:", statsPath);
     handleGoWithCountView(statsPath, path);
 }
-export const setTaskNeedInfo = (taskMetaId, triggerMetaInfo) => __awaiter(void 0, void 0, void 0, function* () {
+export const setTaskNeededInfo = (taskMetaId, taskInfo) => __awaiter(void 0, void 0, void 0, function* () {
     let res = {};
-    if (triggerMetaInfo) {
+    if (((taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.instanceId) || '0') !== '0') {
         res = {
             code: 0,
             data: {
-                triggerMeta: triggerMetaInfo.triggerMeta,
-                instanceId: triggerMetaInfo.instanceId
+                triggerMeta: taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.triggerMeta,
+                extra: taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.extra,
+                instanceId: taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.instanceId,
             },
             msg: 'triggerMetaInfoValid'
         };
@@ -78,6 +80,7 @@ export const filterTriggerMetaData = (triggerMeta) => {
             result[key] = JSON.parse(value);
         }
         catch (e) {
+            // 如果不是 JSON 字符串，直接使用原值
             result[key] = value;
         }
     });
@@ -115,3 +118,4 @@ export const handleViewWithCountParams = (instanceId, viewAttribute, actionNum) 
         type: 'deeplink',
     });
 });
+//# sourceMappingURL=url.js.map

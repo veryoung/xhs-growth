@@ -1,15 +1,22 @@
 import { TaskStatus } from "../../../types/task";
 import GrowthCore, { go } from "../../../index";
+import { setTaskNeededInfo, filterTriggerMetaData } from "../../../utils/url";
 
 export class FollowTask {
   /** 关注 */
-  async takeFollow(taskMetaId: string, isAutoFollow: boolean = true) {
+  async takeFollow(taskMetaId: string, isAutoFollow: boolean = true, completeTaskId?: string, userId?: Array<string>) {
     try {
-      const res = await GrowthCore.task.claimTask(taskMetaId)
+      const taskInfo = {
+        instanceId: completeTaskId,
+        triggerMeta: {
+          triggerCondition: userId,
+        },
+      }
+      const res = await setTaskNeededInfo(taskMetaId, taskInfo)
       if (res.code === 0) {
-        const { taskStatus, triggerMeta } = res.data
+        const { taskStatus, triggerMeta = {} } = res.data
         if(taskStatus === TaskStatus.UNFINISHED && isAutoFollow && triggerMeta) { 
-          const ids = JSON.parse(triggerMeta.triggerCondition)
+          const ids = triggerMeta?.triggerCondition
           go(`xhsdiscover://user/${ids[0]}`, {
             type: 'deeplink',
             success: (res) => {

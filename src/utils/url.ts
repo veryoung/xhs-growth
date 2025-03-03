@@ -2,7 +2,7 @@
 import { IStrategyResult, QueryParams } from "../types/index";
 import { go } from "../index";
 import GrowthCore from "../index";
-import { eventMissionType, ItriggerMeta } from "../types/index";
+import { eventMissionType, ItriggerMetaData, ITaskInfo } from "../types/index";
 
 
 
@@ -53,14 +53,15 @@ function countTimePageLogic (res:any, params:any) {
   handleGoWithCountView(statsPath, path)
 }
 
-export const setTaskNeedInfo = async (taskMetaId: string, triggerMetaInfo?: ItriggerMeta) => {
+export const setTaskNeededInfo = async (taskMetaId: string, taskInfo?: ITaskInfo) => {
   let res = {};
-  if (triggerMetaInfo) {
+  if ((taskInfo?.instanceId || '0') !== '0') {
     res = {
       code: 0,
       data: {
-        triggerMeta: triggerMetaInfo.triggerMeta,
-        instanceId: triggerMetaInfo.instanceId
+        triggerMeta: taskInfo?.triggerMeta,
+        extra: taskInfo?.extra,
+        instanceId: taskInfo?.instanceId,
       },
       msg: 'triggerMetaInfoValid'
     };
@@ -70,7 +71,7 @@ export const setTaskNeedInfo = async (taskMetaId: string, triggerMetaInfo?: Itri
   return await GrowthCore.task.claimTask(taskMetaId)
 }
 
-export const filterTriggerMetaData = (triggerMeta: ItriggerMeta) => {
+export const filterTriggerMetaData = (triggerMeta: ItriggerMetaData) => {
   const result: Record<string, any> = {}
   if (!triggerMeta) return result
   Object.entries(triggerMeta).forEach(([key, value]) => {

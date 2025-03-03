@@ -1,3 +1,4 @@
+import { TaskType, TaskStatus } from "./task";
 export type Platform = 'webview' | 'miniprogram' | 'rn';
 export interface Config {
     platform: Platform;
@@ -37,9 +38,13 @@ export interface ViewTopicParams {
     totalSize?: number;
 }
 export declare enum UserType {
+    /** 新用户 */
     NEW = "NEW",
+    /** 召回用户 */
     RECALL = "RECALL",
+    /** 拉活用户 */
     REVIVE = "REVIVE",
+    /** 老用户 */
     ACTIVE = "ACTIVE"
 }
 export interface UserTypeResponse {
@@ -59,14 +64,36 @@ export interface NotificationData {
     avatarUrl: string;
     useIName: string;
 }
-export interface ItriggerMeta {
+export interface ITaskElement {
+    taskMetaId: string;
+    instanceId: string;
+    taskType: TaskType;
+    name: string;
+    taskStatus: TaskStatus;
+    progress: string;
+    expireTime: string;
     triggerMeta: {
-        triggerCondition: string;
-        viewAttribute?: string;
-        action?: string;
+        triggerCondition: string | undefined;
+        viewAttribute?: string | undefined;
+        action?: string | undefined;
     };
-    instanceId?: string;
+    extra: {
+        shareCode?: string | undefined;
+    };
 }
+export interface ItriggerMetaData {
+    triggerCondition: Array<string> | undefined;
+    viewAttribute?: Record<string, any> | undefined;
+    action?: string | undefined;
+}
+export interface ITaskInfo {
+    triggerMeta?: ItriggerMetaData;
+    instanceId?: string | undefined;
+    extra?: {
+        shareCode?: string | undefined;
+    };
+}
+/** 防封返回的链接 */
 export interface IStrategyResult {
     url: string;
     realUrl?: string;
