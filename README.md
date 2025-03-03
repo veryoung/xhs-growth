@@ -278,25 +278,43 @@ GrowthCore.task.follow.takeFollow('202501131142',true,'13215',['5b3dca654eacab77
 ##### GrowthCore.task.publishNotes
 笔记任务相关方法
 
-- `GrowthCore.task.publishNotes.publish(metaId: string)` 发布笔记
-  - 参数
+- `GrowthCore.task.publishNotes.publish(metaId: string, completeTaskId?: string, topicId?: Array<string>)` 发布笔记
+```typescript
+interface taskParams{
+  metaId:string // 任务元信息
+  /**
+  * 业务方主动触发任务状态变化所需参数
+  * 下方参数可在GrowthCore.task.getTaskList()内部查询
+  */
+  completeTaskId?: string //触发任务状态变化ID
+  topicId?: Array<string> //发布话题ID列表
+}
 
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | metaId | string | 任务元ID | 是 |
+import growthCore from '@veryoung/xhs-growth';
 
-  - 返回值
+// 使用类型方法1: 直接传入任务元ID
+growthCore.task.publishNotes.publish('202401131159').then((res) => {
+  console.log("res: ",res)//返回任务领取结果
+})
 
-    | 参数名 | 类型 | 说明 |
-    |--------|------|-----|
-    | topicId | string | 笔记话题ID |
+// 使用类型方法2: 按格式自定义参数传入，可以指定任务效果
+growthCore.task.publishNotes.publish('202401131159','45167',['62db0ed7000000000101cfa9', '5c2edf56000000000a00b35c']).then((res) => {
+  console.log("res: ",res)//返回任务领取结果
+})
+```
 
 - `GrowthCore.task.publishNotes.onlyPublish(topicIdList: string[])`: 仅发布笔记,不进行任务完成
-  - 参数
+```typescript
+interface taskParams{
+  topicIdList?: Array<string> //发布话题ID列表
+}
 
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------| 
-    | topicIdList | string[] | 话题ID列表 | 是 |
+import growthCore from '@veryoung/xhs-growth';
+
+growthCore.task.publishNotes.onlyPublish(['62db0ed7000000000101cfa9', '5c2edf56000000000a00b35c']).then((res) => {
+  console.log("res: ",res)//返回任务领取结果
+})
+```
 
 ##### GrowthCore.task.topic
 话题任务相关方法
@@ -319,7 +337,7 @@ import growthCore from '@veryoung/xhs-growth';
 
 // 使用类型方法1: 直接传入任务元ID
 growthCore.task.topic.viewTopic('2025011411').then((res) => {
-  console.log("res: ",res)//返回任务领取结果
+  console.log("res: ",res)//返回任务结果
 })
 
 // 使用类型方法2: 按格式自定义参数传入，可以指定任务效果
@@ -335,29 +353,55 @@ growthCore.task.topic.viewTopic('202501152131', '45168', 'VIEW_COUNT_NUM', ['62d
 
 #### GrowthCore.task.inviteFriends
 好友助力任务相关方法
-- `GrowthCore.task.inviteFriends.shareFriends (metaId: string, extraQuery?: any)` 分享邀请助力任务
-  - 请求参数
-  
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | metaId | string |任务元ID | 是 |
-    | extraQuery | any | 需要拼接到分享页面url上的参数，支持一个object | 否 |
-  
-  - 返回值
+- `GrowthCore.task.inviteFriends.shareFriends (metaId: string, extraQuery?: Record<string, any>, completeTaskId?: string, shareCode?: string)` 分享邀请助力任务
+```typescript
+interface inputParams{
+  metaId:string // 任务元信息
+  extraQuery?: Record<string, any> // 需要拼接进入url参数，支持object
+  /**
+   * 业务方主动触发任务状态变化所需参数
+   * 下方参数可在GrowthCore.task.getTaskList()内部查询
+  */
+  completeTaskId?: string //触发任务状态变化ID
+  shareCode?: string //助力任务生成的分享码
+}
 
-    | 参数名 | 类型 | 说明 |
-    |--------|------|------|
-    | path | string | 分享页url |
+interface outParams{
+  path: string //分享页url
+}
 
-  
+import growthCore from '@veryoung/xhs-growth';
+
+// 使用类型方法1: 直接传入任务元ID
+growthCore.task.inviteFriends.shareFriends('2025011411').then((res) => {
+  console.log("res: ",res)//返回任务结果
+})
+
+// 使用类型方法2: 按格式自定义参数传入，可以指定任务效果
+growthCore.task.inviteFriends.shareFriends('202501152131', {}, '34264', 'YG4qr6').then((res) => {
+  console.log('res: ', res)
+}).catch((err) => {
+  console.log('err: ', err)
+})
+```
 - `GrowthCore.task.inviteFriends.completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
-  - 请求参数，instanceId 和 shareCode 可以从分享页url的query中获取
-  
-    | 参数名 | 类型 | 说明 | 必填 |
-    |--------|------|------|------|
-    | instanceId | string |任务实例 ID | 是 |
-    | shareCode | string | 分享码 | 是 |
+```typescript
+/**
+ * 请求参数，instanceId 和 shareCode 可以从分享页url的query中获取
+*/
+interface inputParams{
+  instanceId: string //触发任务状态变化ID
+  shareCode：string //主态生成分享码
+}
 
+import growthCore from '@veryoung/xhs-growth';
+
+growthCore.task.inviteFriends.completeInviteAssistTask('34264', 'YG4qr6').then((res) => {
+  console.log('res: ', res)
+}).catch((err) => {
+  console.log('err: ', err)
+})
+```
 ### BenefitBus（待实现）
 
 权益管理系统，提供权益相关的功能
