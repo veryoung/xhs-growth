@@ -29,7 +29,7 @@ export class InviteFriendsTask {
         });
     }
     // 分享邀请助力任务
-    shareFriends(taskMetaId, completeTaskId, shareCode, extraQuery) {
+    shareFriends(taskMetaId, extraQuery, completeTaskId, shareCode) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const taskInfo = {

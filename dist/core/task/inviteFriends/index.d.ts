@@ -3,6 +3,6 @@ export declare class InviteFriendsTask {
     core: Core;
     constructor(core: Core);
     completeInviteAssistTask(completeTaskId: string, shareCode: string): Promise<any>;
-    shareFriends(taskMetaId: string, completeTaskId?: string, shareCode?: string, extraQuery?: any): Promise<any>;
+    shareFriends(taskMetaId: string, extraQuery?: any, completeTaskId?: string, shareCode?: string): Promise<any>;
 }
 //# sourceMappingURL=index.d.ts.map

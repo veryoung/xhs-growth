@@ -21,7 +21,7 @@ export class InviteFriendsTask {
   }
 
   // 分享邀请助力任务
-  async shareFriends (taskMetaId: string, completeTaskId?: string, shareCode?: string, extraQuery?: any){
+  async shareFriends (taskMetaId: string, extraQuery?: any, completeTaskId?: string, shareCode?: string){
     try {
       const taskInfo = {
         instanceId: completeTaskId,
