@@ -157,58 +157,64 @@ onLoad(async () => {
 任务相关示例，提供任务相关的功能
 
 - `GrowthCore.task.getTaskList()` 获取任务列表
+  - 返回元素类型
+
+  | 参数名 | 类型 | 说明 | 备注 |
+  |--------|------|------|------|
+  | `metaId` | string |当前任务ID ||
+  | `completeTaskId` | string |触发任务状态变化ID ||
+  | `type` | string |任务类型 |参考任务类型说明|
+  | `status` | string |任务状态 |参考任务状态说明，每个任务都会需要领取才能生效，增长侧方法会在第一次执行任务的时候,自动领取任务并且执行对应任务|
+  | `extraParams` | any | 任务信息 | 特定任务类型独有参数，具体取值参考下方私有参数表格 |
+
+  - 任务类型
+
+  | 枚举值 | 说明 | 是否支持 |
+  |------|------|------|
+  | `TOPIC_NOTE_PUBLISH` | 话题笔记发布 | 是 |
+  | `INVITE_ASSISTANCE` | 邀请助力 | 是 |
+  | `TOPIC_NOTE_BROWSE` | 话题笔记浏览 | 是 |
+  | `NOTE_LIKE` | 笔记点赞 | 否 |
+  | `FOLLOW_USER` | 关注用户 | 是 |
+  | `SEARCH_NOTE` | 搜索笔记 | 否 |
+
+  - 任务状态
+
+  | 枚举值 | 说明 |
+  |------|------|
+  | `UNFINISHED` | 未完成 |
+  | `FINISHED` | 已完成 |
+  | `UNCLAIMED` | 未领取 |
+  | `TIMEOUT` | 超时的 |
+  | `EXPIRED` | 过期的 |
+
+  - 私有变量说明
+
+  | 属性 | 类型 | 说明 | 任务类型依赖 |
+  |--------|------|------|------|
+  | `topicId` | Array<string> | 发布话题ID | TOPIC_NOTE_PUBLISH |
+  | `shareCode` | string | 助力生成分享码 | INVITE_ASSISTANCE |
+  | `topicBrowserTaskType` | string | 细分浏览话题任务 | TOPIC_NOTE_BROWSE |
+  | `pageId` | Array<string> | 浏览话题页ID | TOPIC_NOTE_BROWSE |
+  | `timeLimit.singleNoteViewTime` | number | 单篇笔记最大阅读时长 | TOPIC_NOTE_BROWSE |
+  | `timeLimit.totalSize` | number | 计次：笔记最大阅读篇数；计时：总任务阅读时长 | TOPIC_NOTE_BROWSE |
+  | `userId` | Array<string> | 关注目标ID | FOLLOW_USER |
+
+  **topicBrowserTaskType 枚举值:**
+
+  | 枚举值 | 说明 |
+  |--------|------|
+  | `SIMPLE_VIEW` | 简单浏览 |
+  | `VIEW_COUNT_NUM` | 浏览计次 |
+  | `VIEW_COUNT_TIME` | 浏览计时 |
+
 ```typescript
 interface commonOutputParams{
-
   metaId: string //当前任务ID
-
   completeTaskId: string //触发任务状态变化ID
-
-  /**
-   * 任务类型
-   * 一共六种任务类型：1.话题笔记发布：TOPIC_NOTE_PUBLISH 2.邀请助力 INVITE_ASSISTANCE 3.话题笔记浏览 TOPIC_NOTE_BROWSE
-   * 4.笔记点赞 NOTE_LIKE 5.关注用户 FOLLOW_USER 6.搜索笔记 SEARCH_NOTE
-   * 目前支持 1 2 3 5
-  */
   type: string
-
-  /**
-   * 任务状态
-   * 区分五种状态：1. UNFINISHED: 未完成 2.FINISHED: 已完成 3.UNCLAIMED: 未领取 4.TIMEOUT: 超时的 5.EXPIRED 过期的
-   * 备注: 每个任务都会需要领取才能生效，增长侧方法会在第一次执行任务的时候,自动领取任务并且执行对应任务
-  */
   status: string
-
-  /**
-   * privateOutputParams
-   * 额外参数位置
-   * 依赖于任务类型type
-  */
-}
-
-//TOPIC_NOTE_PUBLISH
-interface privateOutputParams{
-  topicId: Array<string> //发布话题ID
-}
-
-//INVITE_ASSISTANCE
-interface privateOutputParams{
-  shareCode: string //助力生成分享码
-}
-
-//TOPIC_NOTE_BROWSE
-interface privateOutputParams{
-  topicBrowserTaskType: string//细分浏览话题任务，三个状态：1.SIMPLE_VIEW：简单浏览 2.VIEW_COUNT_NUM：浏览计次 3.VIEW_COUNT_TIME：浏览计时
-  pageId: Array<string> //浏览话题页ID
-  timeLimit:{
-    singleNoteViewTime: number//计次任务：单篇笔记最大阅读时长 计时任务：单篇笔记最大阅读时长
-    totalSize: number//计次任务：笔记最大阅读篇数 计时任务：总任务阅读时长
-  }//计时计次任务参数
-}
-
-//FOLLOW_USER
-interface privateOutputParams{
-  userId: Array<string> // 关注目标ID
+  ...extraParams
 }
 ```
 
@@ -223,39 +229,46 @@ interface privateOutputParams{
 
     | 参数名 | 类型 | 说明 |
     |--------|------|------|
-    | avatar | string | 助力人头像 |
-    | nickname | string | 助力人昵称 |
+    | `avatar` | string | 助力人头像 |
+    | `nickname` | string | 助力人昵称 |
 
 - `GrowthCore.task.startNotification(callback(notifications: Notification) => any)` 轮询助力记录通知
   - 请求参数
 
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
-    | callback | (notifications: []) => any | 获取任务完成的回调,callback每间隔一段时间都会执行，不断刷新最新的任务完成记录 | 是 |
+    | `callback` | (notifications: []) => any | 获取任务完成的回调,callback每间隔一段时间都会执行，不断刷新最新的任务完成记录 | 是 |
 
     - Notification 类型
 
     | 参数名 | 类型 | 说明  |
     |--------|------|------|
-    | notificationData | object | 通知详细数据  |
-    | notificationData.taskType | string | 任务类型  |
-    | notificationData.avatarUrl | string | 用户头像地址  |
-    | notificationData.useIName | string | 用户昵称  |
-    | notificationId | string | 通知ID  |
+    | `notificationData` | object | 通知详细数据  |
+    | `notificationData.taskType` | string | 任务类型  |
+    | `notificationData.avatarUrl` | string | 用户头像地址  |
+    | `notificationData.useIName` | string | 用户昵称  |
+    | `notificationId` | string | 通知ID  |
 
 ##### GrowthCore.task.follow
 关注任务相关方法
 
 ###### GrowthCore.task.follow.takeFollow(metaId:string，isAutoFollow: boolean, completeTaskId?: string, userId?: Array<string>) 发起关注
 - `takeFollow(metaId:string，isAutoFollow: boolean, completeTaskId?: string, userId?: Array<string>)`: 发起关注
+
+  | 属性 | 类型 | 必选 | 说明 |
+  |--------|------|------|------|
+  | `metaId` | string | 必选 | 任务元信息ID |
+  | `isAutoFollow` | boolean | 必选 | 是否需要自动关注，初始值为true |
+  | `completeTaskId` | string | 可选 | 触发任务状态变化ID |
+  | `userId` | Array<string> | 可选 | 关注目标ID |
+
 ```typescript
+/**
+ * 主动触发任务状态变化所需参数可在GrowthCore.task.getTaskList()内部查询
+*/
 interface taskParams{
   metaId: string //任务元信息ID
   isAutoFollow: boolean //是否需要自动关注，初始值为true
-  /**
-   * 业务方主动触发任务状态变化所需参数
-   * 下方参数可在GrowthCore.task.getTaskList()内部查询
-  */
   completeTaskId?: string //触发任务状态变化ID
   userId?: Array<string> //关注目标ID
 }
@@ -279,13 +292,19 @@ GrowthCore.task.follow.takeFollow('202501131142',true,'13215',['5b3dca654eacab77
 笔记任务相关方法
 
 - `GrowthCore.task.publishNotes.publish(metaId: string, completeTaskId?: string, topicId?: Array<string>)` 发布笔记
+
+  | 属性 | 类型 | 必选 | 说明 |
+  |--------|------|------|------|
+  | `metaId` | string | 必选 | 任务元信息 |
+  | `completeTaskId` | string | 可选 | 触发任务状态变化ID |
+  | `topicId` | Array<string> | 可选 | 发布话题ID列表 |
+
 ```typescript
+/**
+ * 主动触发任务状态变化所需参数可在GrowthCore.task.getTaskList()内部查询
+*/
 interface taskParams{
   metaId:string // 任务元信息
-  /**
-  * 业务方主动触发任务状态变化所需参数
-  * 下方参数可在GrowthCore.task.getTaskList()内部查询
-  */
   completeTaskId?: string //触发任务状态变化ID
   topicId?: Array<string> //发布话题ID列表
 }
@@ -304,6 +323,11 @@ growthCore.task.publishNotes.publish('202401131159','45167',['62db0ed70000000001
 ```
 
 - `GrowthCore.task.publishNotes.onlyPublish(topicIdList: string[])`: 仅发布笔记,不进行任务完成
+
+  | 属性 | 类型 | 说明 |
+  |--------|------|------|
+  | `topicIdList` | Array<string> | 发布话题ID列表 |
+
 ```typescript
 interface taskParams{
   topicIdList?: Array<string> //发布话题ID列表
@@ -319,14 +343,22 @@ growthCore.task.publishNotes.onlyPublish(['62db0ed7000000000101cfa9', '5c2edf560
 ##### GrowthCore.task.topic
 话题任务相关方法
 - `GrowthCore.task.topic.viewTopic(metaId:string, completeTaskId?: string, viewTaskType?: string, pageId?: Array<string>, timeLimit?: Record<string, any>)`: 查看话题
+
+  | 属性 | 类型 | 必选 | 说明 |
+  |--------|------|------|------|
+  | `metaId` | string | 必选 | 任务元信息 |
+  | `completeTaskId` | string | 可选 | 触发任务状态变化ID |
+  | `viewTaskType` | string | 可选 | 浏览任务类型：'SIMPLE_VIEW' 或 'VIEW_COUNT_NUM' 或 'VIEW_COUNT_TIME' |
+  | `pageId` | Array<string> | 可选 | 话题浏览ID |
+  | `timeLimit` | Record<string, any> | 可选 | 计时计次参数 |
+
 ```typescript
+/**
+ * 主动触发任务状态变化所需参数可在GrowthCore.task.getTaskList()内部查询
+*/
 // 进行普通浏览话题页，浏览计时，浏览计次的功能
 interface taskParams{
   metaId:string // 任务元信息
-  /**
-   * 业务方主动触发任务状态变化所需参数
-   * 下方参数可在GrowthCore.task.getTaskList()内部查询
-  */
   completeTaskId?: string //触发任务状态变化ID
   viewTaskType?: string // 'SIMPLE_VIEW' || 'VIEW_COUNT_NUM' || 'VIEW_COUNT_TIME"
   pageId?: Array<string> //话题浏览ID
@@ -354,19 +386,32 @@ growthCore.task.topic.viewTopic('202501152131', '45168', 'VIEW_COUNT_NUM', ['62d
 #### GrowthCore.task.inviteFriends
 好友助力任务相关方法
 - `GrowthCore.task.inviteFriends.shareFriends (metaId: string, extraQuery?: Record<string, any>, completeTaskId?: string, shareCode?: string)` 分享邀请助力任务
+
+  | 属性 | 类型 | 必选 | 说明 |
+  |--------|------|------|------|
+  | `metaId` | string | 必选 | 任务元信息 |
+  | `extraQuery` | Record<string, any> | 可选 | 需要拼接进入url参数，支持object |
+  | `completeTaskId` | string | 可选 | 触发任务状态变化ID |
+  | `shareCode` | string | 可选 | 助力任务生成的分享码 |
+
+  - 返回参数类型
+
+  | 属性 | 类型 | 必选 | 说明 |
+  |--------|------|------|------|
+  | `path` | string | 必选 | 分享页url |
+
 ```typescript
+/**
+ * 主动触发任务状态变化所需参数可在GrowthCore.task.getTaskList()内部查询
+*/
 interface inputParams{
   metaId:string // 任务元信息
   extraQuery?: Record<string, any> // 需要拼接进入url参数，支持object
-  /**
-   * 业务方主动触发任务状态变化所需参数
-   * 下方参数可在GrowthCore.task.getTaskList()内部查询
-  */
   completeTaskId?: string //触发任务状态变化ID
   shareCode?: string //助力任务生成的分享码
 }
 
-interface outParams{
+interface outputParams{
   path: string //分享页url
 }
 
@@ -385,6 +430,12 @@ growthCore.task.inviteFriends.shareFriends('202501152131', {}, '34264', 'YG4qr6'
 })
 ```
 - `GrowthCore.task.inviteFriends.completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
+
+  | 属性 | 类型 | 必选 | 说明 |
+  |--------|------|------|------|
+  | `instanceId` | string | 必选 | 触发任务状态变化 |
+  | `shareCode` | string | 必选 | 主态生成分享码 |
+
 ```typescript
 /**
  * 请求参数，instanceId 和 shareCode 可以从分享页url的query中获取
