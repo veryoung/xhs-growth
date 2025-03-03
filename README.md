@@ -118,7 +118,7 @@ interface initParams {
 //usage
 import GrowthCore from '@veryoung/xhs-growth';
 
-let isInit = fasle
+let isInit = false
 
 onLoad(async () => {
   await GrowthCore.init({
@@ -157,21 +157,60 @@ onLoad(async () => {
 任务相关示例，提供任务相关的功能
 
 - `GrowthCore.task.getTaskList()` 获取任务列表
+```typescript
+interface commonOutputParams{
 
-  - 返回值 taskItem 类型：
-  
-    | 参数名 | 类型 | 说明 |
-    |--------|------|------|
-    | taskMetaId | string | 任务元ID |
-    | instanceId | string | 任务实例ID |
-    | taskType | string | 任务类型 |
-    | progress | string | 进度 |
-    | taskStauts | string | 任务状态: 区分三种状态：1. UNFINISHED: 未完成 2.FINISHED: 已完成 3.UNCLAIMED: 未领取 备注: 每个任务都会需要领取才能生效，增长侧方法会在第一次执行任务的时候,自动领取任务并且执行对应任务 | 
-    | expireTime | string | 失效时间 |
-    | triggerMeta | object | 任务信息 |
-    | triggerMeta.triggerCondition | array | 根据任务类型返回不同的ID集合，例如：关注任务返回关注userId、发布笔记任务返回话题ID、浏览任务返回pageId |
-    | extra | object | 额外信息 |
-    | extra.shareCode | string | 分享码 |
+  metaId: string //当前任务ID
+
+  completeTaskId: string //触发任务状态变化ID
+
+  /**
+   * 任务类型
+   * 一共六种任务类型：1.话题笔记发布：TOPIC_NOTE_PUBLISH 2.邀请助力 INVITE_ASSISTANCE 3.话题笔记浏览 TOPIC_NOTE_BROWSE
+   * 4.笔记点赞 NOTE_LIKE 5.关注用户 FOLLOW_USER 6.搜索笔记 SEARCH_NOTE
+   * 目前支持 1 2 3 5
+  */
+  type: string
+
+  /**
+   * 任务状态
+   * 区分五种状态：1. UNFINISHED: 未完成 2.FINISHED: 已完成 3.UNCLAIMED: 未领取 4.TIMEOUT: 超时的 5.EXPIRED 过期的
+   * 备注: 每个任务都会需要领取才能生效，增长侧方法会在第一次执行任务的时候,自动领取任务并且执行对应任务
+  */
+  status: string
+
+  /**
+   * privateOutputParams
+   * 额外参数位置
+   * 依赖于任务类型type
+  */
+}
+
+//TOPIC_NOTE_PUBLISH
+interface privateOutputParams{
+  topicId: Array<string> //发布话题ID
+}
+
+//INVITE_ASSISTANCE
+interface privateOutputParams{
+  shareCode: string //助力生成分享码
+}
+
+//TOPIC_NOTE_BROWSE
+interface privateOutputParams{
+  topicBrowserTaskType: string//细分浏览话题任务，三个状态：1.SIMPLE_VIEW：简单浏览 2.VIEW_COUNT_NUM：浏览计次 3.VIEW_COUNT_TIME：浏览计时
+  pageId: Array<string> //浏览话题页ID
+  timeLimit:{
+    singleNoteViewTime: number//计次任务：单篇笔记最大阅读时长 计时任务：单篇笔记最大阅读时长
+    totalSize: number//计次任务：笔记最大阅读篇数 计时任务：总任务阅读时长
+  }//计时计次任务参数
+}
+
+//FOLLOW_USER
+interface privateOutputParams{
+  userId: Array<string> // 关注目标ID
+}
+```
 
 - `GrowthCore.task.queryRecord(limit: number)` 获取助力记录
   - 请求参数
@@ -207,17 +246,31 @@ onLoad(async () => {
 ##### GrowthCore.task.follow
 关注任务相关方法
 
-###### GrowthCore.task.follow.takeFollow(taskMetaId:string) 发起关注
-- `takeFollow(taskMetaId:string)`: 发起关注
+###### GrowthCore.task.follow.takeFollow(metaId:string，isAutoFollow: boolean, completeTaskId?: string, userId?: Array<string>) 发起关注
+- `takeFollow(metaId:string，isAutoFollow: boolean, completeTaskId?: string, userId?: Array<string>)`: 发起关注
 ```typescript
 interface taskParams{
-  taskMetaId: string //任务元信息ID
+  metaId: string //任务元信息ID
+  isAutoFollow: boolean //是否需要自动关注，初始值为true
+  /**
+   * 业务方主动触发任务状态变化所需参数
+   * 下方参数可在GrowthCore.task.getTaskList()内部查询
+  */
+  completeTaskId?: string //触发任务状态变化ID
+  userId?: Array<string> //关注目标ID
 }
 import GrowthCore from '@veryoung/xhs-growth';
 GrowthCore.init({
   //neededParams
 })
+
+//核心自动完成
 GrowthCore.task.follow.takeFollow('202501131142').then((res) => {
+  console.log('res: ', res) //返回任务状态
+})
+
+//业务自行调用
+GrowthCore.task.follow.takeFollow('202501131142',true,'13215',['5b3dca654eacab77e57267d1']).then((res) => {
   console.log('res: ', res) //返回任务状态
 })
 ```
@@ -225,12 +278,12 @@ GrowthCore.task.follow.takeFollow('202501131142').then((res) => {
 ##### GrowthCore.task.publishNotes
 笔记任务相关方法
 
-- `GrowthCore.task.publishNotes.publish(taskMetaId: string)` 发布笔记
+- `GrowthCore.task.publishNotes.publish(metaId: string)` 发布笔记
   - 参数
 
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
-    | taskMetaId | string | 任务元ID | 是 |
+    | metaId | string | 任务元ID | 是 |
 
   - 返回值
 
@@ -247,38 +300,32 @@ GrowthCore.task.follow.takeFollow('202501131142').then((res) => {
 
 ##### GrowthCore.task.topic
 话题任务相关方法
-- `GrowthCore.task.topic.viewTopic(taskMetaId:string, triggerMetaInfo?: ItriggerMeta)`: 查看话题
+- `GrowthCore.task.topic.viewTopic(metaId:string, completeTaskId?: string, viewTaskType?: string, pageId?: Array<string>, timeLimit?: Record<string, any>)`: 查看话题
 ```typescript
 // 进行普通浏览话题页，浏览计时，浏览计次的功能
 interface taskParams{
-  taskMetaId:string // 任务元信息
-  triggerMetaInfo?: ItriggerMeta 
+  metaId:string // 任务元信息
+  /**
+   * 业务方主动触发任务状态变化所需参数
+   * 下方参数可在GrowthCore.task.getTaskList()内部查询
+  */
+  completeTaskId?: string //触发任务状态变化ID
+  viewTaskType?: string // 'SIMPLE_VIEW' || 'VIEW_COUNT_NUM' || 'VIEW_COUNT_TIME"
+  pageId?: Array<string> //话题浏览ID
+  timeLimit?: Record<string, any> //计时计次参数
 }
 
-interface ItriggerMeta {
-  triggerMeta: {
-    triggerCondition: string 
-    viewAttribute?: string 
-    action?: string    
-  } // 该对象可以通过获取任务列表接口直接填充
-  instanceId?: string // 任务实例id
-}
 import growthCore from '@veryoung/xhs-growth';
 
 // 使用类型方法1: 直接传入任务元ID
 growthCore.task.topic.viewTopic('2025011411').then((res) => {
   console.log("res: ",res)//返回任务领取结果
 })
-// 使用类型方法2: 按格式自定义参数传入，可以指定任务效果
-const metaInfo = {
-  action: 'VIEW_COUNT_NUM',
-  triggerCondition: '["62db0ed71d27af0001b4a199"]',
-  viewAttribute: '{"singleNoteViewTime":15,"totalSize":45}',
-}
 
-growthCore.task.topic.viewTopic('202501152058', {
-  instanceId: '14684',
-  triggerMeta: metaInfo,
+// 使用类型方法2: 按格式自定义参数传入，可以指定任务效果
+growthCore.task.topic.viewTopic('202501152131', '45168', 'VIEW_COUNT_NUM', ['62db0ed71d27af0001b4a199'], {
+  singleNoteViewTime: 15,
+  totalSize: 45,
 }).then((res) => {
   console.log('res: ', res)
 }).catch((err) => {
@@ -288,12 +335,12 @@ growthCore.task.topic.viewTopic('202501152058', {
 
 #### GrowthCore.task.inviteFriends
 好友助力任务相关方法
-- `GrowthCore.task.inviteFriends.shareFriends (taskMetaId: string, extraQuery?: any)` 分享邀请助力任务
+- `GrowthCore.task.inviteFriends.shareFriends (metaId: string, extraQuery?: any)` 分享邀请助力任务
   - 请求参数
   
     | 参数名 | 类型 | 说明 | 必填 |
     |--------|------|------|------|
-    | taskMetaId | string |任务元ID | 是 |
+    | metaId | string |任务元ID | 是 |
     | extraQuery | any | 需要拼接到分享页面url上的参数，支持一个object | 否 |
   
   - 返回值
