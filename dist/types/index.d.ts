@@ -38,13 +38,9 @@ export interface ViewTopicParams {
     totalSize?: number;
 }
 export declare enum UserType {
-    /** 新用户 */
     NEW = "NEW",
-    /** 召回用户 */
     RECALL = "RECALL",
-    /** 拉活用户 */
     REVIVE = "REVIVE",
-    /** 老用户 */
     ACTIVE = "ACTIVE"
 }
 export interface UserTypeResponse {
@@ -93,7 +89,6 @@ export interface ITaskInfo {
         shareCode?: string | undefined;
     };
 }
-/** 防封返回的链接 */
 export interface IStrategyResult {
     url: string;
     realUrl?: string;
