@@ -9,9 +9,9 @@ export class InviteFriendsTask {
     this.core = core;
   }
   // 完成邀请助力任务
-  async completeInviteAssistTask(completeTaskId: string, shareCode: string) {
+  async completeInviteAssistTask(taskId: string, shareCode: string) {
     const res = await GrowthCore.fetch('POST', httpConfig.API_LIST.completeTask, {
-      instanceId: completeTaskId,
+      instanceId: taskId,
       eventType: eventMissionType.INVITE_ASSIST,
       param: {
         shareCode,
@@ -21,15 +21,15 @@ export class InviteFriendsTask {
   }
 
   // 分享邀请助力任务
-  async shareFriends (taskMetaId: string, extraQuery?: any, completeTaskId?: string, shareCode?: string){
+  async shareFriends (id: string, extraQuery?: any, taskId?: string, shareCode?: string){
     try {
       const taskInfo = {
-        instanceId: completeTaskId,
+        instanceId: taskId,
         extra: {
           shareCode: shareCode,
         },
       }
-      const res = await setTaskNeededInfo(taskMetaId, taskInfo)
+      const res = await setTaskNeededInfo(id, taskInfo)
       if(res.code === 0) {
         const { data: { extra: { shareCode }, instanceId } } = res;
         let path = `https://miniprogram.xiaohongshu.com/miniprogram/entry?shareCode=${shareCode}&instanceid=${instanceId}&activityId=${this.core.activityId}&activityType=${this.core.activityId}`;

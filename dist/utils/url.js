@@ -32,43 +32,21 @@ export const countPageBaseUrl = (isDebugger) => {
 export const getQueryString = (query) => {
     return Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
 };
-function countTimePageLogic(res, params) {
-    var _a;
-    const pageId = res.data.triggerMeta.triggerCondition;
-    const queryParams = encodeURIComponent(Object.entries({
-        activityId: GrowthCore.activityId,
-        eventType: eventMissionType.NOTE_BROWSE,
-        instanceId: (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.instanceId,
-        times: params === null || params === void 0 ? void 0 : params.totalSize,
-        asc: 0,
-        totalSize: params === null || params === void 0 ? void 0 : params.totalSize,
-        token: GrowthCore.getRequestToken(),
-    })
-        .map(([key, value]) => `${key}=${value}`)
-        .join('&'));
-    const path = `www.xiaohongshu.com/page/topics/${pageId}`;
-    const statsBasePath = countPageBaseUrl(GrowthCore.isDebugger);
-    console.log("🚀 ~ TopicTask ~ viewTopic ~ GrowthCore.isDebugger:", GrowthCore.isDebugger);
-    const statsPath = `${statsBasePath}?${queryParams}`;
-    console.log("🚀 ~ TopicTask ~ viewTopic ~ statsPath:", statsPath);
-    handleGoWithCountView(statsPath, path);
-}
-export const setTaskNeededInfo = (taskMetaId, taskInfo) => __awaiter(void 0, void 0, void 0, function* () {
+export const setTaskNeededInfo = (id, taskInfo) => __awaiter(void 0, void 0, void 0, function* () {
     let res = {};
-    if (((taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.instanceId) || '0') !== '0') {
+    if (taskInfo && taskInfo.instanceId && taskInfo.instanceId !== '0') {
         res = {
             code: 0,
             data: {
-                triggerMeta: taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.triggerMeta,
+                triggerMeta: taskInfo.triggerMeta,
                 extra: taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.extra,
-                instanceId: taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.instanceId,
+                instanceId: taskInfo.instanceId,
             },
             msg: 'triggerMetaInfoValid'
         };
-        console.log('origin res: ', res);
         return res;
     }
-    return yield GrowthCore.task.claimTask(taskMetaId);
+    return yield GrowthCore.task.claimTask(id);
 });
 export const filterTriggerMetaData = (triggerMeta) => {
     const result = {};

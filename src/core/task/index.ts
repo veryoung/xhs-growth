@@ -40,8 +40,8 @@ export class TaskBus {
           name: item.name,
           status: item.taskStatus,
           type: item.taskType,
-          metaId: item.taskMetaId,
-          completeTaskId: item.instanceId,
+          id: item.taskMetaId,
+          taskId: item.instanceId,
           ...infoEncapsulation(item.taskType, item),
         }
       })
@@ -50,25 +50,23 @@ export class TaskBus {
     return res
   }
 
-  async claimTask(taskMetaId: string) {
+  async claimTask(id: string) {
     const res = await GrowthCore.fetch('POST', httpConfig.API_LIST.claimTask, {
-      taskMetaId: taskMetaId
+      taskMetaId: id
     })
     if (res.code === 0) {
       const taskInfo = filterTriggerMetaData(res.data?.triggerMeta)
       res.data.triggerMeta = taskInfo
     }
-    console.log("🚀 ~ TaskBus ~ claimTask ~ res:", res)
     return res
   }
 
-  async completeTask(instanceId: string, eventType: eventMissionType, params: any) {
+  async completeTask(taskId: string, eventType: eventMissionType, params: any) {
     const res = await GrowthCore.fetch('POST', httpConfig.API_LIST.completeTask, {
-      instanceId: instanceId,
+      instanceId: taskId,
       eventType: eventType,
       params: params,
     }); 
-    console.log("🚀 ~ TaskBus ~ completeTask ~ res:", res)
     return res;
   }
 
@@ -76,7 +74,6 @@ export class TaskBus {
   private async polling(group?: string) {
     const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
     const res = await GrowthCore.fetch('POST', url);
-    console.log("🚀 ~ TaskBus ~ polling ~ res:", res)
     return res;
   }
 
@@ -84,7 +81,6 @@ export class TaskBus {
   async queryRecord(limit: number) {
     const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
     const res = await GrowthCore.fetch('GET', url);
-    console.log("🚀 ~ TaskBus ~ queryRecord ~ res:", res)
     return res;
   }
 

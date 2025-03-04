@@ -15,10 +15,10 @@ export class InviteFriendsTask {
     constructor(core) {
         this.core = core;
     }
-    completeInviteAssistTask(completeTaskId, shareCode) {
+    completeInviteAssistTask(taskId, shareCode) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield GrowthCore.fetch('POST', httpConfig.API_LIST.completeTask, {
-                instanceId: completeTaskId,
+                instanceId: taskId,
                 eventType: eventMissionType.INVITE_ASSIST,
                 param: {
                     shareCode,
@@ -27,16 +27,16 @@ export class InviteFriendsTask {
             return res;
         });
     }
-    shareFriends(taskMetaId, extraQuery, completeTaskId, shareCode) {
+    shareFriends(id, extraQuery, taskId, shareCode) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const taskInfo = {
-                    instanceId: completeTaskId,
+                    instanceId: taskId,
                     extra: {
                         shareCode: shareCode,
                     },
                 };
-                const res = yield setTaskNeededInfo(taskMetaId, taskInfo);
+                const res = yield setTaskNeededInfo(id, taskInfo);
                 if (res.code === 0) {
                     const { data: { extra: { shareCode }, instanceId } } = res;
                     let path = `https://miniprogram.xiaohongshu.com/miniprogram/entry?shareCode=${shareCode}&instanceid=${instanceId}&activityId=${this.core.activityId}&activityType=${this.core.activityId}`;

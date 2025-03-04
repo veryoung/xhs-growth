@@ -12,8 +12,8 @@ export declare class TaskBus {
     topic: TopicTask;
     constructor(core: Core);
     getTaskList(): Promise<any>;
-    claimTask(taskMetaId: string): Promise<any>;
-    completeTask(instanceId: string, eventType: eventMissionType, params: any): Promise<any>;
+    claimTask(id: string): Promise<any>;
+    completeTask(taskId: string, eventType: eventMissionType, params: any): Promise<any>;
     private polling;
     queryRecord(limit: number): Promise<any>;
     startNotification(callback: (notification: Notification) => any): void;

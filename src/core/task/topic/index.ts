@@ -2,18 +2,17 @@ import { ITaskInfo } from "../../../types";
 import { setTaskNeededInfo, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
 
 export class TopicTask {
-  async viewTopic(taskMetaId: string, completeTaskId?: string, viewTaskType?: string, pageId?: Array<string>, timeLimit?: Record<string, any>) {
+  async viewTopic(id: string, taskId?: string, viewTaskType?: string, pageId?: Array<string>, timeLimit?: Record<string, any>) {
     try {
       const taskInfo = {
-        instanceId: completeTaskId,
+        instanceId: taskId,
         triggerMeta: {
           action: viewTaskType,
           triggerCondition: pageId,
           viewAttribute: timeLimit,
         },
       }
-      const res = await setTaskNeededInfo(taskMetaId, taskInfo)
-      console.log("🚀 ~ TopicTask ~ viewTopic ~ res:", res)
+      const res = await setTaskNeededInfo(id, taskInfo)
       
       if (res.code === 0) {
         if (!res.data?.triggerMeta) {
@@ -23,8 +22,7 @@ export class TopicTask {
           }
         }
 
-        const fliteredTriggerMetaData = res.data?.triggerMeta
-        const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData
+        const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = res.data?.triggerMeta || {}
         switch (action) {
           case 'SIMPLE_VIEW':
             return handleOnlyView(triggerCondition, res.data.instanceId)

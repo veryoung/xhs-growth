@@ -24,15 +24,15 @@ export class PublishNotesTask  {
     })
   }
   // 发布笔记
-  async publish(taskMetaId: string, completeTaskId?: string, topicId?: Array<string>){
+  async publish(id: string, taskId?: string, topicId?: Array<string>){
     try {
       const taskInfo = {
-        instanceId: completeTaskId,
+        instanceId: taskId,
         triggerMeta: {
           triggerCondition: topicId,
         },
       }
-      const res = await setTaskNeededInfo(taskMetaId, taskInfo)
+      const res = await setTaskNeededInfo(id, taskInfo)
       if (res.code !== 0) {
         return res
       }

@@ -31,17 +31,17 @@ export class PublishNotesTask {
             });
         });
     }
-    publish(taskMetaId, completeTaskId, topicId) {
+    publish(id, taskId, topicId) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
             try {
                 const taskInfo = {
-                    instanceId: completeTaskId,
+                    instanceId: taskId,
                     triggerMeta: {
                         triggerCondition: topicId,
                     },
                 };
-                const res = yield setTaskNeededInfo(taskMetaId, taskInfo);
+                const res = yield setTaskNeededInfo(id, taskInfo);
                 if (res.code !== 0) {
                     return res;
                 }
