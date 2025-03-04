@@ -9,7 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { setTaskNeededInfo, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
 export class TopicTask {
+<<<<<<< HEAD
     viewTask(id, taskMetaInfo) {
+=======
+    viewTopic(id, taskId, viewTaskType, pageId, timeLimit) {
+>>>>>>> a4eaeb2 (feat: 更新代码入参和文档)
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
             try {
@@ -31,8 +35,12 @@ export class TopicTask {
                             msg: '任务领取错误',
                         };
                     }
+<<<<<<< HEAD
                     const fliteredTriggerMetaData = (_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta;
                     const { triggerCondition = [], viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData;
+=======
+                    const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = ((_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta) || {};
+>>>>>>> a4eaeb2 (feat: 更新代码入参和文档)
                     switch (action) {
                         case 'SIMPLE_VIEW':
                             return handleOnlyView(triggerCondition, res.data.instanceId);

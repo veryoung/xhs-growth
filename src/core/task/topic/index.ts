@@ -2,7 +2,11 @@ import { TaskStatus } from "src/types/task";
 import { setTaskNeededInfo, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
 
 export class TopicTask {
+<<<<<<< HEAD
   async viewTask(id: string, taskMetaInfo: Record<string, any>) {
+=======
+  async viewTopic(id: string, taskId?: string, viewTaskType?: string, pageId?: Array<string>, timeLimit?: Record<string, any>) {
+>>>>>>> a4eaeb2 (feat: 更新代码入参和文档)
     try {
       const { taskId, viewTaskType, pageId, timeLimit, status } = taskMetaInfo
       const taskInfo = {
@@ -24,8 +28,12 @@ export class TopicTask {
           }
         }
 
+<<<<<<< HEAD
         const fliteredTriggerMetaData = res.data?.triggerMeta
         const { triggerCondition = [], viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData
+=======
+        const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = res.data?.triggerMeta || {}
+>>>>>>> a4eaeb2 (feat: 更新代码入参和文档)
         switch (action) {
           case 'SIMPLE_VIEW':
             return handleOnlyView(triggerCondition, res.data.instanceId)

@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/core/task/topic/index.ts"],"names":[],"mappings":"AAGA,qBAAa,SAAS;IACd,QAAQ,CAAC,EAAE,EAAE,MAAM,EAAE,YAAY,EAAE,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC;CA2C7D"}
+=======
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/core/task/topic/index.ts"],"names":[],"mappings":"AAGA,qBAAa,SAAS;IACd,SAAS,CAAC,EAAE,EAAE,MAAM,EAAE,MAAM,CAAC,EAAE,MAAM,EAAE,YAAY,CAAC,EAAE,MAAM,EAAE,MAAM,CAAC,EAAE,KAAK,CAAC,MAAM,CAAC,EAAE,SAAS,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC;CAwC5H"}
+>>>>>>> a4eaeb2 (feat: 更新代码入参和文档)
