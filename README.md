@@ -133,7 +133,7 @@ onLoad(async () => {
 ```    
 
 
-#### GrowthCore.getUserType() 获取增长侧判断的用户类型
+#### `GrowthCore.getUserType()` 获取增长侧判断的用户类型
 用户类型说明：
 
 | 枚举值 | 类型 | 说明 |
@@ -153,10 +153,10 @@ onLoad(async () => {
 })
 ```    
 
-#### GrowthCore.task 任务实例
+## GrowthCore.task 任务实例
 任务相关示例，提供任务相关的功能
 
-- `GrowthCore.task.getTaskList()` 获取任务列表
+#### `GrowthCore.task.getTaskList()` 获取任务列表
   - 返回元素类型
 
   | 参数名 | 类型 | 说明 | 备注 |
@@ -169,86 +169,44 @@ onLoad(async () => {
 
   - 任务类型
 
-  | 枚举值 | 说明 | 是否支持 |
-  |------|------|------|
-  | `TOPIC_NOTE_PUBLISH` | 话题笔记发布 | 是 |
-  | `INVITE_ASSISTANCE` | 邀请助力 | 是 |
-  | `TOPIC_NOTE_BROWSE` | 话题笔记浏览 | 是 |
-  | `NOTE_LIKE` | 笔记点赞 | 否 |
-  | `FOLLOW_USER` | 关注用户 | 是 |
-  | `SEARCH_NOTE` | 搜索笔记 | 否 |
+  | 枚举值 | 说明 |
+  |------|------|
+  | `TOPIC_NOTE_PUBLISH` | 话题笔记发布 |
+  | `INVITE_ASSISTANCE` | 邀请助力 |
+  | `TOPIC_NOTE_BROWSE` | 话题笔记浏览 |
+  | `FOLLOW_USER` | 关注用户 |
 
   - 任务状态
 
-  | 枚举值 | 说明 |
-  |------|------|
-  | `UNFINISHED` | 未完成 |
-  | `FINISHED` | 已完成 |
-  | `UNCLAIMED` | 未领取 |
-  | `TIMEOUT` | 超时的 |
-  | `EXPIRED` | 过期的 |
+  | 枚举值 | 说明 | 备注 |
+  |------|------|-----|
+  | `UNFINISHED` | 未完成 ||
+  | `FINISHED` | 已完成 ||
+  | `UNCLAIMED` | 未领取 | 需要领取任务后进行状态变更 |
+  | `TIMEOUT` | 超时的 | 任务超时未完成 |
+  | `EXPIRED` | 过期的 | 任务过期失效 |
 
   - 私有变量说明
 
-  | 属性 | 类型 | 说明 | 任务类型依赖 |
-  |--------|------|------|------|
-  | `topicId` | Array<string> | 发布话题ID | TOPIC_NOTE_PUBLISH |
-  | `shareCode` | string | 助力生成分享码 | INVITE_ASSISTANCE |
-  | `topicBrowserTaskType` | string | 细分浏览话题任务 | TOPIC_NOTE_BROWSE |
-  | `pageId` | Array<string> | 浏览话题页ID | TOPIC_NOTE_BROWSE |
-  | `timeLimit.singleNoteViewTime` | number | 单篇笔记最大阅读时长 | TOPIC_NOTE_BROWSE |
-  | `timeLimit.totalSize` | number | 计次：笔记最大阅读篇数；计时：总任务阅读时长 | TOPIC_NOTE_BROWSE |
-  | `userId` | Array<string> | 关注目标ID | FOLLOW_USER |
+  | 任务类型依赖 | 属性 | 类型 | 说明 |
+  |------|--------|------|------|
+  | TOPIC_NOTE_PUBLISH | `topicId` | Array<string> | 发布话题ID |
+  | INVITE_ASSISTANCE | `shareCode` | string | 助力生成分享码 |
+  | TOPIC_NOTE_BROWSE | `topicBrowserTaskType` | string | 细分浏览话题任务 |
+  |  | `pageId` | Array<string> | 浏览话题页ID |
+  |  | `timeLimit.singleNoteViewTime` | number | 单篇笔记最大阅读时长 |
+  |  | `timeLimit.totalSize` | number | 计次：笔记最大阅读篇数；计时：总任务阅读时长 |
+  | FOLLOW_USER | `userId` | Array<string> | 关注目标ID |
 
   **topicBrowserTaskType 枚举值:**
 
-  | 枚举值 | 说明 |
-  |--------|------|
-  | `SIMPLE_VIEW` | 简单浏览 |
-  | `VIEW_COUNT_NUM` | 浏览计次 |
-  | `VIEW_COUNT_TIME` | 浏览计时 |
+  | 枚举值 | 说明 | 备注 |
+  |--------|------|------|
+  | `SIMPLE_VIEW` | 简单浏览 |只需进入话题页|
+  | `VIEW_COUNT_NUM` | 浏览计次 |指定浏览话题页笔记次数|
+  | `VIEW_COUNT_TIME` | 浏览计时 |指定浏览话题页时长|
 
-```typescript
-interface commonOutputParams{
-  metaId: string //当前任务ID
-  completeTaskId: string //触发任务状态变化ID
-  type: string
-  status: string
-
-  /**
-   * privateOutputParams
-   * 额外参数位置
-   * 依赖于任务类型type
-  */
-}
-
-//TOPIC_NOTE_PUBLISH
-interface privateOutputParams{
-  topicId: Array<string> //发布话题ID
-}
-
-//INVITE_ASSISTANCE
-interface privateOutputParams{
-  shareCode: string //助力生成分享码
-}
-
-//TOPIC_NOTE_BROWSE
-interface privateOutputParams{
-  viewTaskType: string//细分浏览话题任务，三个状态：1.SIMPLE_VIEW：简单浏览 2.VIEW_COUNT_NUM：浏览计次 3.VIEW_COUNT_TIME：浏览计时
-  pageId: Array<string> //浏览话题页ID
-  timeLimit:{
-    singleNoteViewTime: number//计次任务：单篇笔记最大阅读时长 计时任务：单篇笔记最大阅读时长
-    totalSize: number//计次任务：笔记最大阅读篇数 计时任务：总任务阅读时长
-  }//计时计次任务参数
-}
-
-//FOLLOW_USER
-interface privateOutputParams{
-  userId: Array<string> // 关注目标ID
-}
-```
-
-- `GrowthCore.task.queryRecord(limit: number)` 获取助力记录
+#### `GrowthCore.task.queryRecord(limit: number)` 获取助力记录
   - 请求参数
 
     | 参数名 | 类型 | 说明 | 必填 |
@@ -262,7 +220,7 @@ interface privateOutputParams{
     | `avatar` | string | 助力人头像 |
     | `nickname` | string | 助力人昵称 |
 
-- `GrowthCore.task.startNotification(callback(notifications: Notification) => any)` 轮询助力记录通知
+#### `GrowthCore.task.startNotification(callback(notifications: Notification) => any)` 轮询助力记录通知
   - 请求参数
 
     | 参数名 | 类型 | 说明 | 必填 |
@@ -279,11 +237,18 @@ interface privateOutputParams{
     | `notificationData.useIName` | string | 用户昵称  |
     | `notificationId` | string | 通知ID  |
 
-##### GrowthCore.task.follow
+#### `GrowthCore.task.getAntiBannedStrategyUrl(url:string, needRealUrl:boolean): Promise<any>` 防封地址申请
+  - 请求参数
+
+    | 参数名 | 类型 | 说明 | 必填 |
+    |--------|------|------|------|
+    | `url` | string | 传入拼接过所需参数的落地页url | 是 |
+    | `needRealUrl` | boolean | 需要真实url，默认值为true | 是 |
+
+## GrowthCore.task.follow
 关注任务相关方法
 
-###### GrowthCore.task.follow.takeFollow(metaId:string，isAutoFollow: boolean, completeTaskId?: string, userId?: Array<string>) 发起关注
-- `takeFollow(metaId:string，isAutoFollow: boolean, completeTaskId?: string, userId?: Array<string>)`: 发起关注
+#### `GrowthCore.task.follow.takeFollow(metaId:string，isAutoFollow: boolean, completeTaskId?: string, userId?: Array<string>)` 发起关注
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
@@ -318,10 +283,10 @@ GrowthCore.task.follow.takeFollow('202501131142',true,'13215',['5b3dca654eacab77
 })
 ```
 
-##### GrowthCore.task.publishNotes
+## GrowthCore.task.publishNotes
 笔记任务相关方法
 
-- `GrowthCore.task.publishNotes.publish(metaId: string, completeTaskId?: string, topicId?: Array<string>)` 发布笔记
+#### `GrowthCore.task.publishNotes.publish(metaId: string, completeTaskId?: string, topicId?: Array<string>)` 发布笔记
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
@@ -352,7 +317,7 @@ growthCore.task.publishNotes.publish('202401131159','45167',['62db0ed70000000001
 })
 ```
 
-- `GrowthCore.task.publishNotes.onlyPublish(topicIdList: string[])`: 仅发布笔记,不进行任务完成
+#### `GrowthCore.task.publishNotes.onlyPublish(topicIdList: string[])`: 仅发布笔记,不进行任务完成
 
   | 属性 | 类型 | 说明 |
   |--------|------|------|
@@ -370,9 +335,9 @@ growthCore.task.publishNotes.onlyPublish(['62db0ed7000000000101cfa9', '5c2edf560
 })
 ```
 
-##### GrowthCore.task.topic
+## GrowthCore.task.topic
 话题任务相关方法
-- `GrowthCore.task.topic.viewTopic(metaId:string, completeTaskId?: string, viewTaskType?: string, pageId?: Array<string>, timeLimit?: Record<string, any>)`: 查看话题
+#### `GrowthCore.task.topic.viewTopic(metaId:string, completeTaskId?: string, viewTaskType?: string, pageId?: Array<string>, timeLimit?: Record<string, any>)`: 查看话题
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
@@ -413,9 +378,9 @@ growthCore.task.topic.viewTopic('202501152131', '45168', 'VIEW_COUNT_NUM', ['62d
 })
 ```
 
-#### GrowthCore.task.inviteFriends
+## GrowthCore.task.inviteFriends
 好友助力任务相关方法
-- `GrowthCore.task.inviteFriends.shareFriends (metaId: string, extraQuery?: Record<string, any>, completeTaskId?: string, shareCode?: string)` 分享邀请助力任务
+#### `GrowthCore.task.inviteFriends.shareFriends (metaId: string, extraQuery?: Record<string, any>, completeTaskId?: string, shareCode?: string)` 分享邀请助力任务
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
@@ -459,7 +424,7 @@ growthCore.task.inviteFriends.shareFriends('202501152131', {}, '34264', 'YG4qr6'
   console.log('err: ', err)
 })
 ```
-- `GrowthCore.task.inviteFriends.completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
+#### `GrowthCore.task.inviteFriends.completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
