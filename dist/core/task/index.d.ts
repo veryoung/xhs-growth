@@ -11,16 +11,12 @@ export declare class TaskBus {
     inviteFriends: InviteFriendsTask;
     topic: TopicTask;
     constructor(core: Core);
-    /** 获取任务列表 */
     getTaskList(): Promise<any>;
     claimTask(taskMetaId: string): Promise<any>;
     completeTask(instanceId: string, eventType: eventMissionType, params: any): Promise<any>;
-    /** 轮询任务 */
     private polling;
-    /** 查询任务记录 */
     queryRecord(limit: number): Promise<any>;
-    /** 轮询任务完成通知 */
     startNotification(callback: (notification: Notification) => any): void;
-    getAntiBannedStrategyUrl(url: string): Promise<any>;
+    getAntiBannedStrategyUrl(url: string, needRealUrl?: boolean): Promise<any>;
 }
 //# sourceMappingURL=index.d.ts.map

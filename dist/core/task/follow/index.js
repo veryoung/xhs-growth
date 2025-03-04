@@ -11,7 +11,6 @@ import { TaskStatus } from "../../../types/task";
 import { go } from "../../../index";
 import { setTaskNeededInfo } from "../../../utils/url";
 export class FollowTask {
-    /** 关注 */
     takeFollow(taskMetaId_1) {
         return __awaiter(this, arguments, void 0, function* (taskMetaId, isAutoFollow = true, completeTaskId, userId) {
             try {
@@ -63,4 +62,3 @@ export class FollowTask {
         });
     }
 }
-//# sourceMappingURL=index.js.map

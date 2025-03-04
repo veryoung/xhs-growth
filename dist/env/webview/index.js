@@ -3,7 +3,6 @@ export default class WebviewEnv {
         this.fetchCore = config.fetchCore;
     }
     go(path, params) {
-        // 实现 webview 的跳转逻辑
         window.open(path, '_blank');
     }
     fetch(method, url, data, header) {
@@ -15,4 +14,3 @@ export default class WebviewEnv {
         }
     }
 }
-//# sourceMappingURL=index.js.map

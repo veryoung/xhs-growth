@@ -9,7 +9,6 @@ export default class MiniProgramEnv {
     go(path: string, params?: NavigateParams): void;
     fetch(method: string, url: string, data?: object, header?: object): Promise<unknown>;
     init(): Promise<void>;
-    /** 设置授权 */
     setAuthorization(code: string): Promise<void>;
     getUserType(): Promise<UserType | ''>;
     getActivityId(): string;
