@@ -192,13 +192,13 @@ onLoad(async () => {
   |------|--------|------|------|
   | 话题笔记发布 | `topicId` | Array<string> | 发布话题ID |
   | 邀请助力 | `shareCode` | string | 助力生成分享码 |
-  | 话题笔记浏览 | `topicBrowserTaskType` | string | 细分浏览话题任务 |
+  | 话题笔记浏览 | `viewTaskType` | string | 细分浏览话题任务 |
   |  | `pageId` | Array<string> | 浏览话题页ID |
   |  | `timeLimit.singleNoteViewTime` | number | 单篇笔记最大阅读时长 |
   |  | `timeLimit.totalSize` | number | 计次：笔记最大阅读篇数；计时：总任务阅读时长 |
   | 关注用户 | `userId` | Array<string> | 关注目标ID |
 
-  **topicBrowserTaskType 枚举值:**
+  **viewTaskType 枚举值:**
 
   | 枚举值 | 说明 | 备注 |
   |--------|------|------|
