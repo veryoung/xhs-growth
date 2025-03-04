@@ -169,12 +169,12 @@ onLoad(async () => {
 
   - 任务类型
 
-  | 枚举值 | 说明 |
+  | 类型 | 枚举值 |
   |------|------|
-  | `TOPIC_NOTE_PUBLISH` | 话题笔记发布 |
-  | `INVITE_ASSISTANCE` | 邀请助力 |
-  | `TOPIC_NOTE_BROWSE` | 话题笔记浏览 |
-  | `FOLLOW_USER` | 关注用户 |
+  | `话题笔记发布` | TOPIC_NOTE_PUBLISH |
+  | `邀请助力` | INVITE_ASSISTANCE |
+  | `话题笔记浏览` | TOPIC_NOTE_BROWSE |
+  | `关注用户` | FOLLOW_USER |
 
   - 任务状态
 
@@ -190,13 +190,13 @@ onLoad(async () => {
 
   | 任务类型依赖 | 属性 | 类型 | 说明 |
   |------|--------|------|------|
-  | TOPIC_NOTE_PUBLISH | `topicId` | Array<string> | 发布话题ID |
-  | INVITE_ASSISTANCE | `shareCode` | string | 助力生成分享码 |
-  | TOPIC_NOTE_BROWSE | `topicBrowserTaskType` | string | 细分浏览话题任务 |
+  | 话题笔记发布 | `topicId` | Array<string> | 发布话题ID |
+  | 邀请助力 | `shareCode` | string | 助力生成分享码 |
+  | 话题笔记浏览 | `topicBrowserTaskType` | string | 细分浏览话题任务 |
   |  | `pageId` | Array<string> | 浏览话题页ID |
   |  | `timeLimit.singleNoteViewTime` | number | 单篇笔记最大阅读时长 |
   |  | `timeLimit.totalSize` | number | 计次：笔记最大阅读篇数；计时：总任务阅读时长 |
-  | FOLLOW_USER | `userId` | Array<string> | 关注目标ID |
+  | 关注用户 | `userId` | Array<string> | 关注目标ID |
 
   **topicBrowserTaskType 枚举值:**
 
