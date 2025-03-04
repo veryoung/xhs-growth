@@ -15,7 +15,7 @@ export const infoEncapsulation = (type: TaskType, item: any) => {
     // 话题笔记浏览
     case TaskType.TOPIC_NOTE_BROWSE:
       return {
-        topicBrowserTaskType: item.triggerMeta.action,
+        viewTaskType: item.triggerMeta.action,
         pageId: JSON.parse(item.triggerMeta.triggerCondition ?? '[]'),
         timeLimit: JSON.parse(item.triggerMeta.viewAttribute ?? '{}'),
       }

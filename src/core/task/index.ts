@@ -93,7 +93,7 @@ export class TaskBus {
     return openNotification(this.polling, callback);
   }
 
-
+  /** 获取防封策略 url */
   public async getAntiBannedStrategyUrl(url:string): Promise<any> {
     const start = Date.now()
     const params = { 

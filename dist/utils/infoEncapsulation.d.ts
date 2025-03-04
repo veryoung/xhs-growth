@@ -2,19 +2,19 @@ import { TaskType } from "../types/task";
 export declare const infoEncapsulation: (type: TaskType, item: any) => {
     topicId: any;
     shareCode?: undefined;
-    topicBrowserTaskType?: undefined;
+    viewTaskType?: undefined;
     pageId?: undefined;
     timeLimit?: undefined;
     userId?: undefined;
 } | {
     shareCode: any;
     topicId?: undefined;
-    topicBrowserTaskType?: undefined;
+    viewTaskType?: undefined;
     pageId?: undefined;
     timeLimit?: undefined;
     userId?: undefined;
 } | {
-    topicBrowserTaskType: any;
+    viewTaskType: any;
     pageId: any;
     timeLimit: any;
     topicId?: undefined;
@@ -24,13 +24,13 @@ export declare const infoEncapsulation: (type: TaskType, item: any) => {
     userId: any;
     topicId?: undefined;
     shareCode?: undefined;
-    topicBrowserTaskType?: undefined;
+    viewTaskType?: undefined;
     pageId?: undefined;
     timeLimit?: undefined;
 } | {
     topicId?: undefined;
     shareCode?: undefined;
-    topicBrowserTaskType?: undefined;
+    viewTaskType?: undefined;
     pageId?: undefined;
     timeLimit?: undefined;
     userId?: undefined;

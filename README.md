@@ -214,7 +214,37 @@ interface commonOutputParams{
   completeTaskId: string //触发任务状态变化ID
   type: string
   status: string
-  ...extraParams
+
+  /**
+   * privateOutputParams
+   * 额外参数位置
+   * 依赖于任务类型type
+  */
+}
+
+//TOPIC_NOTE_PUBLISH
+interface privateOutputParams{
+  topicId: Array<string> //发布话题ID
+}
+
+//INVITE_ASSISTANCE
+interface privateOutputParams{
+  shareCode: string //助力生成分享码
+}
+
+//TOPIC_NOTE_BROWSE
+interface privateOutputParams{
+  viewTaskType: string//细分浏览话题任务，三个状态：1.SIMPLE_VIEW：简单浏览 2.VIEW_COUNT_NUM：浏览计次 3.VIEW_COUNT_TIME：浏览计时
+  pageId: Array<string> //浏览话题页ID
+  timeLimit:{
+    singleNoteViewTime: number//计次任务：单篇笔记最大阅读时长 计时任务：单篇笔记最大阅读时长
+    totalSize: number//计次任务：笔记最大阅读篇数 计时任务：总任务阅读时长
+  }//计时计次任务参数
+}
+
+//FOLLOW_USER
+interface privateOutputParams{
+  userId: Array<string> // 关注目标ID
 }
 ```
 
