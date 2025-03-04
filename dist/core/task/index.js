@@ -36,35 +36,33 @@ export class TaskBus {
             };
             if (res.code === 0) {
                 requestInfo.data = res.data.tasks.map((item) => {
-                    return Object.assign({ name: item.name, status: item.taskStatus, type: item.taskType, metaId: item.taskMetaId, completeTaskId: item.instanceId }, infoEncapsulation(item.taskType, item));
+                    return Object.assign({ name: item.name, status: item.taskStatus, type: item.taskType, id: item.taskMetaId, taskId: item.instanceId }, infoEncapsulation(item.taskType, item));
                 });
                 return requestInfo;
             }
             return res;
         });
     }
-    claimTask(taskMetaId) {
+    claimTask(id) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
             const res = yield GrowthCore.fetch('POST', httpConfig.API_LIST.claimTask, {
-                taskMetaId: taskMetaId
+                taskMetaId: id
             });
             if (res.code === 0) {
                 const taskInfo = filterTriggerMetaData((_a = res.data) === null || _a === void 0 ? void 0 : _a.triggerMeta);
                 res.data.triggerMeta = taskInfo;
             }
-            console.log("🚀 ~ TaskBus ~ claimTask ~ res:", res);
             return res;
         });
     }
-    completeTask(instanceId, eventType, params) {
+    completeTask(taskId, eventType, params) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield GrowthCore.fetch('POST', httpConfig.API_LIST.completeTask, {
-                instanceId: instanceId,
+                instanceId: taskId,
                 eventType: eventType,
                 params: params,
             });
-            console.log("🚀 ~ TaskBus ~ completeTask ~ res:", res);
             return res;
         });
     }
@@ -72,7 +70,6 @@ export class TaskBus {
         return __awaiter(this, void 0, void 0, function* () {
             const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
             const res = yield GrowthCore.fetch('POST', url);
-            console.log("🚀 ~ TaskBus ~ polling ~ res:", res);
             return res;
         });
     }
@@ -80,7 +77,6 @@ export class TaskBus {
         return __awaiter(this, void 0, void 0, function* () {
             const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
             const res = yield GrowthCore.fetch('GET', url);
-            console.log("🚀 ~ TaskBus ~ queryRecord ~ res:", res);
             return res;
         });
     }

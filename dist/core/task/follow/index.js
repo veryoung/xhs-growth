@@ -11,19 +11,19 @@ import { TaskStatus } from "../../../types/task";
 import { go } from "../../../index";
 import { setTaskNeededInfo } from "../../../utils/url";
 export class FollowTask {
-    takeFollow(taskMetaId_1) {
-        return __awaiter(this, arguments, void 0, function* (taskMetaId, isAutoFollow = true, completeTaskId, userId) {
+    takeFollow(id, taskId, goUserPage, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
             try {
                 const taskInfo = {
-                    instanceId: completeTaskId,
+                    instanceId: taskId,
                     triggerMeta: {
                         triggerCondition: userId,
                     },
                 };
-                const res = yield setTaskNeededInfo(taskMetaId, taskInfo);
+                const res = yield setTaskNeededInfo(id, taskInfo);
                 if (res.code === 0) {
                     const { taskStatus, triggerMeta = {} } = res.data;
-                    if (taskStatus === TaskStatus.UNFINISHED && isAutoFollow && triggerMeta) {
+                    if (taskStatus === TaskStatus.UNFINISHED && goUserPage && triggerMeta) {
                         const ids = triggerMeta === null || triggerMeta === void 0 ? void 0 : triggerMeta.triggerCondition;
                         go(`xhsdiscover://user/${ids[0]}`, {
                             type: 'deeplink',

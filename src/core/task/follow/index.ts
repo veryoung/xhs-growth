@@ -4,18 +4,18 @@ import { setTaskNeededInfo, filterTriggerMetaData } from "../../../utils/url";
 
 export class FollowTask {
   /** 关注 */
-  async takeFollow(taskMetaId: string, isAutoFollow: boolean = true, completeTaskId?: string, userId?: Array<string>) {
+  async takeFollow(id: string, taskId?: string, goUserPage?: boolean,  userId?: Array<string>) {
     try {
       const taskInfo = {
-        instanceId: completeTaskId,
+        instanceId: taskId,
         triggerMeta: {
           triggerCondition: userId,
         },
       }
-      const res = await setTaskNeededInfo(taskMetaId, taskInfo)
+      const res = await setTaskNeededInfo(id, taskInfo)
       if (res.code === 0) {
         const { taskStatus, triggerMeta = {} } = res.data
-        if(taskStatus === TaskStatus.UNFINISHED && isAutoFollow && triggerMeta) { 
+        if(taskStatus === TaskStatus.UNFINISHED && goUserPage && triggerMeta) { 
           const ids = triggerMeta?.triggerCondition
           go(`xhsdiscover://user/${ids[0]}`, {
             type: 'deeplink',

@@ -1,5 +1,5 @@
 export declare class FollowTask {
-    takeFollow(taskMetaId: string, isAutoFollow?: boolean, completeTaskId?: string, userId?: Array<string>): Promise<{
+    takeFollow(id: string, taskId?: string, goUserPage?: boolean, userId?: Array<string>): Promise<{
         code: any;
         msg: any;
     } | undefined>;
