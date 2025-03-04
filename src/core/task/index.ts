@@ -94,12 +94,12 @@ export class TaskBus {
   }
 
   /** 获取防封策略 url */
-  public async getAntiBannedStrategyUrl(url:string): Promise<any> {
+  public async getAntiBannedStrategyUrl(url:string, needRealUrl: boolean = true): Promise<any> {
     const start = Date.now()
     const params = { 
       projectName: PROJECT_NAME, 
       url: url, 
-      needRealUrl: true 
+      needRealUrl: needRealUrl,
     }
     try {
       const resoponse = await GrowthCore.fetch('POST', httpConfig.API_LIST.PHOENIX_URL, params, {});
