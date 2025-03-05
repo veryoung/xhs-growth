@@ -247,44 +247,43 @@ onLoad(async () => {
 ## GrowthCore.task.follow
 关注任务相关方法
 
-#### `GrowthCore.task.follow.takeFollow(id:string，isAutoFollow: boolean, taskId?: string, userId?: Array<string>)` 发起关注
+#### `GrowthCore.task.follow.takeFollow(id:string，taskId: string, userId: Array<string>, status: string, goUserPage: boolean)` 发起关注
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
   | `id` | string | 必选 | 任务元id |
-  | `taskId` | string | 可选 | 任务id |
+  | `taskId` | string | 必选 | 任务id |
+  | `userId` | Array<string> | 必选 | 关注目标ID |
+  | `status` | string | 必选 | 当前任务状态 |
   | `goUserPage` | boolean | 可选 | 是否需要前往用户主页关注，默认否，支持业务自行通过小程序能力发起关注 |
-  | `userId` | Array<string> | 可选 | 关注目标ID |
 
 ```typescript
 import GrowthCore from '@veryoung/xhs-growth';
 
-// 返回任务状态
-const res = await GrowthCore.task.follow.takeFollow('202501131142')
+//调用过程
+const { id, taskId, userId, status } = GrowthCore.task.getTaskList().data.find(item => item.type === 'FOLLOW_USER')
 
-//业务自行调用
-const res = await GrowthCore.task.follow.takeFollow('202501131142',true,'13215',['5b3dca654eacab77e57267d1'])
+const res = await GrowthCore.task.follow.takeFollow(id, taskId, userId, status, false)
 ```
 
 ## GrowthCore.task.publishNotes
 笔记任务相关方法
 
-#### `GrowthCore.task.publishNotes.publish(id: string, taskId?: string, topicId?: Array<string>)` 发布笔记
+#### `GrowthCore.task.publishNotes.publish(id: string, taskId: string, topicId: Array<string>)` 发布笔记
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
   | `id` | string | 必选 | 任务元id |
-  | `taskId` | string | 可选 | 任务id |
-  | `topicId` | Array<string> | 可选 | 发布话题ID列表 |
+  | `taskId` | string | 必选 | 任务id |
+  | `topicId` | Array<string> | 必选 | 发布话题ID列表 |
 
 ```typescript
 import GrowthCore from '@veryoung/xhs-growth';
 
-// 使用类型方法1: 直接传入任务元ID
-const res = await GrowthCore.task.publishNotes.publish('202401131159')
+//调用过程
+const { id, taskId, topicId } = GrowthCore.task.getTaskList().data.find(item => item.type === 'TOPIC_NOTE_PUBLISH')
 
-// 使用类型方法2: 按格式自定义参数传入，可以指定任务效果
-const res = await GrowthCore.task.publishNotes.publish('202401131159','45167',['62db0ed7000000000101cfa9', '5c2edf56000000000a00b35c'])
+const res = await GrowthCore.task.publishNotes.publish(id, taskId, topicId)
 ```
 
 #### `GrowthCore.task.publishNotes.onlyPublish(topicIdList: string[])`: 仅发布笔记,不进行任务完成
@@ -301,39 +300,35 @@ const res = await GrowthCore.task.publishNotes.onlyPublish(['62db0ed700000000010
 
 ## GrowthCore.task.topic
 话题任务相关方法
-#### `GrowthCore.task.topic.viewTopic(id:string, taskId?: string, viewTaskType?: string, pageId?: Array<string>, timeLimit?: Record<string, any>)`: 前往话题页进行浏览
+#### `GrowthCore.task.topic.viewTopic(id:string, taskId: string, viewTaskType: string, pageId: Array<string>, timeLimit: Record<string, any>)`: 前往话题页进行浏览
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
   | `id` | string | 必选 | 任务元id |
-  | `taskId` | string | 可选 | 任务id |
-  | `viewTaskType` | string | 可选 | 浏览任务类型：'SIMPLE_VIEW' 或 'VIEW_COUNT_NUM' 或 'VIEW_COUNT_TIME' |
-  | `pageId` | Array<string> | 可选 | 话题浏览ID |
-  | `timeLimit` | Record<string, any> | 可选 | 阅读笔记的必要参数 |
+  | `taskId` | string | 必选 | 任务id |
+  | `viewTaskType` | string | 必选 | 浏览任务类型：'SIMPLE_VIEW' 或 'VIEW_COUNT_NUM' 或 'VIEW_COUNT_TIME' |
+  | `pageId` | Array<string> | 必选 | 话题浏览ID |
+  | `timeLimit` | Record<string, any> | 必选 | 阅读笔记的必要参数 |
 
 ```typescript
 import GrowthCore from '@veryoung/xhs-growth';
 
-// 使用类型方法1: 直接传入任务元ID
-const res = await GrowthCore.task.topic.viewTopic('2025011411')
+//调用过程
+const { id, taskId, viewTaskType, pageId, timeLimit } = GrowthCore.task.getTaskList().data.find(item => item.type === 'TOPIC_NOTE_BROWSE')
 
-// 使用类型方法2: 按格式自定义参数传入，可以指定任务效果
-const res =  GrowthCore.task.topic.viewTopic('202501152131', '45168', 'VIEW_COUNT_NUM', ['62db0ed71d27af0001b4a199'], {
-  singleNoteViewTime: 15,
-  totalSize: 45,
-})
+const res = GrowthCore.task.topic.viewTopic(id, taskId, viewTaskType, pageId, timeLimit)
 ```
 
 ## GrowthCore.task.inviteFriends
 好友助力任务相关方法
-#### `GrowthCore.task.inviteFriends.shareFriends (id: string, extraQuery?: Record<string, any>, taskId?: string, shareCode?: string)` 分享邀请助力任务
+#### `GrowthCore.task.inviteFriends.shareFriends (id: string, taskId: string, shareCode: string, extraQuery?: Record<string, any>)` 分享邀请助力任务
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
   | `id` | string | 必选 | 任务元id |
+  | `taskId` | string | 必选 | 任务id |
+  | `shareCode` | string | 必选 | 助力任务生成的分享码 |
   | `extraQuery` | Record<string, any> | 可选 | 需要拼接进入url参数，支持object |
-  | `taskId` | string | 可选 | 任务id |
-  | `shareCode` | string | 可选 | 助力任务生成的分享码 |
 
   - 返回参数类型
 
@@ -344,11 +339,10 @@ const res =  GrowthCore.task.topic.viewTopic('202501152131', '45168', 'VIEW_COUN
 ```typescript
 import GrowthCore from '@veryoung/xhs-growth';
 
-// 使用类型方法1: 直接传入任务元ID
-const res = await GrowthCore.task.inviteFriends.shareFriends('2025011411')
+//调用过程
+const { id, taskId, shareCode } = GrowthCore.task.getTaskList().data.find(item => item.type === 'INVITE_ASSISTANCE')
 
-// 使用类型方法2: 按格式自定义参数传入，可以指定任务效果
-const res = await GrowthCore.task.inviteFriends.shareFriends('202501152131', {}, '34264', 'YG4qr6')
+const res = GrowthCore.task.topic.viewTopic(id, taskId,shareCode, {})
 ```
 #### `GrowthCore.task.inviteFriends.completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
 
