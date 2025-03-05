@@ -24,7 +24,7 @@ export class PublishNotesTask  {
     })
   }
   // 发布笔记
-  async publish(id: string, taskId?: string, topicId?: Array<string>){
+  async publish(id: string, taskId: string, topicId: Array<string>){
     try {
       const taskInfo = {
         instanceId: taskId,

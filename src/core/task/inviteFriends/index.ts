@@ -1,6 +1,6 @@
 import { httpConfig } from "../../../config/http.config";
 import { eventMissionType } from "../../../types";
-import GrowthCore, { Core, go } from "../../../index";
+import GrowthCore, { Core } from "../../../index";
 import { getQueryString, setTaskNeededInfo } from "../../../utils/url";
 
 export class InviteFriendsTask {
@@ -21,7 +21,7 @@ export class InviteFriendsTask {
   }
 
   // 分享邀请助力任务
-  async shareFriends (id: string, extraQuery?: any, taskId?: string, shareCode?: string){
+  async shareFriends (id: string, taskId: string, shareCode: string, extraQuery?: any){
     try {
       const taskInfo = {
         instanceId: taskId,
