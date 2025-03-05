@@ -114,6 +114,7 @@ export interface ItriggerMetaData {
 export interface ITaskInfo {
   triggerMeta?: ItriggerMetaData
   instanceId?: string | undefined
+  taskStatus?: TaskStatus
   extra?: {
     shareCode?: string | undefined
   }
