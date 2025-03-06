@@ -31,6 +31,7 @@ export class PublishNotesTask {
             });
         });
     }
+    // 发布笔记
     publish(id, taskId, topicId) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
@@ -69,3 +70,4 @@ export class PublishNotesTask {
         });
     }
 }
+//# sourceMappingURL=index.js.map

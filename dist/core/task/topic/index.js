@@ -7,12 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { TaskStatus } from "src/types/task";
 import { setTaskNeededInfo, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
 export class TopicTask {
-    viewTopic(id, taskId, viewTaskType, pageId, timeLimit) {
+    viewTopic(id, taskMetaInfo) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b;
+            var _a, _b, _c;
             try {
+                const { taskId, viewTaskType, pageId, timeLimit, status } = taskMetaInfo;
                 const taskInfo = {
                     instanceId: taskId,
                     triggerMeta: {
@@ -20,6 +22,7 @@ export class TopicTask {
                         triggerCondition: pageId,
                         viewAttribute: timeLimit,
                     },
+                    taskStatus: status,
                 };
                 const res = yield setTaskNeededInfo(id, taskInfo);
                 if (res.code === 0) {
@@ -29,7 +32,11 @@ export class TopicTask {
                             msg: '任务领取错误',
                         };
                     }
-                    const { triggerCondition, viewAttribute = {}, action = 'SIMPLE_VIEW' } = ((_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta) || {};
+                    const fliteredTriggerMetaData = (_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta;
+                    const { triggerCondition = [], viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData;
+                    if (((_c = res.data) === null || _c === void 0 ? void 0 : _c.taskStatus) === TaskStatus.FINISHED) {
+                        return handleOnlyView(triggerCondition, res.data.instanceId);
+                    }
                     switch (action) {
                         case 'SIMPLE_VIEW':
                             return handleOnlyView(triggerCondition, res.data.instanceId);
@@ -51,3 +58,4 @@ export class TopicTask {
         });
     }
 }
+//# sourceMappingURL=index.js.map

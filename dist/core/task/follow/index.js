@@ -11,7 +11,8 @@ import { TaskStatus } from "../../../types/task";
 import { go } from "../../../index";
 import { setTaskNeededInfo } from "../../../utils/url";
 export class FollowTask {
-    takeFollow(id, taskId, goUserPage, userId) {
+    /** 关注 */
+    takeFollow(id, taskId, userId, status, goUserPage) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const taskInfo = {
@@ -19,6 +20,7 @@ export class FollowTask {
                     triggerMeta: {
                         triggerCondition: userId,
                     },
+                    taskStatus: status,
                 };
                 const res = yield setTaskNeededInfo(id, taskInfo);
                 if (res.code === 0) {
@@ -62,3 +64,4 @@ export class FollowTask {
         });
     }
 }
+//# sourceMappingURL=index.js.map
