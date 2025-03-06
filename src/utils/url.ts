@@ -90,7 +90,7 @@ export const handleViewWithCountParams = async (instanceId: string, viewAttribut
     type: 'xhsCore',
     token: GrowthCore.getRequestToken(),
     fullscreen: 'true',
-    needCountWidget: taskStatus === TaskStatus.FINISHED ? 'no' : 'yes',
+    needCountWidget: taskStatus === TaskStatus.FINISHED ? 0 : 1,
     disableNativeLoading: 'yes',
   })
   .map(([key, value]) => `${key}=${value}`)
