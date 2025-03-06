@@ -83,10 +83,10 @@ export const handleViewWithCountParams = async (instanceId: string, viewAttribut
   const baseUrlForView = 'xhsdiscover://rn/growthfeeds?'
   const queryParams = Object.entries({
     activityId: GrowthCore.activityId,
-    singleMaxCount: viewAttribute.singleNoteViewTime,
+    singleMaxCount: viewAttribute.singleNoteViewTime ?? 0,
     taskId: instanceId,
     taskType: actionNum,
-    totalSize: viewAttribute.totalSize,
+    totalSize: viewAttribute.totalSize ?? 0,
     type: 'xhsCore',
     token: GrowthCore.getRequestToken(),
     fullscreen: 'true',

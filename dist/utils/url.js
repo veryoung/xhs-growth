@@ -79,13 +79,14 @@ export const handleOnlyView = (triggerCondition, instanceId) => __awaiter(void 0
     return completeRes;
 });
 export const handleViewWithCountParams = (instanceId, viewAttribute, actionNum, taskStatus) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     const baseUrlForView = 'xhsdiscover://rn/growthfeeds?';
     const queryParams = Object.entries({
         activityId: GrowthCore.activityId,
-        singleMaxCount: viewAttribute.singleNoteViewTime,
+        singleMaxCount: (_a = viewAttribute.singleNoteViewTime) !== null && _a !== void 0 ? _a : 0,
         taskId: instanceId,
         taskType: actionNum,
-        totalSize: viewAttribute.totalSize,
+        totalSize: (_b = viewAttribute.totalSize) !== null && _b !== void 0 ? _b : 0,
         type: 'xhsCore',
         token: GrowthCore.getRequestToken(),
         fullscreen: 'true',
