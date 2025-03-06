@@ -261,7 +261,7 @@ onLoad(async () => {
 import GrowthCore from '@veryoung/xhs-growth';
 
 //调用过程
-const { id, taskId, userId, status } = GrowthCore.task.getTaskList().data.find(item => item.type === 'FOLLOW_USER')
+const { id, taskId, userId, status } = (await GrowthCore.task.getTaskList()).data.find(item => item.type === 'FOLLOW_USER')
 
 const res = await GrowthCore.task.follow.takeFollow(id, taskId, userId, status, false)
 ```
@@ -281,7 +281,7 @@ const res = await GrowthCore.task.follow.takeFollow(id, taskId, userId, status, 
 import GrowthCore from '@veryoung/xhs-growth';
 
 //调用过程
-const { id, taskId, topicId } = GrowthCore.task.getTaskList().data.find(item => item.type === 'TOPIC_NOTE_PUBLISH')
+const { id, taskId, topicId } = (await GrowthCore.task.getTaskList()).data.find(item => item.type === 'TOPIC_NOTE_PUBLISH')
 
 const res = await GrowthCore.task.publishNotes.publish(id, taskId, topicId)
 ```
@@ -305,18 +305,25 @@ const res = await GrowthCore.task.publishNotes.onlyPublish(['62db0ed700000000010
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
   | `id` | string | 必选 | 任务元id |
+  | `taskMetaInfo` | Record<string,any> | 必选 | 任务完成必要信息 |
+
+  -`taskMetaInfo`具体属性
+
+  | 属性 | 类型 | 必选 | 说明 |
+  |--------|------|------|------|
   | `taskId` | string | 必选 | 任务id |
   | `viewTaskType` | string | 必选 | 浏览任务类型：'SIMPLE_VIEW' 或 'VIEW_COUNT_NUM' 或 'VIEW_COUNT_TIME' |
   | `pageId` | Array<string> | 必选 | 话题浏览ID |
   | `timeLimit` | Record<string, any> | 必选 | 阅读笔记的必要参数 |
+  | `status` | string | 必选 | 任务状态，完成状态会自动进入纯浏览任务 |
 
 ```typescript
 import GrowthCore from '@veryoung/xhs-growth';
 
 //调用过程
-const { id, taskId, viewTaskType, pageId, timeLimit } = GrowthCore.task.getTaskList().data.find(item => item.type === 'TOPIC_NOTE_BROWSE')
+const { name, type, id, ...taskMetaInfo } = (await GrowthCore.task.getTaskList()).data.find(item => item.type === 'TOPIC_NOTE_BROWSE')
 
-const res = GrowthCore.task.topic.viewTopic(id, taskId, viewTaskType, pageId, timeLimit)
+const res = GrowthCore.task.topic.viewTopic(id, taskMetaInfo)
 ```
 
 ## GrowthCore.task.inviteFriends
@@ -340,9 +347,9 @@ const res = GrowthCore.task.topic.viewTopic(id, taskId, viewTaskType, pageId, ti
 import GrowthCore from '@veryoung/xhs-growth';
 
 //调用过程
-const { id, taskId, shareCode } = GrowthCore.task.getTaskList().data.find(item => item.type === 'INVITE_ASSISTANCE')
+const { id, taskId, shareCode } = (await GrowthCore.task.getTaskList()).data.find(item => item.type === 'INVITE_ASSISTANCE')
 
-const res = GrowthCore.task.topic.viewTopic(id, taskId,shareCode, {})
+const res = GrowthCore.task.topic.viewTopic(id, taskId, shareCode, {})
 ```
 #### `GrowthCore.task.inviteFriends.completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
 
