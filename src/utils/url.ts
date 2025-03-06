@@ -1,8 +1,8 @@
 /** 携带挂件进行跳转 */
-import { IStrategyResult, QueryParams } from "../types/index";
 import { go } from "../index";
 import GrowthCore from "../index";
-import { eventMissionType, ItriggerMetaData, ITaskInfo } from "../types/index";
+import { eventMissionType, ItriggerMetaData, ITaskInfo, QueryParams } from "../types/index";
+import { TaskStatus } from "../types/task";
 
 
 
@@ -79,7 +79,7 @@ export const handleOnlyView = async (triggerCondition: string[], instanceId: str
   return completeRes
 }
 
-export const handleViewWithCountParams = async (instanceId: string, viewAttribute: any, actionNum: number) => {
+export const handleViewWithCountParams = async (instanceId: string, viewAttribute: any, actionNum: number, taskStatus: string) => {
   const baseUrlForView = 'xhsdiscover://rn/growthfeeds?'
   const queryParams = Object.entries({
     activityId: GrowthCore.activityId,
@@ -90,6 +90,7 @@ export const handleViewWithCountParams = async (instanceId: string, viewAttribut
     type: 'xhsCore',
     token: GrowthCore.getRequestToken(),
     fullscreen: 'true',
+    needCountWidget: taskStatus === TaskStatus.FINISHED ? 'no' : 'yes',
     disableNativeLoading: 'yes',
   })
   .map(([key, value]) => `${key}=${value}`)

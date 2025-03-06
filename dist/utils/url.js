@@ -7,9 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+/** 携带挂件进行跳转 */
 import { go } from "../index";
 import GrowthCore from "../index";
 import { eventMissionType } from "../types/index";
+import { TaskStatus } from "../types/task";
 export const handleGoWithCountView = (url, h5Url) => {
     const targetURL = `xhsdiscover://webview/${h5Url}?fullscreen=true&naviHidden=yes&widget_size=60.60&widget_position=0.24&openPage=yes&widget_url=${url}`;
     // todo: 实现跳转
@@ -76,7 +78,7 @@ export const handleOnlyView = (triggerCondition, instanceId) => __awaiter(void 0
     console.log("🚀 ~ handleOnlyView ~ completeRes:", completeRes);
     return completeRes;
 });
-export const handleViewWithCountParams = (instanceId, viewAttribute, actionNum) => __awaiter(void 0, void 0, void 0, function* () {
+export const handleViewWithCountParams = (instanceId, viewAttribute, actionNum, taskStatus) => __awaiter(void 0, void 0, void 0, function* () {
     const baseUrlForView = 'xhsdiscover://rn/growthfeeds?';
     const queryParams = Object.entries({
         activityId: GrowthCore.activityId,
@@ -87,6 +89,7 @@ export const handleViewWithCountParams = (instanceId, viewAttribute, actionNum) 
         type: 'xhsCore',
         token: GrowthCore.getRequestToken(),
         fullscreen: 'true',
+        needCountWidget: taskStatus === TaskStatus.FINISHED ? 'no' : 'yes',
         disableNativeLoading: 'yes',
     })
         .map(([key, value]) => `${key}=${value}`)

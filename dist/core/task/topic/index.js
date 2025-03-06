@@ -7,12 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { TaskStatus } from "src/types/task";
 import { setTaskNeededInfo, handleOnlyView, handleViewWithCountParams } from "../../../utils/url";
 export class TopicTask {
-    viewTopic(id, taskMetaInfo) {
+    viewTask(id, taskMetaInfo) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c;
+            var _a, _b;
             try {
                 const { taskId, viewTaskType, pageId, timeLimit, status } = taskMetaInfo;
                 const taskInfo = {
@@ -34,16 +33,13 @@ export class TopicTask {
                     }
                     const fliteredTriggerMetaData = (_b = res.data) === null || _b === void 0 ? void 0 : _b.triggerMeta;
                     const { triggerCondition = [], viewAttribute = {}, action = 'SIMPLE_VIEW' } = fliteredTriggerMetaData;
-                    if (((_c = res.data) === null || _c === void 0 ? void 0 : _c.taskStatus) === TaskStatus.FINISHED) {
-                        return handleOnlyView(triggerCondition, res.data.instanceId);
-                    }
                     switch (action) {
                         case 'SIMPLE_VIEW':
                             return handleOnlyView(triggerCondition, res.data.instanceId);
                         case 'VIEW_COUNT_NUM':
-                            return handleViewWithCountParams(res.data.instanceId, viewAttribute, 2);
+                            return handleViewWithCountParams(res.data.instanceId, viewAttribute, 2, res.data.taskStatus);
                         case 'VIEW_COUNT_TIME':
-                            return handleViewWithCountParams(res.data.instanceId, viewAttribute, 1);
+                            return handleViewWithCountParams(res.data.instanceId, viewAttribute, 1, res.data.taskStatus);
                     }
                 }
                 return {
