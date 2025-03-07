@@ -42,10 +42,7 @@ export const setTaskNeededInfo = (id, taskInfo) => __awaiter(void 0, void 0, voi
                 triggerMeta: taskInfo.triggerMeta,
                 extra: taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.extra,
                 instanceId: taskInfo.instanceId,
-<<<<<<< HEAD
                 taskStatus: taskInfo === null || taskInfo === void 0 ? void 0 : taskInfo.taskStatus,
-=======
->>>>>>> a4eaeb2 (feat: 更新代码入参和文档)
             },
             msg: 'triggerMetaInfoValid'
         };

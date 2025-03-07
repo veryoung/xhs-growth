@@ -27,11 +27,7 @@ export class InviteFriendsTask {
             return res;
         });
     }
-<<<<<<< HEAD
     shareFriends(id, taskId, shareCode, extraQuery) {
-=======
-    shareFriends(id, extraQuery, taskId, shareCode) {
->>>>>>> a4eaeb2 (feat: 更新代码入参和文档)
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const taskInfo = {

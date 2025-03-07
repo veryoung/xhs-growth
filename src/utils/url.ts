@@ -41,10 +41,7 @@ export const setTaskNeededInfo = async (id: string, taskInfo?: ITaskInfo) => {
         triggerMeta: taskInfo.triggerMeta,
         extra: taskInfo?.extra,
         instanceId: taskInfo.instanceId,
-<<<<<<< HEAD
         taskStatus: taskInfo?.taskStatus,
-=======
->>>>>>> a4eaeb2 (feat: 更新代码入参和文档)
       },
       msg: 'triggerMetaInfoValid'
     };

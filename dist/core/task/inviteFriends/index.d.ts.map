@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 {"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/core/task/inviteFriends/index.ts"],"names":[],"mappings":"AAEA,OAAmB,EAAE,IAAI,EAAE,MAAM,gBAAgB,CAAC;AAGlD,qBAAa,iBAAiB;IAC5B,IAAI,EAAE,IAAI,CAAC;gBACC,IAAI,EAAE,IAAI;IAIhB,wBAAwB,CAAC,MAAM,EAAE,MAAM,EAAE,SAAS,EAAE,MAAM;IAY1D,YAAY,CAAE,EAAE,EAAE,MAAM,EAAE,MAAM,EAAE,MAAM,EAAE,SAAS,EAAE,MAAM,EAAE,UAAU,CAAC,EAAE,GAAG;CAkCpF"}
-=======
-{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/core/task/inviteFriends/index.ts"],"names":[],"mappings":"AAEA,OAAmB,EAAE,IAAI,EAAM,MAAM,gBAAgB,CAAC;AAGtD,qBAAa,iBAAiB;IAC5B,IAAI,EAAE,IAAI,CAAC;gBACC,IAAI,EAAE,IAAI;IAIhB,wBAAwB,CAAC,MAAM,EAAE,MAAM,EAAE,SAAS,EAAE,MAAM;IAY1D,YAAY,CAAE,EAAE,EAAE,MAAM,EAAE,UAAU,CAAC,EAAE,GAAG,EAAE,MAAM,CAAC,EAAE,MAAM,EAAE,SAAS,CAAC,EAAE,MAAM;CAkCtF"}
->>>>>>> a4eaeb2 (feat: 更新代码入参和文档)

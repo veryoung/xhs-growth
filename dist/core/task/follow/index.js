@@ -11,11 +11,7 @@ import { TaskStatus } from "../../../types/task";
 import { go } from "../../../index";
 import { setTaskNeededInfo } from "../../../utils/url";
 export class FollowTask {
-<<<<<<< HEAD
     takeFollow(id, taskId, userId, status, goUserPage) {
-=======
-    takeFollow(id, taskId, goUserPage, userId) {
->>>>>>> a4eaeb2 (feat: 更新代码入参和文档)
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const taskInfo = {
