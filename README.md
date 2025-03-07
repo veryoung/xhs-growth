@@ -300,7 +300,7 @@ const res = await GrowthCore.task.publishNotes.onlyPublish(['62db0ed700000000010
 
 ## GrowthCore.task.topic
 话题任务相关方法
-#### `GrowthCore.task.topic.viewTopic(id:string, taskId: string, viewTaskType: string, pageId: Array<string>, timeLimit: Record<string, any>)`: 前往话题页进行浏览
+#### `GrowthCore.task.topic.viewTask(id:string, taskMetaInfo: Record<string, any>)`: 前往页面进行浏览
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
@@ -323,7 +323,7 @@ import GrowthCore from '@veryoung/xhs-growth';
 //调用过程
 const { name, type, id, ...taskMetaInfo } = (await GrowthCore.task.getTaskList()).data.find(item => item.type === 'TOPIC_NOTE_BROWSE')
 
-const res = GrowthCore.task.topic.viewTopic(id, taskMetaInfo)
+const res = GrowthCore.task.topic.viewTask(id, taskMetaInfo)
 ```
 
 ## GrowthCore.task.inviteFriends
