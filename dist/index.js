@@ -11,26 +11,35 @@ import { TaskBus } from './core/task';
 import { createEnvironment } from './env';
 export class Core {
     constructor() {
+        /** 是否是调试模式 */
         this.isDebugger = false;
+        /** 活动id */
         this.activityId = '';
+        /** 外部设置的code */
         this.code = '';
+        /** 设备id */
         this.deviceId = '';
         this.task = new TaskBus(this);
     }
     init(config) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
+            // 初始化配置
             this.config = config;
+            // 初始化活动id
             this.activityId = config.activityId;
             this.isDebugger = (_a = config.isDebugger) !== null && _a !== void 0 ? _a : false;
             this.deviceId = config.deviceId || '';
-            this.env = createEnvironment(config.platform, {
-                fetchCore: config.fetchCore,
-                isDebugger: config.isDebugger,
-                activityId: config.activityId,
-                baseUrl: config.baseUrl,
-                deviceId: config.deviceId,
-            });
+            if (!this.env) {
+                // 初始化环境
+                this.env = createEnvironment(config.platform, {
+                    fetchCore: config.fetchCore,
+                    isDebugger: config.isDebugger,
+                    activityId: config.activityId,
+                    baseUrl: config.baseUrl,
+                    deviceId: config.deviceId,
+                });
+            }
             yield this.env.init();
             return this;
         });
@@ -46,6 +55,10 @@ export class Core {
             return yield this.env.getUserType();
         });
     }
+    /** 外部重新设置code
+     *  因小程序登录后，code会失效，需要重新设置
+     *  如果外部未设置code，core核心会自动设置code, 如果外部设置code，则外部设置的code会覆盖core核心设置的code
+     */
     setCode(code) {
         this.code = code;
     }
@@ -60,10 +73,16 @@ const GrowthCore = () => {
     }
     return StaticCore;
 };
+/** 导出跳转方法 */
 export const go = (path, params) => {
     return GrowthCore().go(path, params);
 };
+/** 外部重新设置code
+ *  因小程序登录后，code会失效，需要重新设置
+ *  如果外部未设置code，core核心会自动设置code, 如果外部设置code，则外部设置的code会覆盖core核心设置的code
+ */
 export const setCode = (code) => {
     return GrowthCore().setCode(code);
 };
 export default GrowthCore();
+//# sourceMappingURL=index.js.map

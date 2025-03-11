@@ -11,6 +11,7 @@ import { TaskStatus } from "../../../types/task";
 import { go } from "../../../index";
 import { setTaskNeededInfo } from "../../../utils/url";
 export class FollowTask {
+    /** 关注 */
     takeFollow(id, taskId, userId, status, goUserPage) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -63,3 +64,4 @@ export class FollowTask {
         });
     }
 }
+//# sourceMappingURL=index.js.map

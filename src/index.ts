@@ -33,14 +33,16 @@ export class Core {
     this.activityId = config.activityId;
     this.isDebugger = config.isDebugger ?? false;
     this.deviceId = config.deviceId || '';
-    // 初始化环境
-    this.env = createEnvironment(config.platform, {
-      fetchCore: config.fetchCore,
-      isDebugger: config.isDebugger,
-      activityId: config.activityId,
-      baseUrl: config.baseUrl,
-      deviceId: config.deviceId,
-    });
+    if (!this.env) {
+      // 初始化环境
+      this.env = createEnvironment(config.platform, {
+        fetchCore: config.fetchCore,
+        isDebugger: config.isDebugger,
+        activityId: config.activityId,
+        baseUrl: config.baseUrl,
+        deviceId: config.deviceId,
+      });
+    }
     await this.env.init();
     return this;
   }
@@ -73,10 +75,10 @@ export class Core {
 let StaticCore: Core;
 
 const GrowthCore = () => {
-    if(!StaticCore) {
-        StaticCore = new Core();
-    }
-    return StaticCore;
+  if (!StaticCore) {
+    StaticCore = new Core();
+  }
+  return StaticCore;
 }
 
 /** 导出跳转方法 */

@@ -7,12 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+/** 携带挂件进行跳转 */
 import { go } from "../index";
 import GrowthCore from "../index";
 import { eventMissionType } from "../types/index";
 import { TaskStatus } from "../types/task";
 export const handleGoWithCountView = (url, h5Url) => {
     const targetURL = `xhsdiscover://webview/${h5Url}?fullscreen=true&naviHidden=yes&widget_size=60.60&widget_position=0.24&openPage=yes&widget_url=${url}`;
+    // todo: 实现跳转
     console.log("🚀 ~ handleGoWithCountView ~ targetURL:", targetURL);
     go(targetURL, {
         type: 'deeplink',
@@ -59,6 +61,7 @@ export const filterTriggerMetaData = (triggerMeta) => {
             result[key] = JSON.parse(value);
         }
         catch (e) {
+            // 如果不是 JSON 字符串，直接使用原值
             result[key] = value;
         }
     });
@@ -97,3 +100,4 @@ export const handleViewWithCountParams = (instanceId, viewAttribute, actionNum, 
         type: 'deeplink',
     });
 });
+//# sourceMappingURL=url.js.map
