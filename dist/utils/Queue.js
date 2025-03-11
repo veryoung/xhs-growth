@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-/* eslint-disable no-plusplus */
 export class RequestQueue {
     constructor(concurrency) {
         this.queue = [];
@@ -41,7 +40,7 @@ export class RequestQueue {
             }
             catch (error) {
                 console.error('Task execution failed:', error);
-                throw error; // 重要：需要重新抛出错误
+                throw error;
             }
             finally {
                 this.running--;
@@ -58,7 +57,6 @@ export class RequestQueue {
             this.runTask(nextTask)
                 .catch(error => {
                 console.error('Queue task error:', error);
-                // 这里的错误已经被前面的 Promise reject 处理了
             });
         }
     }
@@ -73,4 +71,3 @@ export class RequestQueue {
         return this.running;
     }
 }
-//# sourceMappingURL=queue.js.map

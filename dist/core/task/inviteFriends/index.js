@@ -15,7 +15,6 @@ export class InviteFriendsTask {
     constructor(core) {
         this.core = core;
     }
-    // 完成邀请助力任务
     completeInviteAssistTask(taskId, shareCode) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield GrowthCore.fetch('POST', httpConfig.API_LIST.completeTask, {
@@ -28,7 +27,6 @@ export class InviteFriendsTask {
             return res;
         });
     }
-    // 分享邀请助力任务
     shareFriends(id, taskId, shareCode, extraQuery) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -51,7 +49,6 @@ export class InviteFriendsTask {
                     if (strategyUrls[0] !== strategyUrls[1]) {
                         path = strategyUrls[0];
                     }
-                    // todo: 降级口令，目前没有这个可能性
                     return Object.assign(Object.assign({}, res), { data: {
                             path,
                         } });
@@ -64,4 +61,3 @@ export class InviteFriendsTask {
         });
     }
 }
-//# sourceMappingURL=index.js.map

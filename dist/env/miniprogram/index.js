@@ -11,11 +11,8 @@ import { httpConfig } from "../../config/http.config";
 import GrowthCore from "../../index";
 export default class MiniProgramEnv {
     constructor(config) {
-        // 添加全局授权重试计数
         this.authRetryCount = 0;
-        // 最大重试次数
         this.MAX_AUTH_RETRY_COUNT = 3;
-        // 授权请求状态管理
         this.authRequests = {};
         this.fetchCore = config.fetchCore;
         this.coreBaseUrl = config.baseUrl || '';
@@ -34,13 +31,9 @@ export default class MiniProgramEnv {
             return;
         }
         if ((params === null || params === void 0 ? void 0 : params.type) === 'url') {
-            // 去掉https://
             const url = path.replace('https://', '');
-            // 分离url和query
             const [urlPath, query] = url.split('?');
-            // 添加xhsdiscover://webview/
             const deeplink = `xhsdiscover://webview/${urlPath}?${decodeURIComponent(query)}`;
-            // 实现小程序的跳转逻辑
             xhs.openXhsDeeplink({
                 link: deeplink,
                 success: params === null || params === void 0 ? void 0 : params.success,
@@ -67,7 +60,6 @@ export default class MiniProgramEnv {
                     console.log("success", res);
                     if (((_a = res.data) === null || _a === void 0 ? void 0 : _a.code) === 10009) {
                         console.log("this.authRetryCount", this.authRetryCount);
-                        // 使用全局重试计数
                         if (this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) {
                             this.authRetryCount++;
                             this.authRequests = {};
@@ -93,11 +85,6 @@ export default class MiniProgramEnv {
             });
         });
     }
-    /**
-     * 初始化小程序环境
-     * @param code 可选的登录code
-     * @returns Promise<any> 授权结果
-     */
     init(code) {
         return __awaiter(this, void 0, void 0, function* () {
             let currentCode = GrowthCore.code;
@@ -118,7 +105,6 @@ export default class MiniProgramEnv {
                 }
                 console.log("🚀 ~ MiniProgramEnv ~ init ~ currentCode:", currentCode);
                 const token = yield this.setAuthorization(currentCode);
-                // 授权成功后重置重试计数
                 if (token) {
                     this.authRetryCount = 0;
                 }
@@ -130,30 +116,24 @@ export default class MiniProgramEnv {
             }
         });
     }
-    /** 设置授权 */
     setAuthorization(code) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ code:", code);
             if (this.requestToken) {
                 return this.requestToken;
             }
-            // 初始化数组（如果不存在）
             if (!this.authRequests[code]) {
                 this.authRequests[code] = [];
             }
-            // 创建Promise并将resolve函数存入数组
             return new Promise((resolve) => {
-                // 将当前Promise的resolve添加到数组
                 this.authRequests[code].push(resolve);
                 console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ this.authRequests[:", this.authRequests[code]);
-                // 如果数组长度为1，说明是第一个请求，发起请求
                 if (this.authRequests[code].length === 1) {
                     this.executeAuthRequest(code);
                 }
             });
         });
     }
-    // 执行实际的授权请求
     executeAuthRequest(code) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
@@ -164,7 +144,6 @@ export default class MiniProgramEnv {
                 });
                 if ((_a = res.data) === null || _a === void 0 ? void 0 : _a.authorization) {
                     this.requestToken = res.data.authorization;
-                    // 通知所有等待的Promise
                     const resolvers = [...this.authRequests[code]];
                     resolvers.forEach(resolve => resolve(this.requestToken));
                 }
@@ -173,14 +152,11 @@ export default class MiniProgramEnv {
                 }
             }
             catch (error) {
-                // 统一返回空字符串表示失败
                 console.error('授权请求失败', error);
-                // 通知所有等待的Promise
                 const resolvers = [...this.authRequests[code]];
                 resolvers.forEach(resolve => resolve(''));
             }
             finally {
-                // 清空数组
                 this.authRequests = {};
             }
         });
@@ -207,4 +183,3 @@ export default class MiniProgramEnv {
         return this.requestToken;
     }
 }
-//# sourceMappingURL=index.js.map
