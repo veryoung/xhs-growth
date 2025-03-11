@@ -13,17 +13,9 @@ export default class MiniProgramEnv {
   // 最大重试次数
   private readonly MAX_AUTH_RETRY_COUNT: number = 3;
   // 授权请求状态管理
-  private currentAuthRequest: {
-    code: string;
-    isRequesting: boolean;
-    result: string | null;
-    resolvers: Array<(value: string) => void>;
-  } = {
-    code: '',
-    isRequesting: false,
-    result: null,
-    resolvers: []
-  };
+  private authRequests: {
+    [code: string]: Array<(value: string) => void>;
+  } = {};
   
   constructor(config: EnvConfig) {
     this.fetchCore = config.fetchCore;
@@ -139,27 +131,18 @@ export default class MiniProgramEnv {
 
   /** 设置授权 */
   async setAuthorization(code: string): Promise<string> {
-    // 如果已经有结果，直接返回
-    if (this.currentAuthRequest.code === code && this.currentAuthRequest.result !== null) {
-      return this.currentAuthRequest.result;
+    // 初始化数组（如果不存在）
+    if (!this.authRequests[code]) {
+      this.authRequests[code] = [];
     }
     
-    // 如果code不同，重置状态
-    if (this.currentAuthRequest.code !== code) {
-      this.currentAuthRequest.code = code;
-      this.currentAuthRequest.isRequesting = false;
-      this.currentAuthRequest.result = null;
-      this.currentAuthRequest.resolvers = [];
-    }
-    
-    // 创建新的Promise并将其resolve函数存入数组
+    // 创建Promise并将resolve函数存入数组
     return new Promise<string>((resolve) => {
       // 将当前Promise的resolve添加到数组
-      this.currentAuthRequest.resolvers.push(resolve);
+      this.authRequests[code].push(resolve);
       
-      // 如果当前没有正在进行的请求，则发起请求
-      if (!this.currentAuthRequest.isRequesting) {
-        this.currentAuthRequest.isRequesting = true;
+      // 如果数组长度为1，说明是第一个请求，发起请求
+      if (this.authRequests[code].length === 1) {
         this.executeAuthRequest(code);
       }
     });
@@ -178,24 +161,19 @@ export default class MiniProgramEnv {
       };
       this.requestToken = res.data.authorization;
       
-      // 保存结果
-      this.currentAuthRequest.result = this.requestToken;
-      
       // 通知所有等待的Promise
-      const resolvers = [...this.currentAuthRequest.resolvers];
+      const resolvers = [...this.authRequests[code]];
       resolvers.forEach(resolve => resolve(this.requestToken));
     } catch (error) {
       // 统一返回空字符串表示失败
       console.error('授权请求失败', error);
-      this.currentAuthRequest.result = '';
       
       // 通知所有等待的Promise
-      const resolvers = [...this.currentAuthRequest.resolvers];
+      const resolvers = [...this.authRequests[code]];
       resolvers.forEach(resolve => resolve(''));
     } finally {
-      // 清空resolvers数组，但保留code和result
-      this.currentAuthRequest.resolvers = [];
-      this.currentAuthRequest.isRequesting = false;
+      // 清空数组
+      delete this.authRequests[code];
     }
   }
 
