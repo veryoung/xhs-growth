@@ -12,13 +12,17 @@ export default class MiniProgramEnv {
   private authRetryCount: number = 0;
   // 最大重试次数
   private readonly MAX_AUTH_RETRY_COUNT: number = 3;
-  // 替换复杂的队列结构为简单的全局状态
+  // 授权请求状态管理
   private currentAuthRequest: {
     code: string;
-    promise: Promise<string> | null;
+    isRequesting: boolean;
+    result: string | null;
+    resolvers: Array<(value: string) => void>;
   } = {
     code: '',
-    promise: null
+    isRequesting: false,
+    result: null,
+    resolvers: []
   };
   
   constructor(config: EnvConfig) {
@@ -135,20 +139,34 @@ export default class MiniProgramEnv {
 
   /** 设置授权 */
   async setAuthorization(code: string): Promise<string> {
-    // 如果已经有相同code的请求在进行中，直接返回该请求的Promise
-    if (this.currentAuthRequest.code === code && this.currentAuthRequest.promise) {
-      return this.currentAuthRequest.promise;
+    // 如果已经有结果，直接返回
+    if (this.currentAuthRequest.code === code && this.currentAuthRequest.result !== null) {
+      return this.currentAuthRequest.result;
     }
-
-    // 创建新的请求
-    this.currentAuthRequest.code = code;
-    this.currentAuthRequest.promise = this.executeAuthRequest(code);
     
-    return this.currentAuthRequest.promise;
+    // 如果code不同，重置状态
+    if (this.currentAuthRequest.code !== code) {
+      this.currentAuthRequest.code = code;
+      this.currentAuthRequest.isRequesting = false;
+      this.currentAuthRequest.result = null;
+      this.currentAuthRequest.resolvers = [];
+    }
+    
+    // 创建新的Promise并将其resolve函数存入数组
+    return new Promise<string>((resolve) => {
+      // 将当前Promise的resolve添加到数组
+      this.currentAuthRequest.resolvers.push(resolve);
+      
+      // 如果当前没有正在进行的请求，则发起请求
+      if (!this.currentAuthRequest.isRequesting) {
+        this.currentAuthRequest.isRequesting = true;
+        this.executeAuthRequest(code);
+      }
+    });
   }
 
   // 执行实际的授权请求
-  private async executeAuthRequest(code: string): Promise<string> {
+  private async executeAuthRequest(code: string): Promise<void> {
     try {
       console.log('发起新的授权请求');
       const res = await this.fetch('POST', httpConfig.API_LIST.login, {
@@ -159,14 +177,25 @@ export default class MiniProgramEnv {
         }
       };
       this.requestToken = res.data.authorization;
-      return this.requestToken;
+      
+      // 保存结果
+      this.currentAuthRequest.result = this.requestToken;
+      
+      // 通知所有等待的Promise
+      const resolvers = [...this.currentAuthRequest.resolvers];
+      resolvers.forEach(resolve => resolve(this.requestToken));
     } catch (error) {
       // 统一返回空字符串表示失败
       console.error('授权请求失败', error);
-      return '';
+      this.currentAuthRequest.result = '';
+      
+      // 通知所有等待的Promise
+      const resolvers = [...this.currentAuthRequest.resolvers];
+      resolvers.forEach(resolve => resolve(''));
     } finally {
-      // 清空当前请求
-      this.currentAuthRequest.promise = null;
+      // 清空resolvers数组，但保留code和result
+      this.currentAuthRequest.resolvers = [];
+      this.currentAuthRequest.isRequesting = false;
     }
   }
 
