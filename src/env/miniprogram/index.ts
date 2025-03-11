@@ -12,8 +12,14 @@ export default class MiniProgramEnv {
   private authRetryCount: number = 0;
   // 最大重试次数
   private readonly MAX_AUTH_RETRY_COUNT: number = 3;
-  // 授权请求队列
-  private authRequests: Map<string, Promise<string>> = new Map();
+  // 替换复杂的队列结构为简单的全局状态
+  private currentAuthRequest: {
+    code: string;
+    promise: Promise<string> | null;
+  } = {
+    code: '',
+    promise: null
+  };
   
   constructor(config: EnvConfig) {
     this.fetchCore = config.fetchCore;
@@ -129,37 +135,39 @@ export default class MiniProgramEnv {
 
   /** 设置授权 */
   async setAuthorization(code: string): Promise<string> {
-    // 检查是否已有相同code的请求正在进行
-    if (this.authRequests.has(code)) {
-      console.log('发现相同code的授权请求，复用请求结果');
-      return this.authRequests.get(code)!;
+    // 如果已经有相同code的请求在进行中，直接返回该请求的Promise
+    if (this.currentAuthRequest.code === code && this.currentAuthRequest.promise) {
+      return this.currentAuthRequest.promise;
     }
 
-    // 创建新的授权请求
-    const authPromise = new Promise<string>(async (resolve, reject) => {
-      try {
-        console.log('发起新的授权请求');
-        const res = await this.fetch('POST', httpConfig.API_LIST.login, {
-          code: code,
-        }) as {
-          data: {
-            authorization: string;
-          }
-        };
-        this.requestToken = res.data.authorization;
-        resolve(this.requestToken);
-      } catch (error) {
-        reject(error);
-      } finally {
-        // 请求完成后从队列中移除
-        this.authRequests.delete(code);
-      }
-    });
-
-    // 将请求添加到队列
-    this.authRequests.set(code, authPromise);
+    // 创建新的请求
+    this.currentAuthRequest.code = code;
+    this.currentAuthRequest.promise = this.executeAuthRequest(code);
     
-    return authPromise;
+    return this.currentAuthRequest.promise;
+  }
+
+  // 执行实际的授权请求
+  private async executeAuthRequest(code: string): Promise<string> {
+    try {
+      console.log('发起新的授权请求');
+      const res = await this.fetch('POST', httpConfig.API_LIST.login, {
+        code: code,
+      }) as {
+        data: {
+          authorization: string;
+        }
+      };
+      this.requestToken = res.data.authorization;
+      return this.requestToken;
+    } catch (error) {
+      // 统一返回空字符串表示失败
+      console.error('授权请求失败', error);
+      return '';
+    } finally {
+      // 清空当前请求
+      this.currentAuthRequest.promise = null;
+    }
   }
 
   async getUserType(): Promise<UserType | ''> {
