@@ -1,14 +1,21 @@
 import { go } from "../../../index";
 import { genCapaPostDeeplink } from "./capa";
 import { setTaskNeededInfo } from "../../../utils/url";
+import { Core } from "../../../index";
 
-export class PublishNotesTask  {
-  public core: any;
-  constructor(core: any) {
+export class PublishNotesTask {
+  public core: Core;
+  
+  constructor(core: Core) {
     this.core = core;
   }
 
-  async onlyPublish(topicIdList: string[]){
+  /**
+   * 仅发布笔记，不关联任务
+   * @param topicIdList 话题ID列表
+   * @returns Promise<void>
+   */
+  async onlyPublish(topicIdList: string[]): Promise<void> {
     const idStr = topicIdList?.map((item) => ({ page_id: item.trim() }));
     const publishNotePage = genCapaPostDeeplink({
       attach: { topics: idStr },
@@ -23,8 +30,15 @@ export class PublishNotesTask  {
       }
     })
   }
-  // 发布笔记
-  async publish(id: string, taskId: string, topicId: Array<string>){
+  
+  /**
+   * 发布笔记并关联任务
+   * @param id 任务ID
+   * @param taskId 任务实例ID
+   * @param topicId 话题ID列表
+   * @returns Promise<any>
+   */
+  async publish(id: string, taskId: string, topicId: Array<string>): Promise<any> {
     try {
       const taskInfo = {
         instanceId: taskId,

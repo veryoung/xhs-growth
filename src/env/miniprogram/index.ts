@@ -8,6 +8,13 @@ export default class MiniProgramEnv {
   private activityId: string;
   private requestToken!: any;
   private deviceId: string;
+  // 添加全局授权重试计数
+  private authRetryCount: number = 0;
+  // 最大重试次数
+  private readonly MAX_AUTH_RETRY_COUNT: number = 3;
+  // 授权请求队列
+  private authRequests: Map<string, Promise<string>> = new Map();
+  
   constructor(config: EnvConfig) {
     this.fetchCore = config.fetchCore;
     this.coreBaseUrl = config.baseUrl || '';
@@ -51,13 +58,11 @@ export default class MiniProgramEnv {
       if (!url.startsWith(this.coreBaseUrl)) {
         url = this.coreBaseUrl + url;
       }
-
       header = {
         ...header,
         ...(this.requestToken && { 'authorization': `${this.requestToken}` }),
         ...(this.deviceId && { 'X-Legacy-Did': `${this.deviceId}` })
       }
-
       this.fetchCore.request({
         url,
         method,
@@ -66,9 +71,21 @@ export default class MiniProgramEnv {
         success: async (res: any) => {
           console.log("success", res)
           if(res.data?.code === 10009) {
-            await this.init();
-            console.log(method, url, data, header);
-            return await this.fetch(method, url, data, header);
+            // 使用全局重试计数
+            if (this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) {
+              this.authRetryCount++;
+              console.log(`授权重试第 ${this.authRetryCount} 次`, method, url);
+              await this.init();
+              return resolve(await this.fetch(method, url, data, header));
+            } else {
+              this.authRetryCount = 0;
+              console.log(`已达到最大授权重试次数 ${this.MAX_AUTH_RETRY_COUNT}，请求失败`);
+              return resolve({
+                code: 10010,
+                msg: '授权失败，已达到最大重试次数',
+                data: null
+              });
+            }
           }
           resolve(res.data);
         },
@@ -80,28 +97,69 @@ export default class MiniProgramEnv {
     });
   }
 
-  async init() {
+  /**
+   * 初始化小程序环境
+   * @param code 可选的登录code
+   * @returns Promise<any> 授权结果
+   */
+  async init(code?: string): Promise<string> {
     let currentCode = GrowthCore.code;
-    // 没有设置code，则获取code
+
     if(!currentCode) {
-      const { code } = await xhs.login();
-      GrowthCore.setCode(code)
-      currentCode = code;
+      if(!code) {
+        const { code: xhsCode } = await xhs.login();
+        GrowthCore.setCode(xhsCode)
+        currentCode = xhsCode;
+      } else {
+        GrowthCore.setCode(code)
+        currentCode = code;
+      }
     }
     if(!currentCode) {
       throw new Error('请完成小程序登录');
     }
-    await this.setAuthorization(currentCode);
+    
+    const token = await this.setAuthorization(currentCode);
+    // 授权成功后重置重试计数
+    if (token) {
+      this.authRetryCount = 0;
+    }
+    return token;
   }
 
   /** 设置授权 */
-  async setAuthorization(code: string) {
-    // 实现小程序的授权逻辑
-    const res = await this.fetch('POST', httpConfig.API_LIST.login, {
-      code: code,
-    }) as any;
-    console.log('MiniProgram authorization:', res);
-    this.requestToken = res.data.authorization;
+  async setAuthorization(code: string): Promise<string> {
+    // 检查是否已有相同code的请求正在进行
+    if (this.authRequests.has(code)) {
+      console.log('发现相同code的授权请求，复用请求结果');
+      return this.authRequests.get(code)!;
+    }
+
+    // 创建新的授权请求
+    const authPromise = new Promise<string>(async (resolve, reject) => {
+      try {
+        console.log('发起新的授权请求');
+        const res = await this.fetch('POST', httpConfig.API_LIST.login, {
+          code: code,
+        }) as {
+          data: {
+            authorization: string;
+          }
+        };
+        this.requestToken = res.data.authorization;
+        resolve(this.requestToken);
+      } catch (error) {
+        reject(error);
+      } finally {
+        // 请求完成后从队列中移除
+        this.authRequests.delete(code);
+      }
+    });
+
+    // 将请求添加到队列
+    this.authRequests.set(code, authPromise);
+    
+    return authPromise;
   }
 
   async getUserType(): Promise<UserType | ''> {
