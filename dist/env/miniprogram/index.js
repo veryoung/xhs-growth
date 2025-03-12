@@ -64,6 +64,7 @@ export default class MiniProgramEnv {
                             this.authRetryCount++;
                             this.authRequests = {};
                             console.log(`授权重试第 ${this.authRetryCount} 次`, method, url);
+                            GrowthCore.code = '';
                             yield this.init();
                             return resolve(yield this.fetch(method, url, data, header));
                         }
