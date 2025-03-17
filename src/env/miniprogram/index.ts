@@ -77,10 +77,10 @@ export default class MiniProgramEnv {
             // 使用全局重试计数
             if (this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) {
               this.authRetryCount++;
-              this.authRequests = {}
-              console.log(`授权重试第 ${this.authRetryCount} 次`, method, url);
               GrowthCore.code = ''
-              await this.init();
+              // 强制重新登录获取新code
+              const { code: newCode } = await xhs.login();
+              await this.init(newCode);  // 传入新code
               return resolve(await this.fetch(method, url, data, header));
             } else {
               console.log(`已达到最大授权重试次数 ${this.MAX_AUTH_RETRY_COUNT}，请求失败`);
@@ -185,9 +185,8 @@ export default class MiniProgramEnv {
       const resolvers = [...this.authRequests[code]];
       resolvers.forEach(resolve => resolve(''));
     } finally {
-      // 清空数组
-      this.authRequests = {}
-
+      // 只清除当前code的请求队列
+      delete this.authRequests[code];
     }
   }
 

@@ -62,10 +62,9 @@ export default class MiniProgramEnv {
                         console.log("this.authRetryCount", this.authRetryCount);
                         if (this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) {
                             this.authRetryCount++;
-                            this.authRequests = {};
-                            console.log(`授权重试第 ${this.authRetryCount} 次`, method, url);
                             GrowthCore.code = '';
-                            yield this.init();
+                            const { code: newCode } = yield xhs.login();
+                            yield this.init(newCode);
                             return resolve(yield this.fetch(method, url, data, header));
                         }
                         else {
@@ -158,7 +157,7 @@ export default class MiniProgramEnv {
                 resolvers.forEach(resolve => resolve(''));
             }
             finally {
-                this.authRequests = {};
+                delete this.authRequests[code];
             }
         });
     }
