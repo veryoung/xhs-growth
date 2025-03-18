@@ -11,6 +11,7 @@ export declare class Core {
     code: string;
     deviceId: string;
     constructor();
+    getCode(): string;
     init(config: Config): Promise<this>;
     go(path: string, params?: NavigateParams): any;
     fetch(method: string, url: string, data?: object, header?: object): any;
@@ -20,6 +21,7 @@ export declare class Core {
 }
 export declare const go: (path: string, params?: NavigateParams) => any;
 export declare const setCode: (code: string) => void;
+export declare const getCode: () => string;
 declare const _default: Core;
 export default _default;
 //# sourceMappingURL=index.d.ts.map

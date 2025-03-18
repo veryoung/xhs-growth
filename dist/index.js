@@ -17,6 +17,9 @@ export class Core {
         this.deviceId = '';
         this.task = new TaskBus(this);
     }
+    getCode() {
+        return this.code;
+    }
     init(config) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
@@ -67,5 +70,8 @@ export const go = (path, params) => {
 };
 export const setCode = (code) => {
     return GrowthCore().setCode(code);
+};
+export const getCode = () => {
+    return GrowthCore().getCode();
 };
 export default GrowthCore();

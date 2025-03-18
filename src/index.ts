@@ -26,6 +26,10 @@ export class Core {
     this.task = new TaskBus(this);
   }
 
+  public getCode() {
+    return this.code
+  }
+
   async init(config: Config) {
     // 初始化配置
     this.config = config;
@@ -92,6 +96,13 @@ export const go = (path: string, params?: NavigateParams) => {
  */
 export const setCode = (code: string) => {
   return GrowthCore().setCode(code);
+}
+
+/**
+ * 获取小程序登录code
+ */
+export const getCode = () => {
+  return GrowthCore().getCode();
 }
 
 export default GrowthCore();
