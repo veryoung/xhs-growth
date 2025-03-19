@@ -152,6 +152,21 @@ onLoad(async () => {
 })
 ```    
 
+#### `GrowthCore.getCode(force?: boolean)` 获取小程序登录最新code
+
+| 枚举值 | 类型 | 说明 | 必填 |
+|--------|------|------|------|
+| `force` | boolean | 是否强制获取最新code | 否 |
+
+```typescript
+import GrowthCore from '@veryoung/xhs-growth';
+
+onLoad(async () => {
+  const res = await GrowthCore.getCode(true)
+  console.log('code：', res)
+})
+```  
+
 ## GrowthCore.task 任务实例
 任务相关示例，提供任务相关的功能
 
