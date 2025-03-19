@@ -14,11 +14,6 @@ export class PublishNotesTask {
     constructor(core) {
         this.core = core;
     }
-    /**
-     * 仅发布笔记，不关联任务
-     * @param topicIdList 话题ID列表
-     * @returns Promise<void>
-     */
     onlyPublish(topicIdList) {
         return __awaiter(this, void 0, void 0, function* () {
             const idStr = topicIdList === null || topicIdList === void 0 ? void 0 : topicIdList.map((item) => ({ page_id: item.trim() }));
@@ -36,13 +31,6 @@ export class PublishNotesTask {
             });
         });
     }
-    /**
-     * 发布笔记并关联任务
-     * @param id 任务ID
-     * @param taskId 任务实例ID
-     * @param topicId 话题ID列表
-     * @returns Promise<any>
-     */
     publish(id, taskId, topicId) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
@@ -81,4 +69,3 @@ export class PublishNotesTask {
         });
     }
 }
-//# sourceMappingURL=index.js.map
