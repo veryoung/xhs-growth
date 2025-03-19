@@ -66,9 +66,7 @@ export default class MiniProgramEnv {
                 header,
                 success: (res) => __awaiter(this, void 0, void 0, function* () {
                     var _a;
-                    console.log("请求成功", res.data.code);
                     if (((_a = res.data) === null || _a === void 0 ? void 0 : _a.code) === 10009) {
-                        console.log("this.authRetryCount", this.authRetryCount);
                         // 使用全局重试计数
                         if ((this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) && !this.isAuthing) {
                             this.authRetryCount++;
@@ -76,7 +74,6 @@ export default class MiniProgramEnv {
                             GrowthCore.code = '';
                             // 强制重新登录获取新code
                             const { code: newCode } = yield xhs.login();
-                            console.log('我是重试发起1');
                             yield this.executeAuthRequest(newCode); // 传入新code
                             return resolve(yield this.fetch(method, url, data, header));
                         }
@@ -93,7 +90,6 @@ export default class MiniProgramEnv {
                     resolve(res.data);
                 }),
                 fail: (error) => __awaiter(this, void 0, void 0, function* () {
-                    console.log("fail", error);
                     reject(error);
                 })
             });
@@ -106,7 +102,6 @@ export default class MiniProgramEnv {
      */
     init(code, force) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('我是重试发起2');
             let currentCode = GrowthCore.code;
             try {
                 if (!currentCode) {
@@ -124,12 +119,10 @@ export default class MiniProgramEnv {
                     throw new Error('请完成小程序登录');
                 }
                 const token = yield this.setAuthorization(currentCode, force);
-                console.log("🚀 ~ MiniProgramEnv ~:", this.requestToken);
                 // 授权成功后重置重试计数
                 return token;
             }
             catch (error) {
-                console.log("🚀 ~ MiniProgramEnv ~ init ~ error:", error);
                 return '';
             }
         });
@@ -137,11 +130,9 @@ export default class MiniProgramEnv {
     /** 设置授权 */
     setAuthorization(code, force) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ authRetryCount:", this.authRetryCount);
             if (this.requestToken && !force) {
                 return this.requestToken;
             }
-            console.log('当前设置的code', code);
             // 初始化数组（如果不存在）
             if (!this.authRequests[code]) {
                 this.authRequests[code] = [];
@@ -162,7 +153,6 @@ export default class MiniProgramEnv {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
             try {
-                console.log(`开始授权...${code}`);
                 this.isAuthing = true;
                 const res = yield this.fetch('POST', httpConfig.API_LIST.login, {
                     code,

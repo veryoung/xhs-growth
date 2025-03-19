@@ -18,7 +18,6 @@ export function createEnvironment(platform, config) {
         case 'webview':
             return new WebviewEnv(config);
         case 'miniprogram':
-            console.log('初始化小程序环境');
             return new MiniProgramEnv(config);
         case 'rn':
             return new RNEnv(config);

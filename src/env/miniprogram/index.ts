@@ -73,10 +73,7 @@ export default class MiniProgramEnv {
         data,
         header,
         success: async (res: any) => {
-          console.log("请求成功", res.data.code)
-
           if (res.data?.code === 10009) {
-            console.log("this.authRetryCount", this.authRetryCount)
             // 使用全局重试计数
             if ((this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) && !this.isAuthing) {
               this.authRetryCount++;
@@ -84,7 +81,6 @@ export default class MiniProgramEnv {
               GrowthCore.code = ''
               // 强制重新登录获取新code
               const { code: newCode } = await xhs.login();
-              console.log('我是重试发起1')
               await this.executeAuthRequest(newCode);  // 传入新code
               return resolve(await this.fetch(method, url, data, header));
             } else if (!this.isAuthing) {
@@ -100,7 +96,6 @@ export default class MiniProgramEnv {
           resolve(res.data);
         },
         fail: async (error: any) => {
-          console.log("fail", error)
           reject(error);
         }
       });
@@ -113,7 +108,6 @@ export default class MiniProgramEnv {
    * @returns Promise<any> 授权结果
    */
   async init(code?: string, force?: boolean): Promise<string> {
-    console.log('我是重试发起2')
     let currentCode = GrowthCore.code;
     try {
       if (!currentCode) {
@@ -130,22 +124,18 @@ export default class MiniProgramEnv {
         throw new Error('请完成小程序登录');
       }
       const token = await this.setAuthorization(currentCode, force);
-      console.log("🚀 ~ MiniProgramEnv ~:", this.requestToken)
       // 授权成功后重置重试计数
       return token;
     } catch (error) {
-      console.log("🚀 ~ MiniProgramEnv ~ init ~ error:", error)
       return ''
     }
   }
 
   /** 设置授权 */
   async setAuthorization(code: string, force?: boolean): Promise<string> {
-    console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ authRetryCount:", this.authRetryCount)
     if (this.requestToken && !force) {
       return this.requestToken
     }
-    console.log('当前设置的code', code)
 
     // 初始化数组（如果不存在）
     if (!this.authRequests[code]) {
@@ -166,7 +156,6 @@ export default class MiniProgramEnv {
   // 执行实际的授权请求
   private async executeAuthRequest(code: string): Promise<void> {
     try {
-      console.log(`开始授权...${code}`);
       this.isAuthing = true;
       const res = await this.fetch('POST', httpConfig.API_LIST.login, {
         code,

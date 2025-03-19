@@ -70,7 +70,6 @@ class NotificationPoller {
         if (this.lastAnimationFrameId) {
             return;
         }
-        // console.log('启动通知轮询，间隔:', this.interval, 'ms')
         this.executeNotifications();
         this.lastExecutionTime = new Date().getTime();
         this.lastAnimationFrameId = setTimeout(this.scheduleNextExecution, this.interval);

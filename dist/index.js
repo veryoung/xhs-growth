@@ -25,7 +25,6 @@ export class Core {
         return __awaiter(this, void 0, void 0, function* () {
             if (force) {
                 this.code = '';
-                console.log('我是重试发起3');
                 yield this.env.init('', force);
             }
             return this.code;
@@ -50,7 +49,6 @@ export class Core {
                     deviceId: config.deviceId,
                 });
             }
-            console.log('我是重试发起4');
             yield this.env.init();
             return this;
         });

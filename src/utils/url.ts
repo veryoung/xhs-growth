@@ -9,7 +9,6 @@ import { TaskStatus } from "../types/task";
 export const handleGoWithCountView = (url: string, h5Url: string) => {
   const targetURL = `xhsdiscover://webview/${h5Url}?fullscreen=true&naviHidden=yes&widget_size=60.60&widget_position=0.24&openPage=yes&widget_url=${url}`
   // todo: 实现跳转
-  console.log("🚀 ~ handleGoWithCountView ~ targetURL:", targetURL)
   go(targetURL, {
     type: 'deeplink',
     success: (res: any) => {
@@ -68,14 +67,12 @@ export const filterTriggerMetaData = (triggerMeta: ItriggerMetaData) => {
 export const handleOnlyView = async (triggerCondition: string[], instanceId: string) => {
   const path = `www.xiaohongshu.com/page/topics/${triggerCondition[0]}`;
   const microAppUrl = `xhsdiscover://webview/${path}`
-  console.log("🚀 ~ handleOnlyView ~ microAppUrl:", microAppUrl)
   
   go(microAppUrl, {
     type: 'deeplink',
   })
   
   const completeRes = await GrowthCore.task.completeTask(instanceId, eventMissionType.NOTE_BROWSE, {})
-  console.log("🚀 ~ handleOnlyView ~ completeRes:", completeRes)
   return completeRes
 }
 
@@ -95,7 +92,6 @@ export const handleViewWithCountParams = async (instanceId: string, viewAttribut
   .map(([key, value]) => `${key}=${value}`)
   .join('&')
   const path = `${baseUrlForView}${queryParams}`
-  console.log("🚀 ~ handleViewNum ~ path:", path)
   go(path, {
     type: 'deeplink',
   })
