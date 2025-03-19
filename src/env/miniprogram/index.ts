@@ -122,7 +122,6 @@ export default class MiniProgramEnv {
       if (!currentCode) {
         throw new Error('请完成小程序登录');
       }
-      console.log("🚀 ~ MiniProgramEnv ~ init ~ currentCode:", currentCode)
       const token = await this.setAuthorization(currentCode);
       // 授权成功后重置重试计数
       if (token) {
@@ -137,7 +136,7 @@ export default class MiniProgramEnv {
 
   /** 设置授权 */
   async setAuthorization(code: string): Promise<string> {
-    console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ code:", code)
+    console.log('当前设置的code', code)
     if (this.requestToken) {
       return this.requestToken
     }
@@ -150,7 +149,6 @@ export default class MiniProgramEnv {
     return new Promise<string>((resolve) => {
       // 将当前Promise的resolve添加到数组
       this.authRequests[code].push(resolve);
-      console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ this.authRequests[:", this.authRequests[code])
       // 如果数组长度为1，说明是第一个请求，发起请求
       if (this.authRequests[code].length === 1) {
         this.executeAuthRequest(code);
@@ -161,7 +159,7 @@ export default class MiniProgramEnv {
   // 执行实际的授权请求
   private async executeAuthRequest(code: string): Promise<void> {
     try {
-      console.log('发起新的授权请求');
+      console.log(`开始授权...${code}`);
       const res = await this.fetch('POST', httpConfig.API_LIST.login, {
         code,
       }) as {

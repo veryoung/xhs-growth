@@ -103,7 +103,6 @@ export default class MiniProgramEnv {
                 if (!currentCode) {
                     throw new Error('请完成小程序登录');
                 }
-                console.log("🚀 ~ MiniProgramEnv ~ init ~ currentCode:", currentCode);
                 const token = yield this.setAuthorization(currentCode);
                 if (token) {
                     this.authRetryCount = 0;
@@ -118,7 +117,7 @@ export default class MiniProgramEnv {
     }
     setAuthorization(code) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ code:", code);
+            console.log('当前设置的code', code);
             if (this.requestToken) {
                 return this.requestToken;
             }
@@ -127,7 +126,6 @@ export default class MiniProgramEnv {
             }
             return new Promise((resolve) => {
                 this.authRequests[code].push(resolve);
-                console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ this.authRequests[:", this.authRequests[code]);
                 if (this.authRequests[code].length === 1) {
                     this.executeAuthRequest(code);
                 }
@@ -138,7 +136,7 @@ export default class MiniProgramEnv {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
             try {
-                console.log('发起新的授权请求');
+                console.log(`开始授权...${code}`);
                 const res = yield this.fetch('POST', httpConfig.API_LIST.login, {
                     code,
                 });
