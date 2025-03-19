@@ -29,7 +29,8 @@ export class Core {
   public async getCode(force?: boolean) {
     if (force) {
       this.code = '';
-      await this.env.init();
+      console.log('我是重试发起3')
+      await this.env.init('', force);
     }
     return this.code
   }
@@ -51,6 +52,7 @@ export class Core {
         deviceId: config.deviceId,
       });
     }
+    console.log('我是重试发起4')
     await this.env.init();
     return this;
   }

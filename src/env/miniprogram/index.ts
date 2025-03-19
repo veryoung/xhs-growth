@@ -8,6 +8,8 @@ export default class MiniProgramEnv {
   private activityId: string;
   private requestToken!: any;
   private deviceId: string;
+  // 判断接口是否授权中
+  private isAuthing: boolean = false;
   // 添加全局授权重试计数
   private authRetryCount: number = 0;
   // 最大重试次数
@@ -71,19 +73,23 @@ export default class MiniProgramEnv {
         data,
         header,
         success: async (res: any) => {
-          console.log("success", res)
+          console.log("请求成功", res.data.code)
+
           if (res.data?.code === 10009) {
             console.log("this.authRetryCount", this.authRetryCount)
             // 使用全局重试计数
-            if (this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) {
+            if ((this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) && !this.isAuthing) {
               this.authRetryCount++;
+              this.requestToken = ''
               GrowthCore.code = ''
               // 强制重新登录获取新code
               const { code: newCode } = await xhs.login();
-              await this.init(newCode);  // 传入新code
+              console.log('我是重试发起1')
+              await this.executeAuthRequest(newCode);  // 传入新code
               return resolve(await this.fetch(method, url, data, header));
-            } else {
+            } else if (!this.isAuthing) {
               console.log(`已达到最大授权重试次数 ${this.MAX_AUTH_RETRY_COUNT}，请求失败`);
+              this.authRetryCount = 0
               return resolve({
                 code: 10010,
                 msg: '授权失败，已达到最大重试次数',
@@ -106,7 +112,8 @@ export default class MiniProgramEnv {
    * @param code 可选的登录code
    * @returns Promise<any> 授权结果
    */
-  async init(code?: string): Promise<string> {
+  async init(code?: string, force?: boolean): Promise<string> {
+    console.log('我是重试发起2')
     let currentCode = GrowthCore.code;
     try {
       if (!currentCode) {
@@ -122,11 +129,9 @@ export default class MiniProgramEnv {
       if (!currentCode) {
         throw new Error('请完成小程序登录');
       }
-      const token = await this.setAuthorization(currentCode);
+      const token = await this.setAuthorization(currentCode, force);
+      console.log("🚀 ~ MiniProgramEnv ~:", this.requestToken)
       // 授权成功后重置重试计数
-      if (token) {
-        this.authRetryCount = 0;
-      }
       return token;
     } catch (error) {
       console.log("🚀 ~ MiniProgramEnv ~ init ~ error:", error)
@@ -135,11 +140,13 @@ export default class MiniProgramEnv {
   }
 
   /** 设置授权 */
-  async setAuthorization(code: string): Promise<string> {
-    console.log('当前设置的code', code)
-    if (this.requestToken) {
+  async setAuthorization(code: string, force?: boolean): Promise<string> {
+    console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ authRetryCount:", this.authRetryCount)
+    if (this.requestToken && !force) {
       return this.requestToken
     }
+    console.log('当前设置的code', code)
+
     // 初始化数组（如果不存在）
     if (!this.authRequests[code]) {
       this.authRequests[code] = [];
@@ -160,6 +167,7 @@ export default class MiniProgramEnv {
   private async executeAuthRequest(code: string): Promise<void> {
     try {
       console.log(`开始授权...${code}`);
+      this.isAuthing = true;
       const res = await this.fetch('POST', httpConfig.API_LIST.login, {
         code,
       }) as {
@@ -167,7 +175,7 @@ export default class MiniProgramEnv {
           authorization: string;
         }
       };
-
+      this.isAuthing = false;
       if (res.data?.authorization) {
         this.requestToken = res.data.authorization;
         // 通知所有等待的Promise

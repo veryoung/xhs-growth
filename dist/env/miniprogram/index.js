@@ -11,8 +11,13 @@ import { httpConfig } from "../../config/http.config";
 import GrowthCore from "../../index";
 export default class MiniProgramEnv {
     constructor(config) {
+        // 判断接口是否授权中
+        this.isAuthing = false;
+        // 添加全局授权重试计数
         this.authRetryCount = 0;
+        // 最大重试次数
         this.MAX_AUTH_RETRY_COUNT = 3;
+        // 授权请求状态管理
         this.authRequests = {};
         this.fetchCore = config.fetchCore;
         this.coreBaseUrl = config.baseUrl || '';
@@ -31,9 +36,13 @@ export default class MiniProgramEnv {
             return;
         }
         if ((params === null || params === void 0 ? void 0 : params.type) === 'url') {
+            // 去掉https://
             const url = path.replace('https://', '');
+            // 分离url和query
             const [urlPath, query] = url.split('?');
+            // 添加xhsdiscover://webview/
             const deeplink = `xhsdiscover://webview/${urlPath}?${decodeURIComponent(query)}`;
+            // 实现小程序的跳转逻辑
             xhs.openXhsDeeplink({
                 link: deeplink,
                 success: params === null || params === void 0 ? void 0 : params.success,
@@ -57,18 +66,23 @@ export default class MiniProgramEnv {
                 header,
                 success: (res) => __awaiter(this, void 0, void 0, function* () {
                     var _a;
-                    console.log("success", res);
+                    console.log("请求成功", res.data.code);
                     if (((_a = res.data) === null || _a === void 0 ? void 0 : _a.code) === 10009) {
                         console.log("this.authRetryCount", this.authRetryCount);
-                        if (this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) {
+                        // 使用全局重试计数
+                        if ((this.authRetryCount < this.MAX_AUTH_RETRY_COUNT) && !this.isAuthing) {
                             this.authRetryCount++;
+                            this.requestToken = '';
                             GrowthCore.code = '';
+                            // 强制重新登录获取新code
                             const { code: newCode } = yield xhs.login();
-                            yield this.init(newCode);
+                            console.log('我是重试发起1');
+                            yield this.executeAuthRequest(newCode); // 传入新code
                             return resolve(yield this.fetch(method, url, data, header));
                         }
-                        else {
+                        else if (!this.isAuthing) {
                             console.log(`已达到最大授权重试次数 ${this.MAX_AUTH_RETRY_COUNT}，请求失败`);
+                            this.authRetryCount = 0;
                             return resolve({
                                 code: 10010,
                                 msg: '授权失败，已达到最大重试次数',
@@ -85,8 +99,14 @@ export default class MiniProgramEnv {
             });
         });
     }
-    init(code) {
+    /**
+     * 初始化小程序环境
+     * @param code 可选的登录code
+     * @returns Promise<any> 授权结果
+     */
+    init(code, force) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log('我是重试发起2');
             let currentCode = GrowthCore.code;
             try {
                 if (!currentCode) {
@@ -103,10 +123,9 @@ export default class MiniProgramEnv {
                 if (!currentCode) {
                     throw new Error('请完成小程序登录');
                 }
-                const token = yield this.setAuthorization(currentCode);
-                if (token) {
-                    this.authRetryCount = 0;
-                }
+                const token = yield this.setAuthorization(currentCode, force);
+                console.log("🚀 ~ MiniProgramEnv ~:", this.requestToken);
+                // 授权成功后重置重试计数
                 return token;
             }
             catch (error) {
@@ -115,33 +134,43 @@ export default class MiniProgramEnv {
             }
         });
     }
-    setAuthorization(code) {
+    /** 设置授权 */
+    setAuthorization(code, force) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('当前设置的code', code);
-            if (this.requestToken) {
+            console.log("🚀 ~ MiniProgramEnv ~ setAuthorization ~ authRetryCount:", this.authRetryCount);
+            if (this.requestToken && !force) {
                 return this.requestToken;
             }
+            console.log('当前设置的code', code);
+            // 初始化数组（如果不存在）
             if (!this.authRequests[code]) {
                 this.authRequests[code] = [];
             }
+            // 创建Promise并将resolve函数存入数组
             return new Promise((resolve) => {
+                // 将当前Promise的resolve添加到数组
                 this.authRequests[code].push(resolve);
+                // 如果数组长度为1，说明是第一个请求，发起请求
                 if (this.authRequests[code].length === 1) {
                     this.executeAuthRequest(code);
                 }
             });
         });
     }
+    // 执行实际的授权请求
     executeAuthRequest(code) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
             try {
                 console.log(`开始授权...${code}`);
+                this.isAuthing = true;
                 const res = yield this.fetch('POST', httpConfig.API_LIST.login, {
                     code,
                 });
+                this.isAuthing = false;
                 if ((_a = res.data) === null || _a === void 0 ? void 0 : _a.authorization) {
                     this.requestToken = res.data.authorization;
+                    // 通知所有等待的Promise
                     const resolvers = [...this.authRequests[code]];
                     resolvers.forEach(resolve => resolve(this.requestToken));
                 }
@@ -150,11 +179,14 @@ export default class MiniProgramEnv {
                 }
             }
             catch (error) {
+                // 统一返回空字符串表示失败
                 console.error('授权请求失败', error);
+                // 通知所有等待的Promise
                 const resolvers = [...this.authRequests[code]];
                 resolvers.forEach(resolve => resolve(''));
             }
             finally {
+                // 只清除当前code的请求队列
                 delete this.authRequests[code];
             }
         });
@@ -181,3 +213,4 @@ export default class MiniProgramEnv {
         return this.requestToken;
     }
 }
+//# sourceMappingURL=index.js.map
