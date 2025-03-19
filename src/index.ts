@@ -26,7 +26,11 @@ export class Core {
     this.task = new TaskBus(this);
   }
 
-  public getCode() {
+  public async getCode(force?: boolean) {
+    if (force) {
+      this.code = '';
+      await this.env.init();
+    }
     return this.code
   }
 

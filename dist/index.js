@@ -17,8 +17,14 @@ export class Core {
         this.deviceId = '';
         this.task = new TaskBus(this);
     }
-    getCode() {
-        return this.code;
+    getCode(force) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (force) {
+                this.code = '';
+                yield this.env.init();
+            }
+            return this.code;
+        });
     }
     init(config) {
         return __awaiter(this, void 0, void 0, function* () {
