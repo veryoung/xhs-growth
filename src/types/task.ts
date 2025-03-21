@@ -21,7 +21,7 @@ export enum TaskType {
     // 话题笔记发布
     TOPIC_NOTE_PUBLISH = "TOPIC_NOTE_PUBLISH",
     // 邀请助力
-    INVITE_ASSISTANCE = "INVITE_ASSISTANCE",
+    INVITE_ASSISTANCE_LIMIT = "INVITE_ASSISTANCE_LIMIT",
     // 话题笔记浏览
     TOPIC_NOTE_BROWSE = "TOPIC_NOTE_BROWSE",
     // 笔记点赞

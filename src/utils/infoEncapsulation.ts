@@ -8,7 +8,7 @@ export const infoEncapsulation = (type: TaskType, item: any) => {
         topicId: JSON.parse(item.triggerMeta.triggerCondition ?? '[]'),
       }
     // 邀请助力
-    case TaskType.INVITE_ASSISTANCE:
+    case TaskType.INVITE_ASSISTANCE_LIMIT:
       return {
         shareCode: item.extra.shareCode,
       }
