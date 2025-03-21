@@ -9,7 +9,7 @@ export var TaskStatus;
 export var TaskType;
 (function (TaskType) {
     TaskType["TOPIC_NOTE_PUBLISH"] = "TOPIC_NOTE_PUBLISH";
-    TaskType["INVITE_ASSISTANCE"] = "INVITE_ASSISTANCE";
+    TaskType["INVITE_ASSISTANCE_LIMIT"] = "INVITE_ASSISTANCE_LIMIT";
     TaskType["TOPIC_NOTE_BROWSE"] = "TOPIC_NOTE_BROWSE";
     TaskType["NOTE_LIKE"] = "NOTE_LIKE";
     TaskType["FOLLOW_USER"] = "FOLLOW_USER";

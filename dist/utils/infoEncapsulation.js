@@ -6,7 +6,7 @@ export const infoEncapsulation = (type, item) => {
             return {
                 topicId: JSON.parse((_a = item.triggerMeta.triggerCondition) !== null && _a !== void 0 ? _a : '[]'),
             };
-        case TaskType.INVITE_ASSISTANCE:
+        case TaskType.INVITE_ASSISTANCE_LIMIT:
             return {
                 shareCode: item.extra.shareCode,
             };
@@ -25,6 +25,6 @@ export const infoEncapsulation = (type, item) => {
         case TaskType.NOTE_LIKE:
             return {};
         default:
-            return {};
+            throw new Error(`不支持的任务类型,请联系默风进行排查: ${type}`);
     }
 };
