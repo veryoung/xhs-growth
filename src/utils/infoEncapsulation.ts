@@ -10,7 +10,7 @@ export const infoEncapsulation = (type: TaskType, item: any) => {
     // 邀请助力
     case TaskType.INVITE_ASSISTANCE_LIMIT:
       return {
-        shareCode: item.extra.shareCode,
+        shareCode: item.extra?.shareCode,
       }
     // 话题笔记浏览
     case TaskType.TOPIC_NOTE_BROWSE:

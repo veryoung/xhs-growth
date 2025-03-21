@@ -7,7 +7,10 @@ export const infoEncapsulation = (type, item) => {
             return {
                 topicId: JSON.parse((_a = item.triggerMeta.triggerCondition) !== null && _a !== void 0 ? _a : '[]'),
             };
+<<<<<<< HEAD
         // 邀请助力
+=======
+>>>>>>> 885b3bb (feat: 更新版本)
         case TaskType.INVITE_ASSISTANCE_LIMIT:
             return {
                 shareCode: item.extra.shareCode,
