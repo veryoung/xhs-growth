@@ -6,6 +6,7 @@ export declare const infoEncapsulation: (type: TaskType, item: any) => {
     pageId?: undefined;
     timeLimit?: undefined;
     userId?: undefined;
+    keyword?: undefined;
 } | {
     shareCode: any;
     topicId?: undefined;
@@ -13,6 +14,7 @@ export declare const infoEncapsulation: (type: TaskType, item: any) => {
     pageId?: undefined;
     timeLimit?: undefined;
     userId?: undefined;
+    keyword?: undefined;
 } | {
     viewTaskType: any;
     pageId: any;
@@ -20,6 +22,7 @@ export declare const infoEncapsulation: (type: TaskType, item: any) => {
     topicId?: undefined;
     shareCode?: undefined;
     userId?: undefined;
+    keyword?: undefined;
 } | {
     userId: any;
     topicId?: undefined;
@@ -27,6 +30,15 @@ export declare const infoEncapsulation: (type: TaskType, item: any) => {
     viewTaskType?: undefined;
     pageId?: undefined;
     timeLimit?: undefined;
+    keyword?: undefined;
+} | {
+    keyword: any;
+    topicId?: undefined;
+    shareCode?: undefined;
+    viewTaskType?: undefined;
+    pageId?: undefined;
+    timeLimit?: undefined;
+    userId?: undefined;
 } | {
     topicId?: undefined;
     shareCode?: undefined;
@@ -34,5 +46,6 @@ export declare const infoEncapsulation: (type: TaskType, item: any) => {
     pageId?: undefined;
     timeLimit?: undefined;
     userId?: undefined;
+    keyword?: undefined;
 };
 //# sourceMappingURL=infoEncapsulation.d.ts.map

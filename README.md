@@ -33,6 +33,24 @@ import GrowthCore from '@veryoung/xhs-growth';
  * 所有方法必须等待init完成
  */
 await GrowthCore.init(config);
+
+/**
+ * GrowthCore.getCode()
+ * 该方法内部会调用xhs.login()
+ * 请业务避免直接使用该api,直接使用会导致GrowthCore和业务竞争登陆态
+ * 如果有使用xhs.login()的场景请使用GrowthCore.getCode代替
+ */
+
+/**
+ * bad
+ */
+const code = xhs.login()
+
+/**
+ * good
+ */
+const code = await GrowthCore.getCode()
+
 ```
 
 ## 在不同框架中使用
@@ -156,7 +174,7 @@ onLoad(async () => {
 
 | 枚举值 | 类型 | 说明 | 必填 |
 |--------|------|------|------|
-| `force` | boolean | 是否强制获取最新code | 否 |
+| `force` | boolean | 是否强制获取最新code，否则获取当前可用code | 否 |
 
 ```typescript
 import GrowthCore from '@veryoung/xhs-growth';
@@ -186,9 +204,10 @@ onLoad(async () => {
   | 类型 | 枚举值 |
   |------|------|
   | `话题笔记发布` | TOPIC_NOTE_PUBLISH |
-  | `邀请助力` | INVITE_ASSISTANCE |
+  | `邀请助力` | INVITE_ASSISTANCE_LIMIT |
   | `话题笔记浏览` | TOPIC_NOTE_BROWSE |
   | `关注用户` | FOLLOW_USER |
+  | `笔记搜索` | SEARCH_NOTE |
 
   - 任务状态
 
@@ -217,8 +236,8 @@ onLoad(async () => {
   | 浏览任务类型 | 对应字段 | 备注 |
   |--------|------|------|
   | 简单浏览 | SIMPLE_VIEW |只需进入话题页,不进行计时，可用于任务完成,让用户进入信息流页|
-  | 计次浏览 | VIEW_COUNT_NUM |指定浏览话题页笔记次数，单次阅读笔记达最大时间则累计一次，累计次数达标后自动完成任务|
-  | 计时浏览 | VIEW_COUNT_TIME |指定浏览话题页时长，阅读笔记总时长达标后自动完成任务|
+  | 信息流计次浏览 | VIEW_COUNT_NUM |指定浏览信息流页笔记次数，单次阅读笔记达最大时间则累计一次，累计次数达标后自动完成任务|
+  | 信息流计时浏览 | VIEW_COUNT_TIME |指定浏览信息流页时长，阅读笔记总时长达标后自动完成任务|
 
 #### `GrowthCore.task.queryRecord(limit: number)` 获取助力记录
   - 请求参数
@@ -315,7 +334,14 @@ const res = await GrowthCore.task.publishNotes.onlyPublish(['62db0ed700000000010
 
 ## GrowthCore.task.topic
 话题任务相关方法
-#### `GrowthCore.task.topic.viewTask(id:string, taskMetaInfo: Record<string, any>)`: 前往页面进行浏览
+#### `GrowthCore.task.topic.viewTask(id:string, taskMetaInfo: Record<string, any>)`: 完成话题相关的浏览任务
+任务包括（详细查看viewTaskType字段）
+##### SIMPLE_VIEW 
+普通浏览任务 可进入话题页做页面浏览
+##### VIEW_COUNT_NUM
+信息流计次任务
+##### VIEW_COUNT_TIME
+信息流计时任务
 
   | 属性 | 类型 | 必选 | 说明 |
   |--------|------|------|------|
@@ -364,7 +390,7 @@ import GrowthCore from '@veryoung/xhs-growth';
 //调用过程
 const { id, taskId, shareCode } = (await GrowthCore.task.getTaskList()).data.find(item => item.type === 'INVITE_ASSISTANCE')
 
-const res = GrowthCore.task.topic.viewTopic(id, taskId, shareCode, {})
+const res = GrowthCore.task.inviteFriends.shareFriends(id, taskId, shareCode, {})
 ```
 #### `GrowthCore.task.inviteFriends.completeInviteAssistTask(instanceId: string, shareCode: string)` 完成邀请助力任务
 
@@ -381,6 +407,28 @@ import GrowthCore from '@veryoung/xhs-growth';
 
 const res = await GrowthCore.task.inviteFriends.completeInviteAssistTask('34264', 'YG4qr6')
 ```
+
+## GrowthCore.task.search
+搜索相关方法
+#### `GrowthCore.task.search.searchNote (id: string, taskId: string, keyword: Record<string, any>)` 搜索指定关键词
+
+  | 属性 | 类型 | 必选 | 说明 |
+  |--------|------|------|------|
+  | `id` | string | 必选 | 任务元id |
+  | `taskId` | string | 必选 | 任务id |
+  | `keyword` | Record<string, any> | 必选 | 需要搜索的目标 |
+
+
+```typescript
+import GrowthCore from '@veryoung/xhs-growth';
+
+//调用过程
+const { id, taskId, keyword } = (await GrowthCore.task.getTaskList()).data.find((item: any) => item.type === 'SEARCH_NOTE')
+
+const resNote = await GrowthCore.task.search.searchNote(id, taskId, keyword)
+
+```
+
 ### BenefitBus（待实现）
 
 权益管理系统，提供权益相关的功能

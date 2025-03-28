@@ -21,6 +21,7 @@ function genDeeplink(deeplinkConfig) {
     let search = '';
     if (searchConfig && Object.keys(searchConfig).length !== 0) {
         const searchRecord = transformConfig(searchConfig);
+        // 这里修改是因为如果传输的字符串中间有空格，URLSearchParams.toString() 方法会把空格变成+ 不符合当初的协定
         let str = '';
         Object.keys(searchRecord).forEach((value, index) => {
             str += `${index ? '&' : ''}${value}=${encodeURIComponent(searchRecord[value])}`;
@@ -35,3 +36,4 @@ export const genCapaPostDeeplink = (searchConfig) => {
         searchConfig,
     });
 };
+//# sourceMappingURL=capa.js.map

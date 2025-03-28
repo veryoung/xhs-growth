@@ -2,6 +2,7 @@ import { FollowTask } from './follow';
 import { PublishNotesTask } from './publishNotes';
 import { InviteFriendsTask } from './inviteFriends';
 import { TopicTask } from './topic';
+import { SearchNote } from './searchNote';
 import { httpConfig } from '../../config/http.config';
 import { eventMissionType, ITaskElement, Notification } from '../../types';
 import GrowthCore, { Core } from '../../index';
@@ -16,6 +17,7 @@ export class TaskBus {
   public publishNotes: PublishNotesTask;
   public inviteFriends: InviteFriendsTask;
   public topic: TopicTask;
+  public search: SearchNote;
 
   constructor(core: Core) {
     this.core = core;
@@ -23,6 +25,7 @@ export class TaskBus {
     this.publishNotes = new PublishNotesTask(this.core);
     this.inviteFriends = new InviteFriendsTask(this.core);
     this.topic = new TopicTask();
+    this.search = new SearchNote();
   }
 
   /** 获取任务列表 */

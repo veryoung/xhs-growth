@@ -26,7 +26,9 @@ export const infoEncapsulation = (type: TaskType, item: any) => {
       }
     // 搜索笔记
     case TaskType.SEARCH_NOTE:
-      return {}
+      return {
+        keyword: JSON.parse(item.triggerMeta.triggerCondition ?? '[]'),
+      }
     // 笔记点赞
     case TaskType.NOTE_LIKE:
       return {}
