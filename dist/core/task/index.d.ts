@@ -13,17 +13,12 @@ export declare class TaskBus {
     topic: TopicTask;
     search: SearchNote;
     constructor(core: Core);
-    /** 获取任务列表 */
     getTaskList(): Promise<any>;
     claimTask(id: string): Promise<any>;
     completeTask(taskId: string, eventType: eventMissionType, params: any): Promise<any>;
-    /** 轮询任务 */
     private polling;
-    /** 查询任务记录 */
     queryRecord(limit: number): Promise<any>;
-    /** 轮询任务完成通知 */
     startNotification(callback: (notification: Notification) => any): void;
-    /** 获取防封策略 url */
     getAntiBannedStrategyUrl(url: string, needRealUrl?: boolean): Promise<any>;
 }
 //# sourceMappingURL=index.d.ts.map

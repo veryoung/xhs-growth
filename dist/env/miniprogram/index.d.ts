@@ -12,13 +12,7 @@ export default class MiniProgramEnv {
     constructor(config: EnvConfig);
     go(path: string, params?: NavigateParams): void;
     fetch(method: string, url: string, data?: object, header?: object): Promise<unknown>;
-    /**
-     * 初始化小程序环境
-     * @param code 可选的登录code
-     * @returns Promise<any> 授权结果
-     */
     init(code?: string, force?: boolean): Promise<string>;
-    /** 设置授权 */
     setAuthorization(code: string, force?: boolean): Promise<string>;
     private executeAuthRequest;
     getUserType(): Promise<UserType | ''>;
