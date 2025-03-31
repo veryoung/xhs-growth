@@ -47,4 +47,3 @@ export class SearchNote {
         });
     }
 }
-//# sourceMappingURL=index.js.map
