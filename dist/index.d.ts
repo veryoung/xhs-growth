@@ -1,4 +1,5 @@
 import { TaskBus } from './core/task';
+import { AbilityBus } from './core/ability';
 import { Config, NavigateParams, UserType } from './types';
 export declare class Core {
     private config;
@@ -7,6 +8,9 @@ export declare class Core {
     baseUrl: string;
     activityId: string;
     task: TaskBus;
+    /** 纯能力总线 */
+    ability: AbilityBus;
+    /** 请求核心 */
     fetchCore: any;
     code: string;
     deviceId: string;

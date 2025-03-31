@@ -429,6 +429,37 @@ const resNote = await GrowthCore.task.search.searchNote(id, taskId, keyword)
 
 ```
 
+### AbilityBus
+
+能力开放系统，提供不依赖任务体系功能
+
+## GrowthCore.ability
+纯能力任务核心
+
+#### `GrowthCore.ability.goTargetUserPage(targetUserId: string)` 前往关注目标主页
+
+  | 属性 | 类型 | 必选 | 说明 |
+  |--------|------|------|------|
+  | `targetUserId` | string | 必选 | 关注目标ID |
+
+```typescript
+import GrowthCore from '@veryoung/xhs-growth';
+
+/**
+ * case1 根据关注任务目标主页id直接跳转
+ */
+const { userId } = (await GrowthCore.task.getTaskList()).data.find(item => item.type === 'FOLLOW_USER')
+
+const res = await GrowthCore.ability.goTargetUserPage(userId[0])
+
+/**
+ * case2 指定目标主页id直接跳转
+ */
+const target = '5b3dca654eacab77e57267d1'
+
+const res = await GrowthCore.ability.goTargetUserPage(target)
+```
+
 ### BenefitBus（待实现）
 
 权益管理系统，提供权益相关的功能

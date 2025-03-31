@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { TaskBus } from './core/task';
+import { AbilityBus } from './core/ability';
 import { createEnvironment } from './env';
 export class Core {
     constructor() {
@@ -16,6 +17,7 @@ export class Core {
         this.code = '';
         this.deviceId = '';
         this.task = new TaskBus(this);
+        this.ability = new AbilityBus(this);
     }
     getCode(force) {
         return __awaiter(this, void 0, void 0, function* () {

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../src/core/ability/index.ts"],"names":[],"mappings":"AAAA,OAAO,IAAI,MAAM,aAAa,CAAC;AAG/B,qBAAa,UAAU;IACrB,OAAO,CAAC,IAAI,CAAc;gBAEd,IAAI,EAAE,OAAO,IAAI;IAIvB,gBAAgB,CAAC,MAAM,EAAE,MAAM;CAkBtC"}

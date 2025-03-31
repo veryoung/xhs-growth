@@ -1,4 +1,5 @@
 import { TaskBus } from './core/task';
+import { AbilityBus } from './core/ability';
 import { Config, NavigateParams, UserType } from './types';
 import { createEnvironment } from './env';
 
@@ -15,6 +16,8 @@ export class Core {
   public activityId: string = '';
   /** 任务总线 */
   public task!: TaskBus;
+  /** 纯能力总线 */
+  public ability!: AbilityBus;
   /** 请求核心 */
   public fetchCore: any;
   /** 外部设置的code */
@@ -24,6 +27,7 @@ export class Core {
 
   constructor() {
     this.task = new TaskBus(this);
+    this.ability = new AbilityBus(this);
   }
 
   public async getCode(force?: boolean) {
