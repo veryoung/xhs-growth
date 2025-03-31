@@ -57,6 +57,7 @@ class NotificationPoller {
             }
             catch (error) {
                 console.error('executeNotifications error:', error);
+                // 如果出现错误，等待一段时间后重试
                 if (this.lastAnimationFrameId !== null) {
                     setTimeout(() => {
                         this.executeNotifications();
@@ -87,3 +88,4 @@ export const openNotification = (polling, callback) => {
         poller.start();
     }
 };
+//# sourceMappingURL=notification.js.map

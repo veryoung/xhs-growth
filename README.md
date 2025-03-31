@@ -388,7 +388,7 @@ const res = GrowthCore.task.topic.viewTask(id, taskMetaInfo)
 import GrowthCore from '@veryoung/xhs-growth';
 
 //调用过程
-const { id, taskId, shareCode } = (await GrowthCore.task.getTaskList()).data.find(item => item.type === 'INVITE_ASSISTANCE_LIMIT')
+const { id, taskId, shareCode } = (await GrowthCore.task.getTaskList()).data.find(item => item.type === 'INVITE_ASSISTANCE')
 
 const res = GrowthCore.task.inviteFriends.shareFriends(id, taskId, shareCode, {})
 ```
@@ -429,7 +429,7 @@ const resNote = await GrowthCore.task.search.searchNote(id, taskId, keyword)
 
 ```
 
-### AbilityBus
+### Ability
 
 能力开放系统，提供不依赖任务体系功能
 

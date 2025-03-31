@@ -27,6 +27,7 @@ export class TaskBus {
         this.topic = new TopicTask();
         this.search = new SearchNote();
     }
+    /** 获取任务列表 */
     getTaskList() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield GrowthCore.fetch('GET', httpConfig.API_LIST.taskTable);
@@ -68,6 +69,7 @@ export class TaskBus {
             return res;
         });
     }
+    /** 轮询任务 */
     polling(group) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = group ? `${httpConfig.API_LIST.polling}?group=${group}` : httpConfig.API_LIST.polling;
@@ -75,6 +77,7 @@ export class TaskBus {
             return res;
         });
     }
+    /** 查询任务记录 */
     queryRecord(limit) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = `${httpConfig.API_LIST.qureyRecord}?limit=${limit}`;
@@ -82,9 +85,11 @@ export class TaskBus {
             return res;
         });
     }
+    /** 轮询任务完成通知 */
     startNotification(callback) {
         return openNotification(this.polling, callback);
     }
+    /** 获取防封策略 url */
     getAntiBannedStrategyUrl(url_1) {
         return __awaiter(this, arguments, void 0, function* (url, needRealUrl = true) {
             const start = Date.now();
@@ -99,12 +104,14 @@ export class TaskBus {
                 console.log('getAntiBannedStrategyUrl end', Date.now() - start);
                 const url = res.url || res.realUrl || params.url;
                 let realUrl = res.realUrl || params.url;
+                // 防封失效了，自行降级即可，99 时，会强制返回原 url
                 if (res.strategyType === 99) {
                     realUrl = params.url;
                 }
                 if (params.needRealUrl) {
                     return [url, realUrl];
                 }
+                // 兜底，如果短链服务异常，则返回短链前的 url，如防封服务返回异常，则返回未经防封处理的原链接
                 return res.url || res.realUrl || params.url;
             }
             catch (error) {
@@ -114,7 +121,9 @@ export class TaskBus {
             if (params.needRealUrl) {
                 return [returnUrl, returnUrl];
             }
+            // 防封服务异常，返回原 url
             return returnUrl;
         });
     }
 }
+//# sourceMappingURL=index.js.map
