@@ -270,6 +270,26 @@ onLoad(async () => {
     | `notificationData.useIName` | string | 用户昵称  |
     | `notificationId` | string | 通知ID  |
 
+  - 特性说明
+    - 使用单例模式，多次调用时会更新回调函数而不会创建多个轮询器
+    - 默认轮询间隔为5秒，可根据服务端返回的 `nextQueryAfter` 动态调整
+    - 接口失败时会记录错误日志但不会中断轮询，确保轮询的稳定性
+
+#### `GrowthCore.task.pauseNotification()` 暂停轮询通知
+  - 功能说明：暂停当前正在运行的轮询任务完成通知
+  - 使用场景：当需要临时停止轮询时调用，例如页面进入后台或用户手动暂停
+  - 注意：暂停后轮询器实例仍然存在，可通过 `resumeNotification()` 恢复
+
+#### `GrowthCore.task.resumeNotification()` 恢复轮询通知  
+  - 功能说明：恢复之前暂停的轮询任务完成通知
+  - 使用场景：当需要重新开始轮询时调用，例如页面重新激活或用户手动恢复
+  - 注意：只有在已存在轮询器实例的情况下才能恢复
+
+#### `GrowthCore.task.getNotificationStatus()` 获取轮询通知状态
+  - 返回值：`boolean` - `true` 表示轮询正在运行，`false` 表示轮询已停止或未启动
+  - 功能说明：查询当前轮询任务完成通知的运行状态
+  - 使用场景：在UI中显示轮询状态，或在逻辑中判断是否需要启动轮询
+
 #### `GrowthCore.task.getAntiBannedStrategyUrl(url:string, needRealUrl:boolean): Promise<any>` 防封地址申请
   - 请求参数
 

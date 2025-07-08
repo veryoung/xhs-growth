@@ -11,6 +11,8 @@ class NotificationPoller {
 
   private lastExecutionTime: number = 0
 
+  private isRunning: boolean = false
+
   public requestQueue: RequestQueue
 
   constructor(
@@ -53,12 +55,7 @@ class NotificationPoller {
       await Promise.all([requestTasks()])
     } catch (error) {
       console.error('executeNotifications error:', error)
-      // 如果出现错误，等待一段时间后重试
-      if (this.lastAnimationFrameId !== null) {
-        setTimeout(() => {
-          this.executeNotifications()
-        }, this.interval)
-      }
+      // 删除错误重试逻辑，让正常轮询周期继续
     }
   }
 
@@ -74,11 +71,16 @@ class NotificationPoller {
     this.lastAnimationFrameId = setTimeout(this.scheduleNextExecution, this.interval)
   }
 
+  public updateCallback(callback: (data: any) => void): void {
+    this.callback = callback
+  }
+
   public start(): void {
-    if (this.lastAnimationFrameId) {
+    if (this.isRunning || this.lastAnimationFrameId) {
       return
     }
 
+    this.isRunning = true
     this.executeNotifications()
     this.lastExecutionTime = new Date().getTime()
     this.lastAnimationFrameId = setTimeout(this.scheduleNextExecution, this.interval)
@@ -86,17 +88,56 @@ class NotificationPoller {
 
   public stop(): void {
     if (this.lastAnimationFrameId) {
-      cancelAnimationFrame(this.lastAnimationFrameId)
+      clearTimeout(this.lastAnimationFrameId)
       this.lastAnimationFrameId = null
     }
+    this.isRunning = false
+  }
+
+  public getStatus(): boolean {
+    return this.isRunning
   }
 
 }
 
 let poller: NotificationPoller
+
+/**
+ * 轮询任务完成通知
+ * @param polling 轮询方法
+ * @param callback 回调方法
+ */
 export const openNotification = (polling: any, callback: (data: any)=> void) => {
   if (!poller) {
     poller = new NotificationPoller(polling, 5000, 3, callback)
     poller.start()
+  } else {
+    // 更新已存在 poller 的 callback
+    poller.updateCallback(callback)
   }
+}
+
+/**
+ * 暂停轮询任务完成通知
+ */
+export const pauseNotification = () => {
+  if (poller) {
+    poller.stop()
+  }
+}
+
+/**
+ * 恢复轮询任务完成通知
+ */
+export const resumeNotification = () => {
+  if (poller) {
+    poller.start()
+  }
+}
+
+/**
+ * 获取轮询任务完成通知状态
+ */
+export const getNotificationStatus = (): boolean => {
+  return poller ? poller.getStatus() : false
 }

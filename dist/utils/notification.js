@@ -12,6 +12,7 @@ class NotificationPoller {
     constructor(poll, interval = 3000, concurrency = 3, callback) {
         this.lastAnimationFrameId = null;
         this.lastExecutionTime = 0;
+        this.isRunning = false;
         this.scheduleNextExecution = () => {
             const now = new Date().getTime();
             const timeSinceLastExecution = now - this.lastExecutionTime;
@@ -57,27 +58,30 @@ class NotificationPoller {
             }
             catch (error) {
                 console.error('executeNotifications error:', error);
-                if (this.lastAnimationFrameId !== null) {
-                    setTimeout(() => {
-                        this.executeNotifications();
-                    }, this.interval);
-                }
             }
         });
     }
+    updateCallback(callback) {
+        this.callback = callback;
+    }
     start() {
-        if (this.lastAnimationFrameId) {
+        if (this.isRunning || this.lastAnimationFrameId) {
             return;
         }
+        this.isRunning = true;
         this.executeNotifications();
         this.lastExecutionTime = new Date().getTime();
         this.lastAnimationFrameId = setTimeout(this.scheduleNextExecution, this.interval);
     }
     stop() {
         if (this.lastAnimationFrameId) {
-            cancelAnimationFrame(this.lastAnimationFrameId);
+            clearTimeout(this.lastAnimationFrameId);
             this.lastAnimationFrameId = null;
         }
+        this.isRunning = false;
+    }
+    getStatus() {
+        return this.isRunning;
     }
 }
 let poller;
@@ -86,4 +90,20 @@ export const openNotification = (polling, callback) => {
         poller = new NotificationPoller(polling, 5000, 3, callback);
         poller.start();
     }
+    else {
+        poller.updateCallback(callback);
+    }
+};
+export const pauseNotification = () => {
+    if (poller) {
+        poller.stop();
+    }
+};
+export const resumeNotification = () => {
+    if (poller) {
+        poller.start();
+    }
+};
+export const getNotificationStatus = () => {
+    return poller ? poller.getStatus() : false;
 };
