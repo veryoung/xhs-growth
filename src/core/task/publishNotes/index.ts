@@ -51,14 +51,12 @@ export class PublishNotesTask {
         return res
       }
   
-      const url = `miniprogram.xiaohongshu.com/miniprogram/${this.core.activityId}/${Math.random().toString(36).slice(2)}/entry?activityId=${this.core.activityId}&activityType=${this.core.activityId}`
       const topicIds = res.data?.triggerMeta?.triggerCondition
       const idStr = topicIds?.map((id: string) => ({ page_id: id.trim() }));
       const publishNotePage = genCapaPostDeeplink({
         attach: { topics: idStr },
         config: {
           is_post_jump: 0,
-          callback: `xhsdiscover://webview/${url}&from=post`,
         },
       })
       go(publishNotePage, {

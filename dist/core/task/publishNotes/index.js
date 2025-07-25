@@ -45,14 +45,12 @@ export class PublishNotesTask {
                 if (res.code !== 0) {
                     return res;
                 }
-                const url = `miniprogram.xiaohongshu.com/miniprogram/${this.core.activityId}/${Math.random().toString(36).slice(2)}/entry?activityId=${this.core.activityId}&activityType=${this.core.activityId}`;
                 const topicIds = (_b = (_a = res.data) === null || _a === void 0 ? void 0 : _a.triggerMeta) === null || _b === void 0 ? void 0 : _b.triggerCondition;
                 const idStr = topicIds === null || topicIds === void 0 ? void 0 : topicIds.map((id) => ({ page_id: id.trim() }));
                 const publishNotePage = genCapaPostDeeplink({
                     attach: { topics: idStr },
                     config: {
                         is_post_jump: 0,
-                        callback: `xhsdiscover://webview/${url}&from=post`,
                     },
                 });
                 go(publishNotePage, {
